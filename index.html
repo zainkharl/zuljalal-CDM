@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zuljalal Traders — Pro Glassmorphism Cloud ERP v4.0</title>
+    <title>Zuljalal Traders — Pro Glassmorphism Cloud ERP v4.2</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -124,19 +124,93 @@
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3) !important;
             outline: none !important;
         }
+
+        /* ==================== CLEAN PRINT TEMPLATE STYLES ==================== */
+        #printSheetArea {
+            display: none;
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 12mm;
+            }
+            html, body {
+                background: #ffffff !important;
+                background-image: none !important;
+                color: #0f172a !important;
+                min-height: auto !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+            .no-print,
+            header,
+            main,
+            footer,
+            .ambient-blob,
+            #authOverlay,
+            #shopModal,
+            #editShopModal,
+            #cartonPurchaseModal,
+            #txModal,
+            #openingBalModal {
+                display: none !important;
+            }
+            #printSheetArea {
+                display: block !important;
+                width: 100% !important;
+                background: #ffffff !important;
+                color: #0f172a !important;
+                font-family: 'Plus Jakarta Sans', sans-serif !important;
+            }
+            #printSheetArea table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 11px;
+            }
+            #printSheetArea th,
+            #printSheetArea td {
+                border: 1px solid #94a3b8;
+                padding: 6px 8px;
+                color: #0f172a !important;
+            }
+            #printSheetArea th {
+                background-color: #f1f5f9 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                font-weight: 800;
+                text-transform: uppercase;
+                font-size: 10px;
+            }
+            #printSheetArea tr.subtotal-row td {
+                background-color: #e2e8f0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                font-weight: 800;
+            }
+            #printSheetArea tr.grandtotal-row td {
+                background-color: #cbd5e1 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                font-weight: 900;
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body class="relative min-h-screen flex flex-col text-slate-100 overflow-x-hidden">
 
+    <!-- ==================== DEDICATED PRINT STATEMENT SHEET ==================== -->
+    <div id="printSheetArea"></div>
+
     <!-- Glowing Background Ambient Spheres -->
-    <div class="ambient-blob w-96 h-96 bg-indigo-600 top-10 left-10"></div>
-    <div class="ambient-blob w-80 h-80 bg-purple-600 top-1/3 right-10"></div>
-    <div class="ambient-blob w-96 h-96 bg-emerald-600 bottom-10 left-1/3"></div>
+    <div class="ambient-blob w-96 h-96 bg-indigo-600 top-10 left-10 no-print"></div>
+    <div class="ambient-blob w-80 h-80 bg-purple-600 top-1/3 right-10 no-print"></div>
+    <div class="ambient-blob w-96 h-96 bg-emerald-600 bottom-10 left-1/3 no-print"></div>
 
     <!-- ==================== FIREBASE AUTHENTICATION OVERLAY ==================== -->
-    <div id="authOverlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl">
+    <div id="authOverlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl no-print">
         <div class="glass-modal w-full max-w-md p-8 rounded-3xl relative overflow-hidden border border-white/20 shadow-2xl">
-            <!-- Header Glow -->
             <div class="absolute -top-12 -left-12 w-32 h-32 bg-indigo-500/30 rounded-full blur-2xl"></div>
             <div class="text-center mb-6 relative">
                 <div class="inline-flex bg-gradient-to-br from-indigo-500 to-purple-600 p-4 rounded-2xl text-3xl text-white shadow-lg mb-3">
@@ -183,13 +257,13 @@
             </form>
 
             <p class="text-[11px] text-slate-400 text-center mt-5">
-                Har user account ka mukammal data Firebase Firestore Cloud mein live save rahe ga.
+                Har new user ko bilkul fresh aur blank ERP workspace milega.
             </p>
         </div>
     </div>
 
     <!-- Top Futuristic Glass Header -->
-    <header class="glass-header sticky top-0 z-40 relative">
+    <header class="glass-header sticky top-0 z-40 relative no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col lg:flex-row justify-between items-center gap-4">
             
             <!-- Logo & Brand Info -->
@@ -214,7 +288,7 @@
                         <span>&bull;</span>
                         <span><i class="fa-solid fa-store text-amber-400 mr-1"></i> Ledgers</span>
                         <span>&bull;</span>
-                        <span><i class="fa-solid fa-cloud text-emerald-400 mr-1"></i> Realtime Sync</span>
+                        <span><i class="fa-solid fa-print text-sky-400 mr-1"></i> Print Statements</span>
                     </p>
                 </div>
             </div>
@@ -266,7 +340,7 @@
     </header>
 
     <!-- Main Content Container -->
-    <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-grow relative z-10">
+    <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-grow relative z-10 no-print">
 
         <!-- ==================== TAB 1: DASHBOARD ==================== -->
         <div id="tab-content-main" class="space-y-6">
@@ -345,9 +419,14 @@
                         </h3>
                         <p class="text-xs text-slate-400">Live cloud synced directory</p>
                     </div>
-                    <div class="relative w-full sm:w-72">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
-                        <input type="text" id="mainSearch" onkeyup="renderDashboard()" placeholder="Search town, shop, BDZ..." class="w-full pl-9 pr-3.5 py-2 rounded-xl text-xs font-medium">
+                    <div class="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+                        <div class="relative flex-grow sm:w-64">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                            <input type="text" id="mainSearch" onkeyup="renderDashboard()" placeholder="Search town, shop, BDZ..." class="w-full pl-9 pr-3.5 py-2 rounded-xl text-xs font-medium">
+                        </div>
+                        <button onclick="printDashboardDirectory()" class="bg-sky-600/85 hover:bg-sky-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-sky-400/30 transition flex items-center whitespace-nowrap shadow-md">
+                            <i class="fa-solid fa-print mr-1.5"></i> Print Directory
+                        </button>
                     </div>
                 </div>
                 <div class="overflow-x-auto">
@@ -379,11 +458,14 @@
                     </h2>
                     <p class="text-xs text-slate-400 mt-1">Har BDZ ke tamam towns/shops aur summary totals</p>
                 </div>
-                <div class="flex items-center gap-2 w-full sm:w-auto">
+                <div class="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
                     <label class="text-xs font-bold text-slate-400">Filter BDZ Booker:</label>
                     <select id="bdzFilterSelect" onchange="renderBdzReport()" class="px-3.5 py-2 rounded-xl text-xs font-bold">
                         <option value="">All BDZs (Complete Sheet)</option>
                     </select>
+                    <button onclick="printBdzReport()" class="bg-sky-600/90 hover:bg-sky-500 text-white px-4 py-2 rounded-xl text-xs font-bold border border-sky-400/30 transition flex items-center shadow-lg">
+                        <i class="fa-solid fa-print mr-1.5"></i> Print BDZ Report
+                    </button>
                 </div>
             </div>
 
@@ -422,9 +504,14 @@
                     </h2>
                     <p class="text-xs text-slate-400 mt-1">Purchases (+) aur Invoice Sales (-) ka realtime stock</p>
                 </div>
-                <button onclick="openCartonPurchaseModal()" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-purple-900/40 transition flex items-center border border-purple-400/30">
-                    <i class="fa-solid fa-plus mr-2"></i> Add Carton Purchase (+)
-                </button>
+                <div class="flex flex-wrap items-center gap-2.5">
+                    <button onclick="printStockReport()" class="bg-sky-600/90 hover:bg-sky-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border border-sky-400/30 transition flex items-center shadow-lg">
+                        <i class="fa-solid fa-print mr-2"></i> Print Stock
+                    </button>
+                    <button onclick="openCartonPurchaseModal()" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-purple-900/40 transition flex items-center border border-purple-400/30">
+                        <i class="fa-solid fa-plus mr-2"></i> Add Carton Purchase (+)
+                    </button>
+                </div>
             </div>
 
             <!-- Stock KPIs -->
@@ -511,6 +598,9 @@
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="printShopLedger(activeShopId)" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold border border-sky-400/30 transition shadow-md shadow-sky-900/30 flex items-center">
+                            <i class="fa-solid fa-print mr-1.5"></i> Print Ledger
+                        </button>
                         <button onclick="openOpeningBalanceModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold border border-white/15 transition">
                             <i class="fa-solid fa-scale-balanced mr-1 text-amber-400"></i> Edit Opening Bal
                         </button>
@@ -547,11 +637,11 @@
     </main>
 
     <!-- Footer -->
-    <footer class="glass-header py-4 text-center text-xs text-slate-400 border-t border-white/10 mt-10 relative z-10">
+    <footer class="glass-header py-4 text-center text-xs text-slate-400 border-t border-white/10 mt-10 relative z-10 no-print">
         <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-            <span>Zuljalal Traders Cloud ERP v4.0 &bull; Firebase Powered</span>
+            <span>Zuljalal Traders Cloud ERP v4.2 &bull; Firebase Powered</span>
             <button onclick="resetToCleanDefaults()" class="text-rose-400 hover:text-rose-300 underline font-semibold transition">
-                <i class="fa-solid fa-triangle-exclamation mr-1"></i> Clear All Entries (Keep Balances)
+                <i class="fa-solid fa-trash-can mr-1"></i> Clear All Data (Start Fresh)
             </button>
         </div>
     </footer>
@@ -559,7 +649,7 @@
     <!-- ==================== MODALS ==================== -->
 
     <!-- MODAL 1: ADD NEW TOWN / SHOP -->
-    <div id="shopModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+    <div id="shopModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
         <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
             <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
                 <h3 class="text-lg font-extrabold text-white flex items-center">
@@ -601,7 +691,7 @@
     </div>
 
     <!-- MODAL 2: EDIT DISTRIBUTOR / SHOP DETAILS -->
-    <div id="editShopModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+    <div id="editShopModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
         <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
             <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
                 <h3 class="text-lg font-extrabold text-white flex items-center">
@@ -643,7 +733,7 @@
     </div>
 
     <!-- MODAL 3: CARTON PURCHASE (+) -->
-    <div id="cartonPurchaseModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+    <div id="cartonPurchaseModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
         <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
             <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
                 <h3 class="text-lg font-extrabold text-white flex items-center">
@@ -673,7 +763,7 @@
     </div>
 
     <!-- MODAL 4: TRANSACTION (SALE / RECOVERY) -->
-    <div id="txModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+    <div id="txModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
         <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
             <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
                 <h3 id="txModalTitle" class="text-lg font-extrabold text-white">New Entry</h3>
@@ -723,7 +813,7 @@
     </div>
 
     <!-- MODAL 5: EDIT OPENING BALANCE -->
-    <div id="openingBalModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+    <div id="openingBalModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
         <div class="glass-modal p-6 rounded-3xl w-full max-w-sm relative">
             <h3 class="text-lg font-extrabold text-white mb-1 flex items-center">
                 <i class="fa-solid fa-scale-balanced text-amber-400 mr-2"></i> Edit Opening Balance
@@ -750,7 +840,6 @@
             signInWithEmailAndPassword, 
             createUserWithEmailAndPassword, 
             signInWithCustomToken, 
-            signInAnonymously, 
             onAuthStateChanged, 
             signOut 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -761,7 +850,6 @@
             onSnapshot 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Your exact Firebase configuration provided by user
         const appId = "zuljalal-traders-erp-app";
         const firebaseConfig = {
             apiKey: "AIzaSyB7Je78BoNQdkXtggBPj_fL1NkFgtFSb0g",
@@ -803,7 +891,12 @@
 
                 unbindFirestoreListener = onSnapshot(docRef, (docSnap) => {
                     if (docSnap.exists()) {
-                        window.db = docSnap.data();
+                        const data = docSnap.data();
+                        window.db = {
+                            shops: Array.isArray(data.shops) ? data.shops : [],
+                            purchases: Array.isArray(data.purchases) ? data.purchases : [],
+                            transactions: Array.isArray(data.transactions) ? data.transactions : []
+                        };
                     } else {
                         window.db = structuredClone(window.defaultData);
                         window.syncToCloud();
@@ -828,27 +921,23 @@
 
     <!-- ==================== JAVASCRIPT APPLICATION LOGIC ==================== -->
     <script>
-        const STORAGE_KEY = "zuljalal_traders_erp_cloud_v4";
+        const STORAGE_KEY = "zuljalal_traders_erp_clean_v4_2";
 
+        // Completely empty default state for every new user / fresh setup
         const defaultData = {
-            shops: [
-                { id: "s1", town: "Chiniot", shopName: "Aslam Traders", booker: "Usman", cell: "0322-7818407", openingBalance: 4330144 },
-                { id: "s2", town: "Rabwah", shopName: "Asif Traders", booker: "Usman", cell: "0331-6087187", openingBalance: 2011584 },
-                { id: "s3", town: "Lalian", shopName: "Zaheer Traders", booker: "Usman", cell: "0300-4814949", openingBalance: 0 },
-                { id: "s4", town: "Sillanwali", shopName: "Saleem Traders", booker: "Mumtaaz", cell: "0309-6189322", openingBalance: 0 },
-                { id: "s5", town: "Shahpur", shopName: "Tariq Traders", booker: "Mumtaaz", cell: "0301-6748286", openingBalance: 0 },
-                { id: "s6", town: "Joharabad", shopName: "Mumtaaz & Son's", booker: "Noor", cell: "0300-6073221", openingBalance: 6823312 },
-                { id: "s7", town: "Noshera", shopName: "Asif Traders", booker: "Noor", cell: "0300-0000000", openingBalance: 0 },
-                { id: "s8", town: "Khushab", shopName: "Aslam & Son's", booker: "Noor", cell: "0300-6350888", openingBalance: 0 },
-                { id: "s9", town: "Kotmomin", shopName: "Bilal Traders", booker: "Sajjad", cell: "0300-6063705", openingBalance: 0 },
-                { id: "s10", town: "Phularwan", shopName: "New Makrian Traders", booker: "Matee Ur Rehman", cell: "0301-6546660", openingBalance: 0 }
-            ],
+            shops: [],
             purchases: [],
             transactions: []
         };
 
         window.defaultData = defaultData;
-        let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || structuredClone(defaultData);
+        let savedLocal = null;
+        try {
+            savedLocal = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        } catch (e) {
+            savedLocal = null;
+        }
+        let db = savedLocal && Array.isArray(savedLocal.shops) ? savedLocal : structuredClone(defaultData);
         window.db = db;
 
         let activeTown = null;
@@ -923,8 +1012,10 @@
         }
 
         function resetToCleanDefaults() {
-            if (confirm("Kya aap tamam entries reset karke default clean account data load karna chahte hain?")) {
+            if (confirm("Kya aap tamam shops, bills, recoveries aur stock data bilkul delete karke software ko 0 (blank) karna chahte hain?")) {
                 window.db = structuredClone(defaultData);
+                activeTown = null;
+                activeShopId = null;
                 saveDB();
                 refreshAll();
                 switchTab('main');
@@ -937,6 +1028,14 @@
 
         function todayStr() {
             return new Date().toISOString().split('T')[0];
+        }
+
+        function readableDateStr() {
+            return new Date().toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            });
         }
 
         function getShopStats(shop) {
@@ -1033,72 +1132,104 @@
 
             const bdzCards = document.getElementById("dashboardBdzCards");
             bdzCards.innerHTML = "";
-            Object.entries(bdzMap).forEach(([bdzName, info]) => {
-                const card = document.createElement("div");
-                card.onclick = () => {
-                    switchTab('bdz');
-                    document.getElementById("bdzFilterSelect").value = bdzName;
-                    renderBdzReport();
-                };
-                card.className = "glass-panel-interactive p-3.5 rounded-xl cursor-pointer relative overflow-hidden";
-                card.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs font-extrabold text-indigo-300 flex items-center">
-                            <i class="fa-solid fa-user-check mr-1 text-indigo-400"></i>${bdzName}
-                        </span>
-                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full font-bold text-slate-300">${info.shops} Shops</span>
-                    </div>
-                    <div class="mt-2.5">
-                        <p class="text-[10px] uppercase text-slate-400 font-bold">Credit Balance</p>
-                        <p class="text-base font-extrabold text-white font-num">${formatPKR(info.credit)}</p>
+            const bdzEntries = Object.entries(bdzMap);
+
+            if (bdzEntries.length === 0) {
+                bdzCards.innerHTML = `
+                    <div class="col-span-full py-6 text-center text-slate-400 text-xs border border-dashed border-white/10 rounded-xl">
+                        Abhi koi BDZ ya Shop add nahi hui. Upar <b>"+ Add Shop"</b> par click karke apna data shuru karein.
                     </div>
                 `;
-                bdzCards.appendChild(card);
-            });
+            } else {
+                bdzEntries.forEach(([bdzName, info]) => {
+                    const card = document.createElement("div");
+                    card.onclick = () => {
+                        switchTab('bdz');
+                        document.getElementById("bdzFilterSelect").value = bdzName;
+                        renderBdzReport();
+                    };
+                    card.className = "glass-panel-interactive p-3.5 rounded-xl cursor-pointer relative overflow-hidden";
+                    card.innerHTML = `
+                        <div class="flex justify-between items-center gap-1">
+                            <span class="text-xs font-extrabold text-indigo-300 flex items-center truncate">
+                                <i class="fa-solid fa-user-check mr-1 text-indigo-400"></i>${bdzName}
+                            </span>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full font-bold text-slate-300">${info.shops} Shops</span>
+                                <button onclick="event.stopPropagation(); printBdzReport('${bdzName.replace(/'/g, "\'")}')" title="Print ${bdzName} Sheet" class="p-1 rounded-lg bg-sky-500/20 hover:bg-sky-500/40 text-sky-300 border border-sky-400/30 transition">
+                                    <i class="fa-solid fa-print text-[10px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mt-2.5">
+                            <p class="text-[10px] uppercase text-slate-400 font-bold">Credit Balance</p>
+                            <p class="text-base font-extrabold text-white font-num">${formatPKR(info.credit)}</p>
+                        </div>
+                    `;
+                    bdzCards.appendChild(card);
+                });
+            }
 
             const query = document.getElementById("mainSearch").value.toLowerCase();
             const tbody = document.getElementById("dashboardTableBody");
             tbody.innerHTML = "";
 
-            window.db.shops
-                .filter(s =>
-                    s.town.toLowerCase().includes(query) ||
-                    s.shopName.toLowerCase().includes(query) ||
-                    s.booker.toLowerCase().includes(query)
-                )
-                .forEach(shop => {
-                    const st = getShopStats(shop);
-                    const tr = document.createElement("tr");
-                    tr.className = "hover:bg-indigo-500/10 transition";
-                    tr.innerHTML = `
-                        <td class="py-3.5 px-5">
-                            <button onclick="openTownSheet('${shop.town}')" class="inline-flex items-center font-bold text-indigo-300 hover:text-white">
-                                <i class="fa-solid fa-folder-open mr-2 text-indigo-400"></i> ${shop.town}
-                            </button>
+            const filteredShops = window.db.shops.filter(s =>
+                s.town.toLowerCase().includes(query) ||
+                s.shopName.toLowerCase().includes(query) ||
+                s.booker.toLowerCase().includes(query)
+            );
+
+            if (filteredShops.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="py-10 text-center text-slate-400 text-sm">
+                            <i class="fa-solid fa-folder-open text-2xl text-indigo-400/70 mb-2 block"></i>
+                            ${window.db.shops.length === 0
+                                ? 'Workspace bilkul clear hai! Nayi shop ya town add karne ke liye <b>"+ Add Shop"</b> dabayein.'
+                                : 'Search ke mutabiq koi shop nahi mili.'}
                         </td>
-                        <td class="py-3.5 px-5">
-                            <button onclick="openTownSheet('${shop.town}', '${shop.id}')" class="font-extrabold text-white hover:text-indigo-300 text-left">
-                                ${shop.shopName} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400 ml-1"></i>
-                            </button>
-                        </td>
-                        <td class="py-3.5 px-5">
-                            <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 text-xs font-bold px-2.5 py-1 rounded-lg">${shop.booker}</span>
-                        </td>
-                        <td class="py-3.5 px-5 text-xs text-slate-400 font-medium">${shop.cell}</td>
-                        <td class="py-3.5 px-5 text-right text-slate-300 font-num">${formatPKR(st.openingBalance)}</td>
-                        <td class="py-3.5 px-5 text-right text-emerald-400 font-bold font-num">${formatPKR(st.totalRecovery)}</td>
-                        <td class="py-3.5 px-5 text-right font-extrabold font-num ${st.netBalance < 0 ? 'text-emerald-400' : 'text-white'}">${formatPKR(st.netBalance)}</td>
-                        <td class="py-3.5 px-5 text-center flex justify-center items-center gap-1.5">
-                            <button onclick="openEditShopModalDirect('${shop.id}')" title="Edit Shop Details" class="bg-white/10 hover:bg-white/20 text-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold transition">
-                                <i class="fa-solid fa-pen-to-square text-indigo-300"></i>
-                            </button>
-                            <button onclick="openTownSheet('${shop.town}', '${shop.id}')" class="bg-indigo-600/80 hover:bg-indigo-600 text-white px-3 py-1 rounded-lg text-xs font-bold transition">
-                                Open Ledger
-                            </button>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
+                    </tr>
+                `;
+                return;
+            }
+
+            filteredShops.forEach(shop => {
+                const st = getShopStats(shop);
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-indigo-500/10 transition";
+                tr.innerHTML = `
+                    <td class="py-3.5 px-5">
+                        <button onclick="openTownSheet('${shop.town}')" class="inline-flex items-center font-bold text-indigo-300 hover:text-white">
+                            <i class="fa-solid fa-folder-open mr-2 text-indigo-400"></i> ${shop.town}
+                        </button>
+                    </td>
+                    <td class="py-3.5 px-5">
+                        <button onclick="openTownSheet('${shop.town}', '${shop.id}')" class="font-extrabold text-white hover:text-indigo-300 text-left">
+                            ${shop.shopName} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400 ml-1"></i>
+                        </button>
+                    </td>
+                    <td class="py-3.5 px-5">
+                        <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 text-xs font-bold px-2.5 py-1 rounded-lg">${shop.booker}</span>
+                    </td>
+                    <td class="py-3.5 px-5 text-xs text-slate-400 font-medium">${shop.cell}</td>
+                    <td class="py-3.5 px-5 text-right text-slate-300 font-num">${formatPKR(st.openingBalance)}</td>
+                    <td class="py-3.5 px-5 text-right text-emerald-400 font-bold font-num">${formatPKR(st.totalRecovery)}</td>
+                    <td class="py-3.5 px-5 text-right font-extrabold font-num ${st.netBalance < 0 ? 'text-emerald-400' : 'text-white'}">${formatPKR(st.netBalance)}</td>
+                    <td class="py-3.5 px-5 text-center flex justify-center items-center gap-1.5">
+                        <button onclick="printShopLedger('${shop.id}')" title="Print Shop Ledger" class="bg-sky-500/20 hover:bg-sky-500/40 text-sky-300 border border-sky-400/30 px-2.5 py-1 rounded-lg text-xs font-bold transition">
+                            <i class="fa-solid fa-print"></i>
+                        </button>
+                        <button onclick="openEditShopModalDirect('${shop.id}')" title="Edit Shop Details" class="bg-white/10 hover:bg-white/20 text-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold transition">
+                            <i class="fa-solid fa-pen-to-square text-indigo-300"></i>
+                        </button>
+                        <button onclick="openTownSheet('${shop.town}', '${shop.id}')" class="bg-indigo-600/80 hover:bg-indigo-600 text-white px-3 py-1 rounded-lg text-xs font-bold transition">
+                            Open Ledger
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
         function renderBdzReport() {
@@ -1109,6 +1240,11 @@
             const tbody = document.getElementById("bdzReportBody");
             summaryGrid.innerHTML = "";
             tbody.innerHTML = "";
+
+            if (bdzList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" class="py-10 text-center text-slate-400 text-sm">Abhi koi BDZ record maujood nahi hai. Pehle <b>"+ Add Shop"</b> se shops add karein.</td></tr>`;
+                return;
+            }
 
             let grandOpening = 0, grandCartons = 0, grandInvoices = 0, grandTotalCredit = 0, grandRecovery = 0, grandRemaining = 0;
 
@@ -1163,9 +1299,14 @@
                 const card = document.createElement("div");
                 card.className = "glass-panel p-4 rounded-2xl";
                 card.innerHTML = `
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="font-extrabold text-white text-sm">${bdz}</span>
-                        <span class="text-[10px] font-bold bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-full border border-indigo-400/30">${bdzShops.length} Shops</span>
+                    <div class="flex items-center justify-between gap-1 mb-2">
+                        <span class="font-extrabold text-white text-sm truncate">${bdz}</span>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <span class="text-[10px] font-bold bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-full border border-indigo-400/30">${bdzShops.length} Shops</span>
+                            <button onclick="printBdzReport('${bdz.replace(/'/g, "\'")}')" title="Print ${bdz} Sheet" class="p-1.5 rounded-lg bg-sky-500/20 hover:bg-sky-500/40 text-sky-300 border border-sky-400/30 transition">
+                                <i class="fa-solid fa-print text-xs"></i>
+                            </button>
+                        </div>
                     </div>
                     <p class="text-[11px] text-slate-400 font-semibold">Remaining Credit:</p>
                     <p class="text-lg font-extrabold text-indigo-300 font-num">${formatPKR(subRemaining)}</p>
@@ -1309,6 +1450,9 @@
                             </p>
                         </div>
                         <div class="flex items-center gap-1">
+                            <button onclick="event.stopPropagation(); printShopLedger('${shop.id}')" title="Print Ledger" class="p-1.5 rounded-lg bg-sky-500/20 hover:bg-sky-500/40 text-sky-300 border border-sky-400/30">
+                                <i class="fa-solid fa-print text-xs"></i>
+                            </button>
                             <button onclick="event.stopPropagation(); openEditShopModalDirect('${shop.id}')" title="Edit Shop Details" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-indigo-300">
                                 <i class="fa-solid fa-pen-to-square text-xs"></i>
                             </button>
@@ -1392,6 +1536,381 @@
                 `;
                 tbody.appendChild(tr);
             });
+        }
+
+        /* ==================== PROPER SKETCH PRINT TEMPLATES ==================== */
+
+        function buildPrintHeader(docTitle, subLine = "") {
+            return `
+                <div style="border-bottom: 2px solid #0f172a; padding-bottom: 10px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: flex-end;">
+                    <div>
+                        <div style="font-size: 22px; font-weight: 900; letter-spacing: 0.5px; color: #0f172a; line-height: 1.1;">ZULJALAL TRADERS</div>
+                        <div style="font-size: 11px; color: #475569; font-weight: 600; margin-top: 3px;">Wholesale Distribution &bull; Stock &amp; Party Ledger System</div>
+                        ${subLine ? `<div style="font-size: 11px; color: #1e293b; font-weight: 700; margin-top: 4px;">${subLine}</div>` : ''}
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="display: inline-block; border: 1.5px solid #0f172a; padding: 3px 10px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">${docTitle}</div>
+                        <div style="font-size: 11px; color: #334155; font-weight: 600; margin-top: 5px;">Print Date: <b>${readableDateStr()}</b></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function buildPrintFooter() {
+            return `
+                <div style="margin-top: 32px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 11px; color: #334155;">
+                    <div>
+                        <div>Generated by <b>Zuljalal Traders Cloud ERP</b></div>
+                        <div style="font-size: 10px; color: #64748b;">Computer generated statement — errors &amp; omissions excepted.</div>
+                    </div>
+                    <div style="display: flex; gap: 36px;">
+                        <div style="text-align: center;">
+                            <div style="width: 120px; border-bottom: 1px solid #0f172a; height: 22px;"></div>
+                            <div style="margin-top: 4px; font-weight: 700;">Prepared By</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 130px; border-bottom: 1px solid #0f172a; height: 22px;"></div>
+                            <div style="margin-top: 4px; font-weight: 700;">Authorized Signature</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function triggerCleanPrint(htmlContent) {
+            const printArea = document.getElementById("printSheetArea");
+            printArea.innerHTML = htmlContent;
+            setTimeout(() => {
+                window.print();
+            }, 60);
+        }
+
+        // 1. PRINT INDIVIDUAL PARTY / SHOP LEDGER STATEMENT
+        function printShopLedger(shopId) {
+            const targetId = shopId || activeShopId;
+            const shop = window.db.shops.find(s => s.id === targetId);
+            if (!shop) {
+                alert("Pehle koi shop/ledger select karein.");
+                return;
+            }
+
+            const st = getShopStats(shop);
+            const shopTxs = window.db.transactions.filter(t => t.shopId === shop.id);
+
+            let runningBal = Number(shop.openingBalance);
+            let rowsHtml = `
+                <tr class="subtotal-row">
+                    <td style="text-align: center;">—</td>
+                    <td>OPENING</td>
+                    <td>Previous Opening Balance Brought Forward</td>
+                    <td style="text-align: center;">—</td>
+                    <td style="text-align: right;">—</td>
+                    <td style="text-align: right;">${formatPKR(runningBal)}</td>
+                    <td style="text-align: right;">${formatPKR(runningBal)}</td>
+                </tr>
+            `;
+
+            shopTxs.forEach(tx => {
+                if (tx.type === "SALE") {
+                    runningBal += Number(tx.amount);
+                } else {
+                    runningBal -= Number(tx.amount);
+                }
+                rowsHtml += `
+                    <tr>
+                        <td style="white-space: nowrap;">${tx.date}</td>
+                        <td style="font-weight: 700;">${tx.ref}</td>
+                        <td>${tx.desc || (tx.type === 'SALE' ? 'Carton Supply Bill' : 'Online / Cash Recovery')}</td>
+                        <td style="text-align: center; font-weight: 700;">${tx.cartons ? tx.cartons + ' Ctn' : '—'}</td>
+                        <td style="text-align: right; font-weight: 700;">${tx.type === 'RECOVERY' ? formatPKR(tx.amount) : '—'}</td>
+                        <td style="text-align: right; font-weight: 700;">${tx.type === 'SALE' ? formatPKR(tx.amount) : '—'}</td>
+                        <td style="text-align: right; font-weight: 800;">${formatPKR(runningBal)}</td>
+                    </tr>
+                `;
+            });
+
+            rowsHtml += `
+                <tr class="grandtotal-row">
+                    <td colspan="3" style="text-align: right; text-transform: uppercase;">Closing Statement Totals:</td>
+                    <td style="text-align: center;">${st.totalCartons} Ctn</td>
+                    <td style="text-align: right;">${formatPKR(st.totalRecovery)}</td>
+                    <td style="text-align: right;">${formatPKR(st.totalCredit)}</td>
+                    <td style="text-align: right;">${formatPKR(st.netBalance)}</td>
+                </tr>
+            `;
+
+            const partyMetaBox = `
+                <div style="border: 1px solid #94a3b8; background: #f8fafc; padding: 10px 12px; margin-bottom: 14px; display: flex; justify-content: space-between; font-size: 12px;">
+                    <div style="line-height: 1.6;">
+                        <div><span style="color: #475569;">Party / Shop Name:</span> <b style="font-size: 14px;">${shop.shopName}</b></div>
+                        <div><span style="color: #475569;">Town / Territory:</span> <b>${shop.town}</b></div>
+                        <div><span style="color: #475569;">Contact Number:</span> <b>${shop.cell}</b></div>
+                    </div>
+                    <div style="text-align: right; line-height: 1.6;">
+                        <div><span style="color: #475569;">Assigned BDZ Booker:</span> <b>${shop.booker}</b></div>
+                        <div><span style="color: #475569;">Opening Credit:</span> <b>${formatPKR(st.openingBalance)}</b></div>
+                        <div><span style="color: #475569;">Net Payable Balance:</span> <b style="font-size: 14px; border-bottom: 2px solid #0f172a;">${formatPKR(st.netBalance)}</b></div>
+                    </div>
+                </div>
+            `;
+
+            const html = `
+                ${buildPrintHeader("Party Ledger Statement")}
+                ${partyMetaBox}
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 12%;">Date</th>
+                            <th style="width: 13%;">Ref / Inv #</th>
+                            <th style="width: 27%;">Description / Particulars</th>
+                            <th style="width: 10%; text-align: center;">Cartons</th>
+                            <th style="width: 12%; text-align: right;">Recovery</th>
+                            <th style="width: 13%; text-align: right;">Bill / Debit</th>
+                            <th style="width: 13%; text-align: right;">Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rowsHtml}</tbody>
+                </table>
+                ${buildPrintFooter()}
+            `;
+
+            triggerCleanPrint(html);
+        }
+
+        // 2. PRINT BDZ WISE REPORT (SINGLE BDZ OR ALL BDZs)
+        function printBdzReport(specificBdz = null) {
+            const selectedFilter = specificBdz !== null ? specificBdz : document.getElementById("bdzFilterSelect").value;
+            const bdzList = selectedFilter ? [selectedFilter] : getUniqueBdzs();
+
+            let grandOpening = 0, grandCartons = 0, grandInvoices = 0, grandTotalCredit = 0, grandRecovery = 0, grandRemaining = 0;
+            let rowsHtml = "";
+
+            bdzList.forEach(bdz => {
+                const bdzShops = window.db.shops.filter(s => s.booker.trim() === bdz);
+                let subOpening = 0, subCartons = 0, subInvoices = 0, subTotalCredit = 0, subRecovery = 0, subRemaining = 0;
+
+                bdzShops.forEach(shop => {
+                    const st = getShopStats(shop);
+                    subOpening += st.openingBalance;
+                    subCartons += st.totalCartons;
+                    subInvoices += st.totalSales;
+                    subTotalCredit += st.totalCredit;
+                    subRecovery += st.totalRecovery;
+                    subRemaining += st.netBalance;
+
+                    rowsHtml += `
+                        <tr>
+                            <td style="font-weight: 700;">${bdz}</td>
+                            <td>${shop.town}</td>
+                            <td style="font-weight: 700;">${shop.shopName}</td>
+                            <td style="text-align: right;">${formatPKR(st.openingBalance)}</td>
+                            <td style="text-align: center;">${st.totalCartons}</td>
+                            <td style="text-align: right;">${formatPKR(st.totalSales)}</td>
+                            <td style="text-align: right;">${formatPKR(st.totalCredit)}</td>
+                            <td style="text-align: right;">${formatPKR(st.totalRecovery)}</td>
+                            <td style="text-align: right; font-weight: 800;">${formatPKR(st.netBalance)}</td>
+                        </tr>
+                    `;
+                });
+
+                rowsHtml += `
+                    <tr class="subtotal-row">
+                        <td colspan="3" style="text-transform: uppercase;">${bdz} — Sub Total (${bdzShops.length} Shops)</td>
+                        <td style="text-align: right;">${formatPKR(subOpening)}</td>
+                        <td style="text-align: center;">${subCartons}</td>
+                        <td style="text-align: right;">${formatPKR(subInvoices)}</td>
+                        <td style="text-align: right;">${formatPKR(subTotalCredit)}</td>
+                        <td style="text-align: right;">${formatPKR(subRecovery)}</td>
+                        <td style="text-align: right;">${formatPKR(subRemaining)}</td>
+                    </tr>
+                `;
+
+                grandOpening += subOpening;
+                grandCartons += subCartons;
+                grandInvoices += subInvoices;
+                grandTotalCredit += subTotalCredit;
+                grandRecovery += subRecovery;
+                grandRemaining += subRemaining;
+            });
+
+            rowsHtml += `
+                <tr class="grandtotal-row">
+                    <td colspan="3" style="text-transform: uppercase;">GRAND TOTAL ${selectedFilter ? `(${selectedFilter})` : '(ALL BDZs)'}</td>
+                    <td style="text-align: right;">${formatPKR(grandOpening)}</td>
+                    <td style="text-align: center;">${grandCartons}</td>
+                    <td style="text-align: right;">${formatPKR(grandInvoices)}</td>
+                    <td style="text-align: right;">${formatPKR(grandTotalCredit)}</td>
+                    <td style="text-align: right;">${formatPKR(grandRecovery)}</td>
+                    <td style="text-align: right;">${formatPKR(grandRemaining)}</td>
+                </tr>
+            `;
+
+            const titleText = selectedFilter ? `BDZ Credit Sheet — ${selectedFilter}` : "BDZ Wise Master Credit Report";
+            const subLine = selectedFilter ? `Booker / BDZ Officer: ${selectedFilter}` : `Complete Booker Summary (${bdzList.length} BDZs)`;
+
+            const html = `
+                ${buildPrintHeader(titleText, subLine)}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>BDZ</th>
+                            <th>Town</th>
+                            <th>Shop / Distributor</th>
+                            <th style="text-align: right;">Opening</th>
+                            <th style="text-align: center;">Ctn</th>
+                            <th style="text-align: right;">Invoices</th>
+                            <th style="text-align: right;">Total Credit</th>
+                            <th style="text-align: right;">Recovery</th>
+                            <th style="text-align: right;">Net Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rowsHtml}</tbody>
+                </table>
+                ${buildPrintFooter()}
+            `;
+
+            triggerCleanPrint(html);
+        }
+
+        // 3. PRINT DASHBOARD MASTER DIRECTORY
+        function printDashboardDirectory() {
+            const query = document.getElementById("mainSearch").value.toLowerCase();
+            const filteredShops = window.db.shops.filter(s =>
+                s.town.toLowerCase().includes(query) ||
+                s.shopName.toLowerCase().includes(query) ||
+                s.booker.toLowerCase().includes(query)
+            );
+
+            let totOpening = 0, totRecovery = 0, totNet = 0;
+            let rowsHtml = "";
+
+            filteredShops.forEach((shop, idx) => {
+                const st = getShopStats(shop);
+                totOpening += st.openingBalance;
+                totRecovery += st.totalRecovery;
+                totNet += st.netBalance;
+
+                rowsHtml += `
+                    <tr>
+                        <td style="text-align: center;">${idx + 1}</td>
+                        <td style="font-weight: 700;">${shop.town}</td>
+                        <td style="font-weight: 700;">${shop.shopName}</td>
+                        <td>${shop.booker}</td>
+                        <td>${shop.cell}</td>
+                        <td style="text-align: right;">${formatPKR(st.openingBalance)}</td>
+                        <td style="text-align: right;">${formatPKR(st.totalRecovery)}</td>
+                        <td style="text-align: right; font-weight: 800;">${formatPKR(st.netBalance)}</td>
+                    </tr>
+                `;
+            });
+
+            rowsHtml += `
+                <tr class="grandtotal-row">
+                    <td colspan="5" style="text-align: right; text-transform: uppercase;">Directory Grand Total (${filteredShops.length} Parties):</td>
+                    <td style="text-align: right;">${formatPKR(totOpening)}</td>
+                    <td style="text-align: right;">${formatPKR(totRecovery)}</td>
+                    <td style="text-align: right;">${formatPKR(totNet)}</td>
+                </tr>
+            `;
+
+            const subLine = query ? `Filtered Search: "${query}"` : `All Active Towns & Distributors (${filteredShops.length} Shops)`;
+
+            const html = `
+                ${buildPrintHeader("Market Credit Directory", subLine)}
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 5%; text-align: center;">#</th>
+                            <th style="width: 13%;">Town</th>
+                            <th style="width: 22%;">Shop / Distributor</th>
+                            <th style="width: 13%;">BDZ Booker</th>
+                            <th style="width: 13%;">Contact No</th>
+                            <th style="width: 11%; text-align: right;">Opening Bal</th>
+                            <th style="width: 11%; text-align: right;">Recovery</th>
+                            <th style="width: 12%; text-align: right;">Net Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rowsHtml}</tbody>
+                </table>
+                ${buildPrintFooter()}
+            `;
+
+            triggerCleanPrint(html);
+        }
+
+        // 4. PRINT WAREHOUSE CARTON STOCK LEDGER
+        function printStockReport() {
+            const st = getCartonStockStats();
+            const movements = [];
+
+            window.db.purchases.forEach(p => {
+                movements.push({
+                    kind: "PURCHASE (+)",
+                    date: p.date,
+                    ref: p.note || "Company Carton Purchase",
+                    inQty: Number(p.cartons),
+                    outQty: 0
+                });
+            });
+
+            window.db.transactions.filter(t => t.type === "SALE" && Number(t.cartons) > 0).forEach(t => {
+                const shop = window.db.shops.find(s => s.id === t.shopId);
+                const label = shop ? `${shop.town} — ${shop.shopName} (${t.ref})` : t.ref;
+                movements.push({
+                    kind: "INVOICE SALE (-)",
+                    date: t.date,
+                    ref: label,
+                    inQty: 0,
+                    outQty: Number(t.cartons)
+                });
+            });
+
+            movements.sort((a, b) => a.date.localeCompare(b.date));
+
+            let runningStock = 0;
+            let rowsHtml = "";
+            movements.forEach(m => {
+                runningStock += (m.inQty - m.outQty);
+                rowsHtml += `
+                    <tr>
+                        <td>${m.date}</td>
+                        <td style="font-weight: 700;">${m.kind}</td>
+                        <td>${m.ref}</td>
+                        <td style="text-align: right; font-weight: 700;">${m.inQty ? '+' + m.inQty : '—'}</td>
+                        <td style="text-align: right; font-weight: 700;">${m.outQty ? '-' + m.outQty : '—'}</td>
+                        <td style="text-align: right; font-weight: 800;">${runningStock} Ctn</td>
+                    </tr>
+                `;
+            });
+
+            rowsHtml += `
+                <tr class="grandtotal-row">
+                    <td colspan="3" style="text-align: right; text-transform: uppercase;">Warehouse Carton Summary:</td>
+                    <td style="text-align: right;">+${st.totalIn} Ctn</td>
+                    <td style="text-align: right;">-${st.totalOut} Ctn</td>
+                    <td style="text-align: right;">${st.available} Ctn</td>
+                </tr>
+            `;
+
+            const html = `
+                ${buildPrintHeader("Warehouse Carton Stock Ledger", `Available Godown Stock: ${st.available.toLocaleString()} Cartons`)}
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 14%;">Date</th>
+                            <th style="width: 18%;">Movement Type</th>
+                            <th style="width: 34%;">Reference / Party Details</th>
+                            <th style="width: 11%; text-align: right;">In (+)</th>
+                            <th style="width: 11%; text-align: right;">Out (-)</th>
+                            <th style="width: 12%; text-align: right;">Stock Bal</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rowsHtml}</tbody>
+                </table>
+                ${buildPrintFooter()}
+            `;
+
+            triggerCleanPrint(html);
         }
 
         function switchTab(tab) {
@@ -1547,12 +2066,21 @@
 
         function populateShopDropdown(selectedShopId = null) {
             const sel = document.getElementById("txShopSelect");
+            if (window.db.shops.length === 0) {
+                sel.innerHTML = `<option value="">-- Pehle Shop Add Karein --</option>`;
+                return;
+            }
             sel.innerHTML = window.db.shops.map(s =>
                 `<option value="${s.id}" ${s.id === selectedShopId ? 'selected' : ''}>${s.town} — ${s.shopName} (BDZ: ${s.booker})</option>`
             ).join("");
         }
 
         function openTransactionModal(type, preselectShopId = null) {
+            if (window.db.shops.length === 0) {
+                alert("Pehle '+ Add Shop' par click karke kam az kam aik shop add karein.");
+                openShopModal();
+                return;
+            }
             document.getElementById("txEditId").value = "";
             document.getElementById("txType").value = type;
             document.getElementById("txDate").value = todayStr();
@@ -1600,6 +2128,10 @@
             const editId = document.getElementById("txEditId").value;
             const type = document.getElementById("txType").value;
             const shopId = document.getElementById("txShopSelect").value;
+            if (!shopId) {
+                alert("Please select a valid shop.");
+                return;
+            }
             const date = document.getElementById("txDate").value;
             const ref = document.getElementById("txRef").value.trim();
             const cartons = type === "SALE" ? Number(document.getElementById("txCartons").value || 0) : 0;

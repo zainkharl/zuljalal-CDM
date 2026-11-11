@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zuljalal Traders — Pro Glassmorphism Cloud ERP v4.0</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+
+        :root {
+            --bg-deep: #080c14;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-deep);
+            color: #f1f5f9;
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(79, 70, 229, 0.22) 0px, transparent 50%),
+                radial-gradient(at 90% 15%, rgba(147, 51, 234, 0.18) 0px, transparent 50%),
+                radial-gradient(at 50% 85%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(245, 158, 11, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .font-num {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Ambient Glowing Blobs */
+        .ambient-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.55;
+            animation: floatBlob 22s infinite alternate ease-in-out;
+        }
+        @keyframes floatBlob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            50% { transform: translate(35px, -45px) scale(1.1); }
+            100% { transform: translate(-25px, 25px) scale(0.95); }
+        }
+
+        /* Mirror Glass Visual Styles */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-panel-interactive {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-panel-interactive:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.22);
+            box-shadow: 0 16px 40px -10px rgba(99, 102, 241, 0.3);
+            background: rgba(23, 32, 54, 0.78);
+        }
+
+        .glass-header {
+            background: rgba(10, 15, 29, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-modal {
+            background: rgba(13, 19, 35, 0.94);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Navigation Buttons */
+        .tab-btn {
+            position: relative;
+            transition: all 0.25s ease;
+            color: #94a3b8;
+        }
+        .tab-btn:hover {
+            color: #f8fafc;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .tab-btn.active {
+            color: #818cf8;
+            background: rgba(99, 102, 241, 0.16);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            font-weight: 700;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 999px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.6); }
+
+        /* Form Inputs Glow */
+        input, select {
+            background: rgba(15, 23, 42, 0.7) !important;
+            border: 1px solid rgba(255, 255, 255, 0.13) !important;
+            color: #f8fafc !important;
+            transition: all 0.2s ease !important;
+        }
+        input:focus, select:focus {
+            border-color: #6366f1 !important;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3) !important;
+            outline: none !important;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col text-slate-100 overflow-x-hidden">
+
+    <!-- Glowing Background Ambient Spheres -->
+    <div class="ambient-blob w-96 h-96 bg-indigo-600 top-10 left-10"></div>
+    <div class="ambient-blob w-80 h-80 bg-purple-600 top-1/3 right-10"></div>
+    <div class="ambient-blob w-96 h-96 bg-emerald-600 bottom-10 left-1/3"></div>
+
+    <!-- ==================== FIREBASE AUTHENTICATION OVERLAY ==================== -->
+    <div id="authOverlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl">
+        <div class="glass-modal w-full max-w-md p-8 rounded-3xl relative overflow-hidden border border-white/20 shadow-2xl">
+            <!-- Header Glow -->
+            <div class="absolute -top-12 -left-12 w-32 h-32 bg-indigo-500/30 rounded-full blur-2xl"></div>
+            <div class="text-center mb-6 relative">
+                <div class="inline-flex bg-gradient-to-br from-indigo-500 to-purple-600 p-4 rounded-2xl text-3xl text-white shadow-lg mb-3">
+                    <i class="fa-solid fa-boxes-packing"></i>
+                </div>
+                <h2 class="text-2xl font-extrabold text-white tracking-tight">ZULJALAL TRADERS</h2>
+                <p class="text-xs text-indigo-300 font-semibold mt-1">Smart Cloud ERP &bull; User Account Login</p>
+            </div>
+
+            <!-- Login / Signup Tabs -->
+            <div class="flex bg-slate-900/80 p-1 rounded-xl mb-5 border border-white/10">
+                <button type="button" id="tabAuthLogin" onclick="toggleAuthTab('login')" class="w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-white bg-indigo-600">
+                    <i class="fa-solid fa-right-to-bracket mr-1"></i> Sign In
+                </button>
+                <button type="button" id="tabAuthSignup" onclick="toggleAuthTab('signup')" class="w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-user-plus mr-1"></i> Create Account
+                </button>
+            </div>
+
+            <!-- Auth Alert Box -->
+            <div id="authAlert" class="hidden mb-4 p-3 rounded-xl text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30"></div>
+
+            <!-- Auth Form -->
+            <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Email Address</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-envelope absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                        <input type="email" id="authEmail" required class="w-full pl-9 pr-3.5 py-2.5 rounded-xl text-sm font-medium" placeholder="zuljalal@traders.com">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Password</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                        <input type="password" id="authPassword" required minlength="6" class="w-full pl-9 pr-3.5 py-2.5 rounded-xl text-sm font-medium" placeholder="••••••••">
+                    </div>
+                </div>
+
+                <button type="submit" id="authBtnSubmit" class="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-sm font-extrabold shadow-lg shadow-indigo-950/50 transition duration-200 mt-2 flex items-center justify-center">
+                    <i class="fa-solid fa-circle-notch fa-spin mr-2 hidden" id="authSpinner"></i>
+                    <span id="authBtnText">Sign In to Dashboard</span>
+                </button>
+            </form>
+
+            <p class="text-[11px] text-slate-400 text-center mt-5">
+                Har user account ka mukammal data Firebase Firestore Cloud mein live save rahe ga.
+            </p>
+        </div>
+    </div>
+
+    <!-- Top Futuristic Glass Header -->
+    <header class="glass-header sticky top-0 z-40 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col lg:flex-row justify-between items-center gap-4">
+            
+            <!-- Logo & Brand Info -->
+            <div class="flex items-center space-x-3.5">
+                <div class="relative group cursor-pointer">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="relative bg-slate-900 border border-white/20 p-3 rounded-2xl text-2xl text-indigo-400 flex items-center justify-center">
+                        <i class="fa-solid fa-boxes-packing"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-indigo-200">
+                            ZULJALAL TRADERS
+                        </h1>
+                        <span class="text-[10px] uppercase tracking-widest bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2.5 py-0.5 rounded-full font-bold shadow-sm">
+                            FIREBASE LIVE
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-0.5 flex items-center gap-2">
+                        <span><i class="fa-solid fa-layer-group text-indigo-400 mr-1"></i> Stock</span>
+                        <span>&bull;</span>
+                        <span><i class="fa-solid fa-store text-amber-400 mr-1"></i> Ledgers</span>
+                        <span>&bull;</span>
+                        <span><i class="fa-solid fa-cloud text-emerald-400 mr-1"></i> Realtime Sync</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Quick Action Buttons & User Profile -->
+            <div class="flex flex-wrap items-center justify-center gap-2.5">
+                <button onclick="openShopModal()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold backdrop-blur-md border border-white/15 transition flex items-center">
+                    <i class="fa-solid fa-store mr-2 text-sky-400"></i> + Add Shop
+                </button>
+                <button onclick="openCartonPurchaseModal()" class="bg-purple-600/80 hover:bg-purple-600 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold backdrop-blur-md border border-purple-400/30 transition flex items-center">
+                    <i class="fa-solid fa-truck-loading mr-2"></i> Purchase (+)
+                </button>
+                <button onclick="openTransactionModal('SALE')" class="bg-emerald-600/80 hover:bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold backdrop-blur-md border border-emerald-400/30 transition flex items-center">
+                    <i class="fa-solid fa-file-invoice-dollar mr-2"></i> Bill (-)
+                </button>
+                <button onclick="openTransactionModal('RECOVERY')" class="bg-amber-500/90 hover:bg-amber-400 text-slate-950 px-3 py-2 rounded-xl text-xs sm:text-sm font-extrabold backdrop-blur-md border border-amber-300/50 transition flex items-center">
+                    <i class="fa-solid fa-hand-holding-dollar mr-2"></i> Recovery
+                </button>
+
+                <div class="h-6 w-[1px] bg-white/15 mx-1 hidden sm:block"></div>
+
+                <!-- User Badge & Logout -->
+                <div class="flex items-center gap-2 bg-slate-900/80 border border-white/15 px-3 py-1.5 rounded-xl text-xs">
+                    <i class="fa-solid fa-user-circle text-indigo-400 text-sm"></i>
+                    <span id="userDisplayEmail" class="font-semibold text-slate-200 max-w-[130px] truncate">User</span>
+                    <button onclick="handleLogout()" title="Logout" class="text-rose-400 hover:text-rose-300 ml-1">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs Bar -->
+        <nav class="bg-slate-900/60 border-t border-b border-white/5 backdrop-blur-md">
+            <div id="navTabsContainer" class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center space-x-2 overflow-x-auto py-2">
+                <button onclick="switchTab('main')" id="btn-main" class="tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center whitespace-nowrap">
+                    <i class="fa-solid fa-gauge-high mr-2"></i> Dashboard
+                </button>
+                <button onclick="switchTab('bdz')" id="btn-bdz" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center whitespace-nowrap">
+                    <i class="fa-solid fa-users-viewfinder mr-2"></i> BDZ Wise Report
+                </button>
+                <button onclick="switchTab('stock')" id="btn-stock" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center whitespace-nowrap">
+                    <i class="fa-solid fa-cubes mr-2"></i> Carton Stock
+                </button>
+                <div class="h-5 w-[1px] bg-white/10 mx-1"></div>
+                <div id="townTabsList" class="flex items-center space-x-1.5"></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-grow relative z-10">
+
+        <!-- ==================== TAB 1: DASHBOARD ==================== -->
+        <div id="tab-content-main" class="space-y-6">
+            
+            <!-- Pro Glass Stat Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="glass-panel-interactive p-5 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Market Credit</p>
+                        <h3 id="kpiTotalCredit" class="text-2xl sm:text-3xl font-extrabold text-white mt-1 font-num">Rs. 0</h3>
+                        <p class="text-[11px] text-rose-400 font-semibold mt-1 flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5 animate-pulse"></span> Market Receivable
+                        </p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                </div>
+
+                <div class="glass-panel-interactive p-5 rounded-2xl flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Online Recovery</p>
+                        <h3 id="kpiTotalRecovery" class="text-2xl sm:text-3xl font-extrabold text-emerald-400 mt-1 font-num">Rs. 0</h3>
+                        <p class="text-[11px] text-emerald-400 font-semibold mt-1"><i class="fa-solid fa-arrow-trend-up mr-1"></i> Bank Collected</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                    </div>
+                </div>
+
+                <div class="glass-panel-interactive p-5 rounded-2xl flex items-center justify-between cursor-pointer" onclick="switchTab('stock')">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Available Cartons</p>
+                        <h3 id="kpiAvailableCartons" class="text-2xl sm:text-3xl font-extrabold text-purple-300 mt-1 font-num">0 Cartons</h3>
+                        <p class="text-[11px] text-purple-400 font-semibold mt-1">View godown stock &rarr;</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                </div>
+
+                <div class="glass-panel-interactive p-5 rounded-2xl flex items-center justify-between cursor-pointer" onclick="switchTab('bdz')">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Active Towns / Shops</p>
+                        <h3 id="kpiTownShopCount" class="text-2xl sm:text-3xl font-extrabold text-amber-300 mt-1 font-num">0 / 0</h3>
+                        <p class="text-[11px] text-amber-400 font-semibold mt-1">View BDZ summary &rarr;</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BDZ Overview Cards -->
+            <div class="glass-panel p-5 rounded-2xl">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                    <div>
+                        <h3 class="font-extrabold text-white text-base flex items-center gap-2">
+                            <i class="fa-solid fa-user-tie text-indigo-400"></i> BDZ Booker Overview Cards
+                        </h3>
+                        <p class="text-xs text-slate-400">Har BDZ booker ka remaining credit status</p>
+                    </div>
+                    <button onclick="switchTab('bdz')" class="text-xs font-bold text-indigo-300 hover:text-white bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 px-3 py-1.5 rounded-xl transition">
+                        Full BDZ Sheet <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+                <div id="dashboardBdzCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5"></div>
+            </div>
+
+            <!-- Dashboard Master Directory Table -->
+            <div class="glass-panel rounded-2xl overflow-hidden border border-white/10">
+                <div class="px-6 py-4 bg-slate-900/80 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                        <h3 class="font-extrabold text-white text-lg flex items-center">
+                            <i class="fa-solid fa-sitemap mr-2.5 text-indigo-400"></i> Town & Distributor / Shop Directory
+                        </h3>
+                        <p class="text-xs text-slate-400">Live cloud synced directory</p>
+                    </div>
+                    <div class="relative w-full sm:w-72">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                        <input type="text" id="mainSearch" onkeyup="renderDashboard()" placeholder="Search town, shop, BDZ..." class="w-full pl-9 pr-3.5 py-2 rounded-xl text-xs font-medium">
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900/90 text-slate-400 text-[11px] uppercase font-bold tracking-wider border-b border-white/10">
+                                <th class="py-3.5 px-5">Town Sheet Link</th>
+                                <th class="py-3.5 px-5">Shop / Distributor Link</th>
+                                <th class="py-3.5 px-5">Assigned BDZ</th>
+                                <th class="py-3.5 px-5">Contact No</th>
+                                <th class="py-3.5 px-5 text-right">Opening Bal</th>
+                                <th class="py-3.5 px-5 text-right">Online Recovery</th>
+                                <th class="py-3.5 px-5 text-right">Net Balance</th>
+                                <th class="py-3.5 px-5 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboardTableBody" class="divide-y divide-white/5 text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 2: BDZ WISE REPORT ==================== -->
+        <div id="tab-content-bdz" class="hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-users-viewfinder text-indigo-400"></i> BDZ Wise Towns & Credit Report
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">Har BDZ ke tamam towns/shops aur summary totals</p>
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <label class="text-xs font-bold text-slate-400">Filter BDZ Booker:</label>
+                    <select id="bdzFilterSelect" onchange="renderBdzReport()" class="px-3.5 py-2 rounded-xl text-xs font-bold">
+                        <option value="">All BDZs (Complete Sheet)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div id="bdzSummaryGrid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4"></div>
+
+            <!-- BDZ Table -->
+            <div class="glass-panel rounded-2xl overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900/90 text-indigo-300 text-[11px] uppercase font-bold tracking-wider border-b border-white/10">
+                                <th class="py-3.5 px-5">BDZ Name</th>
+                                <th class="py-3.5 px-5">Town</th>
+                                <th class="py-3.5 px-5">Shop / Distributor</th>
+                                <th class="py-3.5 px-5 text-right">Opening Credit</th>
+                                <th class="py-3.5 px-5 text-right">Cartons Sold</th>
+                                <th class="py-3.5 px-5 text-right">Invoices (Bill)</th>
+                                <th class="py-3.5 px-5 text-right">Total Credit</th>
+                                <th class="py-3.5 px-5 text-right">Recovery</th>
+                                <th class="py-3.5 px-5 text-right">Remaining Credit</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bdzReportBody" class="divide-y divide-white/5 text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 3: CARTON STOCK INVENTORY ==================== -->
+        <div id="tab-content-stock" class="hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-boxes-stacked text-purple-400"></i> Warehouse Carton Stock Ledger
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">Purchases (+) aur Invoice Sales (-) ka realtime stock</p>
+                </div>
+                <button onclick="openCartonPurchaseModal()" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-purple-900/40 transition flex items-center border border-purple-400/30">
+                    <i class="fa-solid fa-plus mr-2"></i> Add Carton Purchase (+)
+                </button>
+            </div>
+
+            <!-- Stock KPIs -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-purple-500">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Purchased Cartons (+)</span>
+                    <h3 id="stockTotalIn" class="text-2xl sm:text-3xl font-extrabold text-purple-300 mt-1 font-num">0 Cartons</h3>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Dispatched / Sold (-)</span>
+                    <h3 id="stockTotalOut" class="text-2xl sm:text-3xl font-extrabold text-amber-400 mt-1 font-num">0 Cartons</h3>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-emerald-500 bg-gradient-to-r from-slate-900/90 to-indigo-950/60">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Net Available Cartons in Godown</span>
+                    <h3 id="stockNetAvailable" class="text-3xl font-extrabold text-white mt-1 font-num">0 Cartons</h3>
+                </div>
+            </div>
+
+            <!-- Stock History -->
+            <div class="glass-panel rounded-2xl overflow-hidden">
+                <div class="px-6 py-4 bg-slate-900/80 border-b border-white/10">
+                    <h3 class="font-bold text-slate-200">Carton Stock Movement History</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900/90 text-slate-400 text-xs uppercase font-bold border-b border-white/10">
+                                <th class="py-3 px-6">Date</th>
+                                <th class="py-3 px-6">Type</th>
+                                <th class="py-3 px-6">Reference / Details</th>
+                                <th class="py-3 px-6 text-right">Cartons In (+)</th>
+                                <th class="py-3 px-6 text-right">Cartons Out (-)</th>
+                                <th class="py-3 px-6 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stockHistoryBody" class="divide-y divide-white/5 text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 4+: TOWN & SHOP WISE SHEET ==================== -->
+        <div id="town-sheet-container" class="hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border border-indigo-500/30">
+                <div>
+                    <div class="flex items-center gap-2.5">
+                        <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-extrabold px-3 py-1 rounded-lg uppercase">
+                            Town Sheet
+                        </span>
+                        <h2 id="townSheetTitle" class="text-2xl sm:text-3xl font-extrabold text-white">Town Name</h2>
+                    </div>
+                    <p id="townSheetSubtitle" class="text-xs text-slate-400 mt-1">Shop-wise distribution & party ledgers</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="openShopModalForCurrentTown()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-indigo-900/30">
+                        <i class="fa-solid fa-plus mr-1.5"></i> Add Shop in This Town
+                    </button>
+                    <button onclick="switchTab('main')" class="bg-white/10 hover:bg-white/20 text-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold transition border border-white/15">
+                        <i class="fa-solid fa-arrow-left mr-1.5"></i> Back to Dashboard
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+                    Shops in <span id="townNameLabel" class="text-indigo-400"></span>:
+                </h3>
+                <div id="townShopsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </div>
+
+            <!-- Active Selected Shop Detailed Ledger -->
+            <div id="shopLedgerSection" class="glass-panel rounded-2xl overflow-hidden border border-white/10">
+                <div class="px-6 py-4 bg-slate-900/90 text-white flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-white/10">
+                    <div>
+                        <div class="flex items-center gap-2.5 flex-wrap">
+                            <i class="fa-solid fa-store text-amber-400 text-lg"></i>
+                            <h3 id="activeShopName" class="font-extrabold text-lg sm:text-xl text-white">Shop Name</h3>
+                            <span id="activeShopBdzBadge" class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 px-2.5 py-0.5 rounded-full font-bold">BDZ</span>
+                            <button onclick="openEditShopModal()" class="bg-indigo-500/20 hover:bg-indigo-500/40 text-indigo-300 border border-indigo-400/30 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center">
+                                <i class="fa-solid fa-pen-to-square mr-1 text-indigo-400"></i> Edit Distributor Details
+                            </button>
+                        </div>
+                        <p id="activeShopMeta" class="text-xs text-slate-400 mt-1">Contact & Opening Balance Info</p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="openOpeningBalanceModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold border border-white/15 transition">
+                            <i class="fa-solid fa-scale-balanced mr-1 text-amber-400"></i> Edit Opening Bal
+                        </button>
+                        <button onclick="openTransactionModalForActiveShop('SALE')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-md shadow-emerald-900/30">
+                            <i class="fa-solid fa-plus mr-1"></i> Add Carton Bill
+                        </button>
+                        <button onclick="openTransactionModalForActiveShop('RECOVERY')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3 py-1.5 rounded-xl text-xs font-extrabold transition shadow-md shadow-amber-900/30">
+                            <i class="fa-solid fa-plus mr-1"></i> Add Recovery
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ledger Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-950/80 text-slate-400 text-[11px] uppercase font-bold border-b border-white/10">
+                                <th class="py-3 px-5">Date</th>
+                                <th class="py-3 px-5">Ref / Inv #</th>
+                                <th class="py-3 px-5">Description</th>
+                                <th class="py-3 px-5 text-center">Cartons</th>
+                                <th class="py-3 px-5 text-right">Recovery (Online)</th>
+                                <th class="py-3 px-5 text-right">Bill Amount</th>
+                                <th class="py-3 px-5 text-right">Running Balance</th>
+                                <th class="py-3 px-5 text-center">Edit / Del</th>
+                            </tr>
+                        </thead>
+                        <tbody id="shopLedgerBody" class="divide-y divide-white/5 text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-header py-4 text-center text-xs text-slate-400 border-t border-white/10 mt-10 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <span>Zuljalal Traders Cloud ERP v4.0 &bull; Firebase Powered</span>
+            <button onclick="resetToCleanDefaults()" class="text-rose-400 hover:text-rose-300 underline font-semibold transition">
+                <i class="fa-solid fa-triangle-exclamation mr-1"></i> Clear All Entries (Keep Balances)
+            </button>
+        </div>
+    </footer>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- MODAL 1: ADD NEW TOWN / SHOP -->
+    <div id="shopModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
+                <h3 class="text-lg font-extrabold text-white flex items-center">
+                    <i class="fa-solid fa-store text-indigo-400 mr-2.5"></i> Add Town & Shop / Distributor
+                </h3>
+                <button onclick="closeModal('shopModal')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="saveNewShop(event)" class="space-y-3.5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Town Name</label>
+                    <input type="text" id="formTownName" list="existingTownsList" required class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Chiniot">
+                    <datalist id="existingTownsList"></datalist>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Shop / Distributor Name</label>
+                    <input type="text" id="formShopName" required class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Al-Madina Traders">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Assigned BDZ (Booker)</label>
+                        <input type="text" id="formBdzName" list="existingBdzList" required class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Usman">
+                        <datalist id="existingBdzList"></datalist>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Cell / Contact No</label>
+                        <input type="text" id="formCellNo" required class="w-full p-2.5 rounded-xl text-sm" placeholder="0300-1234567">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Opening Balance (Previous Credit Rs.)</label>
+                    <input type="number" id="formOpeningBal" value="0" required class="w-full p-2.5 rounded-xl text-sm font-bold font-num">
+                </div>
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeModal('shopModal')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-900/50">Save Shop</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: EDIT DISTRIBUTOR / SHOP DETAILS -->
+    <div id="editShopModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
+                <h3 class="text-lg font-extrabold text-white flex items-center">
+                    <i class="fa-solid fa-user-pen text-indigo-400 mr-2.5"></i> Edit Distributor / Shop Details
+                </h3>
+                <button onclick="closeModal('editShopModal')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="updateShopDetails(event)" class="space-y-3.5">
+                <input type="hidden" id="editShopTargetId">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Shop / Distributor Name</label>
+                    <input type="text" id="editShopName" required class="w-full p-2.5 rounded-xl text-sm font-semibold" placeholder="e.g. Aslam Traders">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Town Name</label>
+                    <input type="text" id="editTownName" list="existingTownsList" required class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Chiniot">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Assigned BDZ (Booker)</label>
+                        <input type="text" id="editBdzName" list="existingBdzList" required class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Usman">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Cell / Contact No</label>
+                        <input type="text" id="editCellNo" required class="w-full p-2.5 rounded-xl text-sm" placeholder="0322-1234567">
+                    </div>
+                </div>
+                <div class="flex justify-between items-center pt-3">
+                    <button type="button" onclick="deleteDistributorShop()" class="text-xs text-rose-400 hover:text-rose-300 font-bold flex items-center">
+                        <i class="fa-solid fa-trash mr-1"></i> Delete Shop
+                    </button>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="closeModal('editShopModal')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
+                        <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-900/50">Update Details</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 3: CARTON PURCHASE (+) -->
+    <div id="cartonPurchaseModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
+                <h3 class="text-lg font-extrabold text-white flex items-center">
+                    <i class="fa-solid fa-truck-ramp-box text-purple-400 mr-2.5"></i> Company Carton Purchase (+)
+                </h3>
+                <button onclick="closeModal('cartonPurchaseModal')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="saveCartonPurchase(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Date</label>
+                    <input type="date" id="purchaseDate" required class="w-full p-2.5 rounded-xl text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Total Cartons Received (+)</label>
+                    <input type="number" id="purchaseCartons" required min="1" class="w-full p-2.5 rounded-xl text-sm font-bold font-num" placeholder="e.g. 500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Company / Bilty Note</label>
+                    <input type="text" id="purchaseNote" class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Factory Stock Arrival #102">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeModal('cartonPurchaseModal')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-purple-900/50">Add Cartons (+)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 4: TRANSACTION (SALE / RECOVERY) -->
+    <div id="txModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
+                <h3 id="txModalTitle" class="text-lg font-extrabold text-white">New Entry</h3>
+                <button onclick="closeModal('txModal')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="saveTransaction(event)" class="space-y-3.5">
+                <input type="hidden" id="txEditId" value="">
+                <input type="hidden" id="txType" value="SALE">
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Select Town & Shop</label>
+                    <select id="txShopSelect" required class="w-full p-2.5 rounded-xl text-sm font-semibold"></select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Date</label>
+                        <input type="date" id="txDate" required class="w-full p-2.5 rounded-xl text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">Invoice / Ref #</label>
+                        <input type="text" id="txRef" required class="w-full p-2.5 rounded-xl text-sm" placeholder="INV-101 / ONLINE">
+                    </div>
+                </div>
+
+                <div id="txCartonField">
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Total Cartons Sold (-)</label>
+                    <input type="number" id="txCartons" min="0" value="0" class="w-full p-2.5 rounded-xl text-sm font-bold font-num" placeholder="Number of cartons">
+                </div>
+
+                <div>
+                    <label id="txAmountLabel" class="block text-xs font-bold text-slate-300 mb-1">Amount (Rs.)</label>
+                    <input type="number" id="txAmount" required min="0" class="w-full p-2.5 rounded-xl text-sm font-bold font-num" placeholder="0">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Description / Note</label>
+                    <input type="text" id="txDesc" class="w-full p-2.5 rounded-xl text-sm" placeholder="Carton Supply / Bank Transfer">
+                </div>
+
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeModal('txModal')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
+                    <button type="submit" id="txSubmitBtn" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-900/50">Save Entry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 5: EDIT OPENING BALANCE -->
+    <div id="openingBalModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="glass-modal p-6 rounded-3xl w-full max-w-sm relative">
+            <h3 class="text-lg font-extrabold text-white mb-1 flex items-center">
+                <i class="fa-solid fa-scale-balanced text-amber-400 mr-2"></i> Edit Opening Balance
+            </h3>
+            <p id="openingBalShopLabel" class="text-xs text-slate-400 mb-4">Shop Name</p>
+            <form onsubmit="updateOpeningBalance(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">Opening Balance Amount (Rs.)</label>
+                    <input type="number" id="editOpeningBalInput" required class="w-full p-2.5 rounded-xl text-base font-extrabold font-num">
+                </div>
+                <div class="flex justify-end gap-2">
+                    <button type="button" onclick="closeModal('openingBalModal')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold">Update Balance</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== FIREBASE SDK MODULE ==================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword, 
+            signInWithCustomToken, 
+            signInAnonymously, 
+            onAuthStateChanged, 
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            onSnapshot 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Your exact Firebase configuration provided by user
+        const appId = "zuljalal-traders-erp-app";
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7Je78BoNQdkXtggBPj_fL1NkFgtFSb0g",
+            authDomain: "zuljala-traders.firebaseapp.com",
+            projectId: "zuljala-traders",
+            storageBucket: "zuljala-traders.firebasestorage.app",
+            messagingSenderId: "1025802146419",
+            appId: "1:1025802146419:web:c3b5f30d80e4324075d006",
+            measurementId: "G-RWQCJDZ9XN"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const dbFirestore = getFirestore(app);
+
+        window.auth = auth;
+        window.dbFirestore = dbFirestore;
+        window.appId = appId;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.signOut = signOut;
+        window.doc = doc;
+        window.setDoc = setDoc;
+
+        let unbindFirestoreListener = null;
+
+        onAuthStateChanged(auth, async (user) => {
+            const authOverlay = document.getElementById("authOverlay");
+            const userDisplayEmail = document.getElementById("userDisplayEmail");
+
+            if (user) {
+                authOverlay.classList.add("hidden");
+                userDisplayEmail.innerText = user.email || user.uid.substring(0, 8);
+                window.currentUser = user;
+
+                const docRef = doc(dbFirestore, 'artifacts', appId, 'users', user.uid, 'data', 'erp_data');
+
+                if (unbindFirestoreListener) unbindFirestoreListener();
+
+                unbindFirestoreListener = onSnapshot(docRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        window.db = docSnap.data();
+                    } else {
+                        window.db = structuredClone(window.defaultData);
+                        window.syncToCloud();
+                    }
+                    window.refreshAll();
+                }, (err) => {
+                    console.warn("Firestore sync fallback to local:", err);
+                    window.refreshAll();
+                });
+
+            } else {
+                authOverlay.classList.remove("hidden");
+                window.currentUser = null;
+                if (unbindFirestoreListener) unbindFirestoreListener();
+            }
+        });
+
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+            signInWithCustomToken(auth, __initial_auth_token).catch(() => {});
+        }
+    </script>
+
+    <!-- ==================== JAVASCRIPT APPLICATION LOGIC ==================== -->
+    <script>
+        const STORAGE_KEY = "zuljalal_traders_erp_cloud_v4";
+
+        const defaultData = {
+            shops: [
+                { id: "s1", town: "Chiniot", shopName: "Aslam Traders", booker: "Usman", cell: "0322-7818407", openingBalance: 4330144 },
+                { id: "s2", town: "Rabwah", shopName: "Asif Traders", booker: "Usman", cell: "0331-6087187", openingBalance: 2011584 },
+                { id: "s3", town: "Lalian", shopName: "Zaheer Traders", booker: "Usman", cell: "0300-4814949", openingBalance: 0 },
+                { id: "s4", town: "Sillanwali", shopName: "Saleem Traders", booker: "Mumtaaz", cell: "0309-6189322", openingBalance: 0 },
+                { id: "s5", town: "Shahpur", shopName: "Tariq Traders", booker: "Mumtaaz", cell: "0301-6748286", openingBalance: 0 },
+                { id: "s6", town: "Joharabad", shopName: "Mumtaaz & Son's", booker: "Noor", cell: "0300-6073221", openingBalance: 6823312 },
+                { id: "s7", town: "Noshera", shopName: "Asif Traders", booker: "Noor", cell: "0300-0000000", openingBalance: 0 },
+                { id: "s8", town: "Khushab", shopName: "Aslam & Son's", booker: "Noor", cell: "0300-6350888", openingBalance: 0 },
+                { id: "s9", town: "Kotmomin", shopName: "Bilal Traders", booker: "Sajjad", cell: "0300-6063705", openingBalance: 0 },
+                { id: "s10", town: "Phularwan", shopName: "New Makrian Traders", booker: "Matee Ur Rehman", cell: "0301-6546660", openingBalance: 0 }
+            ],
+            purchases: [],
+            transactions: []
+        };
+
+        window.defaultData = defaultData;
+        let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || structuredClone(defaultData);
+        window.db = db;
+
+        let activeTown = null;
+        let activeShopId = null;
+        let currentAuthMode = "login";
+
+        function saveDB() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(window.db));
+            syncToCloud();
+        }
+
+        async function syncToCloud() {
+            if (window.currentUser && window.dbFirestore && window.doc && window.setDoc) {
+                try {
+                    const docRef = window.doc(window.dbFirestore, 'artifacts', window.appId, 'users', window.currentUser.uid, 'data', 'erp_data');
+                    await window.setDoc(docRef, window.db);
+                } catch (e) {
+                    console.error("Firestore sync error:", e);
+                }
+            }
+        }
+        window.syncToCloud = syncToCloud;
+
+        function toggleAuthTab(mode) {
+            currentAuthMode = mode;
+            const tabLogin = document.getElementById("tabAuthLogin");
+            const tabSignup = document.getElementById("tabAuthSignup");
+            const btnText = document.getElementById("authBtnText");
+            const alertBox = document.getElementById("authAlert");
+
+            alertBox.classList.add("hidden");
+
+            if (mode === "login") {
+                tabLogin.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-white bg-indigo-600";
+                tabSignup.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-slate-400 hover:text-white";
+                btnText.innerText = "Sign In to Dashboard";
+            } else {
+                tabSignup.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-white bg-indigo-600";
+                tabLogin.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-slate-400 hover:text-white";
+                btnText.innerText = "Create New Account";
+            }
+        }
+
+        async function handleAuthSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById("authEmail").value.trim();
+            const password = document.getElementById("authPassword").value;
+            const alertBox = document.getElementById("authAlert");
+            const spinner = document.getElementById("authSpinner");
+
+            alertBox.classList.add("hidden");
+            spinner.classList.remove("hidden");
+
+            try {
+                if (currentAuthMode === "login") {
+                    await window.signInWithEmailAndPassword(window.auth, email, password);
+                } else {
+                    await window.createUserWithEmailAndPassword(window.auth, email, password);
+                }
+            } catch (err) {
+                alertBox.innerText = err.message || "Authentication failed. Please check details.";
+                alertBox.classList.remove("hidden");
+            } finally {
+                spinner.classList.add("hidden");
+            }
+        }
+
+        function handleLogout() {
+            if (confirm("Kya aap account se sign out karna chahte hain?")) {
+                window.signOut(window.auth);
+            }
+        }
+
+        function resetToCleanDefaults() {
+            if (confirm("Kya aap tamam entries reset karke default clean account data load karna chahte hain?")) {
+                window.db = structuredClone(defaultData);
+                saveDB();
+                refreshAll();
+                switchTab('main');
+            }
+        }
+
+        function formatPKR(num) {
+            return "Rs. " + Number(num || 0).toLocaleString('en-PK');
+        }
+
+        function todayStr() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function getShopStats(shop) {
+            const txs = window.db.transactions.filter(t => t.shopId === shop.id);
+            let totalSales = 0, totalRecovery = 0, totalCartons = 0;
+
+            txs.forEach(t => {
+                if (t.type === "SALE") {
+                    totalSales += Number(t.amount);
+                    totalCartons += Number(t.cartons || 0);
+                } else if (t.type === "RECOVERY") {
+                    totalRecovery += Number(t.amount);
+                }
+            });
+
+            const totalCredit = Number(shop.openingBalance) + totalSales;
+            const netBalance = totalCredit - totalRecovery;
+
+            return {
+                openingBalance: Number(shop.openingBalance),
+                totalSales,
+                totalCredit,
+                totalRecovery,
+                netBalance,
+                totalCartons,
+                txCount: txs.length
+            };
+        }
+
+        function getCartonStockStats() {
+            const totalIn = window.db.purchases.reduce((sum, p) => sum + Number(p.cartons || 0), 0);
+            const totalOut = window.db.transactions
+                .filter(t => t.type === "SALE")
+                .reduce((sum, t) => sum + Number(t.cartons || 0), 0);
+            return { totalIn, totalOut, available: totalIn - totalOut };
+        }
+
+        function getUniqueTowns() {
+            return [...new Set(window.db.shops.map(s => s.town.trim()))];
+        }
+
+        function getUniqueBdzs() {
+            return [...new Set(window.db.shops.map(s => s.booker.trim()))];
+        }
+
+        function rebuildNavigation() {
+            const townTabsList = document.getElementById("townTabsList");
+            townTabsList.innerHTML = "";
+
+            const towns = getUniqueTowns();
+            towns.forEach(town => {
+                const btn = document.createElement("button");
+                btn.id = "btn-town-" + town;
+                btn.onclick = () => openTownSheet(town);
+                btn.className = "tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center";
+                if (activeTown === town && !document.getElementById("town-sheet-container").classList.contains("hidden")) {
+                    btn.classList.add("active");
+                }
+                btn.innerHTML = `<i class="fa-solid fa-location-dot mr-1.5 text-indigo-400"></i>${town}`;
+                townTabsList.appendChild(btn);
+            });
+
+            document.getElementById("existingTownsList").innerHTML = towns.map(t => `<option value="${t}">`).join("");
+            document.getElementById("existingBdzList").innerHTML = getUniqueBdzs().map(b => `<option value="${b}">`).join("");
+
+            const bdzFilter = document.getElementById("bdzFilterSelect");
+            const currentFilter = bdzFilter.value;
+            bdzFilter.innerHTML = `<option value="">All BDZs (Complete Sheet)</option>` +
+                getUniqueBdzs().map(b => `<option value="${b}" ${b === currentFilter ? 'selected' : ''}>${b}</option>`).join("");
+        }
+
+        function renderDashboard() {
+            let grandRemaining = 0, grandRecovery = 0;
+            const bdzMap = {};
+
+            window.db.shops.forEach(shop => {
+                const st = getShopStats(shop);
+                grandRemaining += st.netBalance;
+                grandRecovery += st.totalRecovery;
+
+                if (!bdzMap[shop.booker]) {
+                    bdzMap[shop.booker] = { credit: 0, recovery: 0, shops: 0 };
+                }
+                bdzMap[shop.booker].credit += st.netBalance;
+                bdzMap[shop.booker].recovery += st.totalRecovery;
+                bdzMap[shop.booker].shops += 1;
+            });
+
+            const stock = getCartonStockStats();
+            document.getElementById("kpiTotalCredit").innerText = formatPKR(grandRemaining);
+            document.getElementById("kpiTotalRecovery").innerText = formatPKR(grandRecovery);
+            document.getElementById("kpiAvailableCartons").innerText = stock.available.toLocaleString() + " Cartons";
+            document.getElementById("kpiTownShopCount").innerText = `${getUniqueTowns().length} Towns / ${window.db.shops.length} Shops`;
+
+            const bdzCards = document.getElementById("dashboardBdzCards");
+            bdzCards.innerHTML = "";
+            Object.entries(bdzMap).forEach(([bdzName, info]) => {
+                const card = document.createElement("div");
+                card.onclick = () => {
+                    switchTab('bdz');
+                    document.getElementById("bdzFilterSelect").value = bdzName;
+                    renderBdzReport();
+                };
+                card.className = "glass-panel-interactive p-3.5 rounded-xl cursor-pointer relative overflow-hidden";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-extrabold text-indigo-300 flex items-center">
+                            <i class="fa-solid fa-user-check mr-1 text-indigo-400"></i>${bdzName}
+                        </span>
+                        <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full font-bold text-slate-300">${info.shops} Shops</span>
+                    </div>
+                    <div class="mt-2.5">
+                        <p class="text-[10px] uppercase text-slate-400 font-bold">Credit Balance</p>
+                        <p class="text-base font-extrabold text-white font-num">${formatPKR(info.credit)}</p>
+                    </div>
+                `;
+                bdzCards.appendChild(card);
+            });
+
+            const query = document.getElementById("mainSearch").value.toLowerCase();
+            const tbody = document.getElementById("dashboardTableBody");
+            tbody.innerHTML = "";
+
+            window.db.shops
+                .filter(s =>
+                    s.town.toLowerCase().includes(query) ||
+                    s.shopName.toLowerCase().includes(query) ||
+                    s.booker.toLowerCase().includes(query)
+                )
+                .forEach(shop => {
+                    const st = getShopStats(shop);
+                    const tr = document.createElement("tr");
+                    tr.className = "hover:bg-indigo-500/10 transition";
+                    tr.innerHTML = `
+                        <td class="py-3.5 px-5">
+                            <button onclick="openTownSheet('${shop.town}')" class="inline-flex items-center font-bold text-indigo-300 hover:text-white">
+                                <i class="fa-solid fa-folder-open mr-2 text-indigo-400"></i> ${shop.town}
+                            </button>
+                        </td>
+                        <td class="py-3.5 px-5">
+                            <button onclick="openTownSheet('${shop.town}', '${shop.id}')" class="font-extrabold text-white hover:text-indigo-300 text-left">
+                                ${shop.shopName} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400 ml-1"></i>
+                            </button>
+                        </td>
+                        <td class="py-3.5 px-5">
+                            <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 text-xs font-bold px-2.5 py-1 rounded-lg">${shop.booker}</span>
+                        </td>
+                        <td class="py-3.5 px-5 text-xs text-slate-400 font-medium">${shop.cell}</td>
+                        <td class="py-3.5 px-5 text-right text-slate-300 font-num">${formatPKR(st.openingBalance)}</td>
+                        <td class="py-3.5 px-5 text-right text-emerald-400 font-bold font-num">${formatPKR(st.totalRecovery)}</td>
+                        <td class="py-3.5 px-5 text-right font-extrabold font-num ${st.netBalance < 0 ? 'text-emerald-400' : 'text-white'}">${formatPKR(st.netBalance)}</td>
+                        <td class="py-3.5 px-5 text-center flex justify-center items-center gap-1.5">
+                            <button onclick="openEditShopModalDirect('${shop.id}')" title="Edit Shop Details" class="bg-white/10 hover:bg-white/20 text-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold transition">
+                                <i class="fa-solid fa-pen-to-square text-indigo-300"></i>
+                            </button>
+                            <button onclick="openTownSheet('${shop.town}', '${shop.id}')" class="bg-indigo-600/80 hover:bg-indigo-600 text-white px-3 py-1 rounded-lg text-xs font-bold transition">
+                                Open Ledger
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+        }
+
+        function renderBdzReport() {
+            const filterBdz = document.getElementById("bdzFilterSelect").value;
+            const bdzList = filterBdz ? [filterBdz] : getUniqueBdzs();
+
+            const summaryGrid = document.getElementById("bdzSummaryGrid");
+            const tbody = document.getElementById("bdzReportBody");
+            summaryGrid.innerHTML = "";
+            tbody.innerHTML = "";
+
+            let grandOpening = 0, grandCartons = 0, grandInvoices = 0, grandTotalCredit = 0, grandRecovery = 0, grandRemaining = 0;
+
+            bdzList.forEach(bdz => {
+                const bdzShops = window.db.shops.filter(s => s.booker.trim() === bdz);
+                let subOpening = 0, subCartons = 0, subInvoices = 0, subTotalCredit = 0, subRecovery = 0, subRemaining = 0;
+
+                bdzShops.forEach(shop => {
+                    const st = getShopStats(shop);
+                    subOpening += st.openingBalance;
+                    subCartons += st.totalCartons;
+                    subInvoices += st.totalSales;
+                    subTotalCredit += st.totalCredit;
+                    subRecovery += st.totalRecovery;
+                    subRemaining += st.netBalance;
+
+                    const tr = document.createElement("tr");
+                    tr.className = "hover:bg-slate-800/40 transition";
+                    tr.innerHTML = `
+                        <td class="py-3 px-5 font-bold text-indigo-300">${bdz}</td>
+                        <td class="py-3 px-5 font-semibold text-slate-300">
+                            <button onclick="openTownSheet('${shop.town}')" class="hover:underline text-indigo-300">${shop.town}</button>
+                        </td>
+                        <td class="py-3 px-5 font-semibold text-white">
+                            <button onclick="openTownSheet('${shop.town}', '${shop.id}')" class="hover:underline">${shop.shopName}</button>
+                        </td>
+                        <td class="py-3 px-5 text-right text-slate-300 font-num">${formatPKR(st.openingBalance)}</td>
+                        <td class="py-3 px-5 text-right font-bold text-purple-300 font-num">${st.totalCartons} Ctn</td>
+                        <td class="py-3 px-5 text-right text-sky-300 font-medium font-num">${formatPKR(st.totalSales)}</td>
+                        <td class="py-3 px-5 text-right font-bold text-slate-200 font-num">${formatPKR(st.totalCredit)}</td>
+                        <td class="py-3 px-5 text-right text-emerald-400 font-bold font-num">${formatPKR(st.totalRecovery)}</td>
+                        <td class="py-3 px-5 text-right font-extrabold text-white font-num">${formatPKR(st.netBalance)}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                const subRow = document.createElement("tr");
+                subRow.className = "bg-indigo-950/70 font-extrabold text-indigo-200 border-t border-b border-indigo-500/30";
+                subRow.innerHTML = `
+                    <td colspan="3" class="py-3.5 px-5 text-xs uppercase tracking-wider text-indigo-300">
+                        <i class="fa-solid fa-calculator mr-1.5 text-indigo-400"></i> ${bdz} — Sub Total
+                    </td>
+                    <td class="py-3.5 px-5 text-right font-num">${formatPKR(subOpening)}</td>
+                    <td class="py-3.5 px-5 text-right text-purple-300 font-num">${subCartons} Ctn</td>
+                    <td class="py-3.5 px-5 text-right text-sky-300 font-num">${formatPKR(subInvoices)}</td>
+                    <td class="py-3.5 px-5 text-right font-num">${formatPKR(subTotalCredit)}</td>
+                    <td class="py-3.5 px-5 text-right text-emerald-400 font-num">${formatPKR(subRecovery)}</td>
+                    <td class="py-3.5 px-5 text-right text-base text-indigo-300 font-num">${formatPKR(subRemaining)}</td>
+                `;
+                tbody.appendChild(subRow);
+
+                const card = document.createElement("div");
+                card.className = "glass-panel p-4 rounded-2xl";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-extrabold text-white text-sm">${bdz}</span>
+                        <span class="text-[10px] font-bold bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-full border border-indigo-400/30">${bdzShops.length} Shops</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 font-semibold">Remaining Credit:</p>
+                    <p class="text-lg font-extrabold text-indigo-300 font-num">${formatPKR(subRemaining)}</p>
+                    <div class="mt-2 pt-2 border-t border-white/10 flex justify-between text-[11px]">
+                        <span class="text-slate-400">Recovery:</span>
+                        <span class="font-bold text-emerald-400 font-num">${formatPKR(subRecovery)}</span>
+                    </div>
+                `;
+                summaryGrid.appendChild(card);
+
+                grandOpening += subOpening;
+                grandCartons += subCartons;
+                grandInvoices += subInvoices;
+                grandTotalCredit += subTotalCredit;
+                grandRecovery += subRecovery;
+                grandRemaining += subRemaining;
+            });
+
+            const grandRow = document.createElement("tr");
+            grandRow.className = "bg-slate-950 text-white font-extrabold text-sm border-t-2 border-amber-500/40";
+            grandRow.innerHTML = `
+                <td colspan="3" class="py-4 px-5 uppercase tracking-wider text-amber-400 flex items-center">
+                    <i class="fa-solid fa-coins mr-2 text-amber-400"></i> GRAND TOTAL (ALL BDZs)
+                </td>
+                <td class="py-4 px-5 text-right font-num">${formatPKR(grandOpening)}</td>
+                <td class="py-4 px-5 text-right text-purple-300 font-num">${grandCartons} Ctn</td>
+                <td class="py-4 px-5 text-right text-sky-300 font-num">${formatPKR(grandInvoices)}</td>
+                <td class="py-4 px-5 text-right font-num">${formatPKR(grandTotalCredit)}</td>
+                <td class="py-4 px-5 text-right text-emerald-400 font-num">${formatPKR(grandRecovery)}</td>
+                <td class="py-4 px-5 text-right text-base text-amber-400 font-num">${formatPKR(grandRemaining)}</td>
+            `;
+            tbody.appendChild(grandRow);
+        }
+
+        function renderStockPage() {
+            const st = getCartonStockStats();
+            document.getElementById("stockTotalIn").innerText = st.totalIn.toLocaleString() + " Cartons";
+            document.getElementById("stockTotalOut").innerText = st.totalOut.toLocaleString() + " Cartons";
+            document.getElementById("stockNetAvailable").innerText = st.available.toLocaleString() + " Cartons";
+
+            const tbody = document.getElementById("stockHistoryBody");
+            tbody.innerHTML = "";
+
+            const movements = [];
+            window.db.purchases.forEach(p => {
+                movements.push({
+                    id: p.id,
+                    kind: "PURCHASE",
+                    date: p.date,
+                    ref: p.note || "Company Carton Purchase",
+                    inQty: Number(p.cartons),
+                    outQty: 0
+                });
+            });
+
+            window.db.transactions.filter(t => t.type === "SALE" && Number(t.cartons) > 0).forEach(t => {
+                const shop = window.db.shops.find(s => s.id === t.shopId);
+                const label = shop ? `${shop.town} — ${shop.shopName} (${t.ref})` : t.ref;
+                movements.push({
+                    id: t.id,
+                    kind: "SALE",
+                    date: t.date,
+                    ref: label,
+                    inQty: 0,
+                    outQty: Number(t.cartons)
+                });
+            });
+
+            movements.sort((a, b) => b.date.localeCompare(a.date));
+
+            if (movements.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400 text-sm">Stock movement history is clean.</td></tr>`;
+                return;
+            }
+
+            movements.forEach(m => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-slate-800/40";
+                tr.innerHTML = `
+                    <td class="py-3 px-6 text-xs text-slate-400 font-medium">${m.date}</td>
+                    <td class="py-3 px-6">
+                        ${m.kind === "PURCHASE"
+                            ? '<span class="bg-purple-500/20 text-purple-300 border border-purple-400/30 text-xs font-bold px-2.5 py-0.5 rounded-full">Purchase (+)</span>'
+                            : '<span class="bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-bold px-2.5 py-0.5 rounded-full">Invoice Sale (-)</span>'}
+                    </td>
+                    <td class="py-3 px-6 font-semibold text-white">${m.ref}</td>
+                    <td class="py-3 px-6 text-right font-bold text-purple-300 font-num">${m.inQty ? '+' + m.inQty : '-'}</td>
+                    <td class="py-3 px-6 text-right font-bold text-amber-400 font-num">${m.outQty ? '-' + m.outQty : '-'}</td>
+                    <td class="py-3 px-6 text-center">
+                        ${m.kind === "PURCHASE"
+                            ? `<button onclick="deletePurchase('${m.id}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>`
+                            : '<span class="text-[11px] text-slate-400">Via Ledger</span>'}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function openTownSheet(townName, preferredShopId = null) {
+            activeTown = townName;
+            const townShops = window.db.shops.filter(s => s.town === townName);
+            if (townShops.length === 0) return;
+
+            if (preferredShopId && townShops.some(s => s.id === preferredShopId)) {
+                activeShopId = preferredShopId;
+            } else if (!activeShopId || !townShops.some(s => s.id === activeShopId)) {
+                activeShopId = townShops[0].id;
+            }
+
+            switchTab('town-view');
+            renderTownSheet();
+        }
+
+        function renderTownSheet() {
+            const townShops = window.db.shops.filter(s => s.town === activeTown);
+            document.getElementById("townSheetTitle").innerText = activeTown + " — Distributor & Shop Sheet";
+            document.getElementById("townNameLabel").innerText = activeTown;
+
+            const grid = document.getElementById("townShopsGrid");
+            grid.innerHTML = "";
+
+            townShops.forEach(shop => {
+                const st = getShopStats(shop);
+                const isSelected = shop.id === activeShopId;
+                const card = document.createElement("div");
+                card.onclick = () => {
+                    activeShopId = shop.id;
+                    renderTownSheet();
+                };
+                card.className = `p-4 rounded-2xl cursor-pointer transition-all duration-200 ${
+                    isSelected
+                        ? 'bg-indigo-600/20 border-2 border-indigo-500 shadow-lg shadow-indigo-950/50'
+                        : 'glass-panel-interactive border border-white/10'
+                }`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-extrabold text-white text-base">${shop.shopName}</h4>
+                            <p class="text-xs text-slate-400 mt-1">
+                                <i class="fa-solid fa-user-tie mr-1 text-indigo-400"></i>BDZ: <b class="text-slate-200">${shop.booker}</b> &bull; ${shop.cell}
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button onclick="event.stopPropagation(); openEditShopModalDirect('${shop.id}')" title="Edit Shop Details" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-indigo-300">
+                                <i class="fa-solid fa-pen-to-square text-xs"></i>
+                            </button>
+                            ${isSelected ? '<span class="bg-indigo-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full">Active</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="mt-3.5 pt-3 border-t border-white/10 flex justify-between items-end">
+                        <div>
+                            <span class="text-[10px] uppercase text-slate-400 font-bold block">Opening Bal</span>
+                            <span class="text-xs font-bold text-slate-300 font-num">${formatPKR(st.openingBalance)}</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[10px] uppercase text-slate-400 font-bold block">Net Credit Balance</span>
+                            <span class="text-base font-extrabold font-num ${st.netBalance < 0 ? 'text-emerald-400' : 'text-indigo-300'}">${formatPKR(st.netBalance)}</span>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            const activeShop = window.db.shops.find(s => s.id === activeShopId);
+            if (!activeShop) return;
+
+            document.getElementById("activeShopName").innerText = `${activeShop.shopName} (${activeShop.town})`;
+            document.getElementById("activeShopBdzBadge").innerText = `BDZ: ${activeShop.booker}`;
+            document.getElementById("activeShopMeta").innerText = `Contact: ${activeShop.cell} | Opening Credit: ${formatPKR(activeShop.openingBalance)}`;
+
+            const tbody = document.getElementById("shopLedgerBody");
+            tbody.innerHTML = "";
+
+            let runningBal = Number(activeShop.openingBalance);
+
+            const openTr = document.createElement("tr");
+            openTr.className = "bg-amber-500/10 font-semibold";
+            openTr.innerHTML = `
+                <td class="py-3 px-5 text-xs text-slate-400">—</td>
+                <td class="py-3 px-5"><span class="bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-extrabold px-2 py-0.5 rounded">OPENING</span></td>
+                <td class="py-3 px-5 text-slate-200">Previous Opening Balance</td>
+                <td class="py-3 px-5 text-center text-slate-400">—</td>
+                <td class="py-3 px-5 text-right text-slate-400">—</td>
+                <td class="py-3 px-5 text-right text-slate-300 font-num">${formatPKR(runningBal)}</td>
+                <td class="py-3 px-5 text-right font-extrabold text-white font-num">${formatPKR(runningBal)}</td>
+                <td class="py-3 px-5 text-center">
+                    <button onclick="openOpeningBalanceModal()" class="text-amber-400 hover:text-amber-300 text-xs font-bold underline">Edit</button>
+                </td>
+            `;
+            tbody.appendChild(openTr);
+
+            const shopTxs = window.db.transactions.filter(t => t.shopId === activeShop.id);
+            if (shopTxs.length === 0) {
+                const emptyTr = document.createElement("tr");
+                emptyTr.innerHTML = `<td colspan="8" class="py-6 text-center text-slate-400 text-xs">No entries recorded yet for this shop.</td>`;
+                tbody.appendChild(emptyTr);
+            }
+
+            shopTxs.forEach(tx => {
+                if (tx.type === "SALE") {
+                    runningBal += Number(tx.amount);
+                } else {
+                    runningBal -= Number(tx.amount);
+                }
+
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-slate-800/40 transition";
+                tr.innerHTML = `
+                    <td class="py-3 px-5 text-xs text-slate-400">${tx.date}</td>
+                    <td class="py-3 px-5 font-bold text-slate-200">${tx.ref}</td>
+                    <td class="py-3 px-5 text-slate-300">${tx.desc || (tx.type === 'SALE' ? 'Carton Bill' : 'Online Payment')}</td>
+                    <td class="py-3 px-5 text-center font-bold text-purple-300 font-num">${tx.cartons ? tx.cartons + ' Ctn' : '—'}</td>
+                    <td class="py-3 px-5 text-right font-bold text-emerald-400 font-num">${tx.type === 'RECOVERY' ? formatPKR(tx.amount) : '—'}</td>
+                    <td class="py-3 px-5 text-right font-bold text-sky-300 font-num">${tx.type === 'SALE' ? formatPKR(tx.amount) : '—'}</td>
+                    <td class="py-3 px-5 text-right font-extrabold text-white font-num">${formatPKR(runningBal)}</td>
+                    <td class="py-3 px-5 text-center space-x-1.5">
+                        <button onclick="editTransaction('${tx.id}')" title="Edit Entry" class="text-indigo-300 hover:text-white bg-indigo-500/20 p-1.5 rounded-lg border border-indigo-500/30">
+                            <i class="fa-solid fa-pen text-xs"></i>
+                        </button>
+                        <button onclick="deleteTransaction('${tx.id}')" title="Delete Entry" class="text-rose-400 hover:text-rose-200 bg-rose-500/20 p-1.5 rounded-lg border border-rose-500/30">
+                            <i class="fa-solid fa-trash text-xs"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-content-main').classList.add('hidden');
+            document.getElementById('tab-content-bdz').classList.add('hidden');
+            document.getElementById('tab-content-stock').classList.add('hidden');
+            document.getElementById('town-sheet-container').classList.add('hidden');
+
+            if (tab === 'main') {
+                document.getElementById('btn-main').classList.add('active');
+                document.getElementById('tab-content-main').classList.remove('hidden');
+                renderDashboard();
+            } else if (tab === 'bdz') {
+                document.getElementById('btn-bdz').classList.add('active');
+                document.getElementById('tab-content-bdz').classList.remove('hidden');
+                renderBdzReport();
+            } else if (tab === 'stock') {
+                document.getElementById('btn-stock').classList.add('active');
+                document.getElementById('tab-content-stock').classList.remove('hidden');
+                renderStockPage();
+            } else if (tab === 'town-view') {
+                const townBtn = document.getElementById('btn-town-' + activeTown);
+                if (townBtn) townBtn.classList.add('active');
+                document.getElementById('town-sheet-container').classList.remove('hidden');
+            }
+        }
+
+        function openModal(id) {
+            const el = document.getElementById(id);
+            el.classList.remove('hidden');
+            el.classList.add('flex');
+        }
+        function closeModal(id) {
+            const el = document.getElementById(id);
+            el.classList.add('hidden');
+            el.classList.remove('flex');
+        }
+
+        function openShopModal() {
+            document.getElementById("formTownName").value = "";
+            document.getElementById("formShopName").value = "";
+            document.getElementById("formBdzName").value = "";
+            document.getElementById("formCellNo").value = "";
+            document.getElementById("formOpeningBal").value = 0;
+            openModal('shopModal');
+        }
+
+        function openShopModalForCurrentTown() {
+            openShopModal();
+            document.getElementById("formTownName").value = activeTown || "";
+        }
+
+        function saveNewShop(e) {
+            e.preventDefault();
+            const town = document.getElementById("formTownName").value.trim();
+            const shopName = document.getElementById("formShopName").value.trim();
+            const booker = document.getElementById("formBdzName").value.trim();
+            const cell = document.getElementById("formCellNo").value.trim();
+            const openingBalance = Number(document.getElementById("formOpeningBal").value || 0);
+
+            const newId = "s_" + Date.now();
+            window.db.shops.push({ id: newId, town, shopName, booker, cell, openingBalance });
+            saveDB();
+            closeModal('shopModal');
+            refreshAll();
+            openTownSheet(town, newId);
+        }
+
+        function openEditShopModal() {
+            if (!activeShopId) return;
+            openEditShopModalDirect(activeShopId);
+        }
+
+        function openEditShopModalDirect(shopId) {
+            const shop = window.db.shops.find(s => s.id === shopId);
+            if (!shop) return;
+
+            document.getElementById("editShopTargetId").value = shop.id;
+            document.getElementById("editShopName").value = shop.shopName;
+            document.getElementById("editTownName").value = shop.town;
+            document.getElementById("editBdzName").value = shop.booker;
+            document.getElementById("editCellNo").value = shop.cell;
+
+            openModal('editShopModal');
+        }
+
+        function updateShopDetails(e) {
+            e.preventDefault();
+            const shopId = document.getElementById("editShopTargetId").value;
+            const shop = window.db.shops.find(s => s.id === shopId);
+            if (!shop) return;
+
+            const oldTown = shop.town;
+            const newTown = document.getElementById("editTownName").value.trim();
+
+            shop.shopName = document.getElementById("editShopName").value.trim();
+            shop.town = newTown;
+            shop.booker = document.getElementById("editBdzName").value.trim();
+            shop.cell = document.getElementById("editCellNo").value.trim();
+
+            saveDB();
+            closeModal('editShopModal');
+            refreshAll();
+
+            if (activeTown === oldTown || activeTown === newTown) {
+                openTownSheet(newTown, shop.id);
+            }
+        }
+
+        function deleteDistributorShop() {
+            const shopId = document.getElementById("editShopTargetId").value;
+            const shop = window.db.shops.find(s => s.id === shopId);
+            if (!shop) return;
+
+            if (confirm(`Delete "${shop.shopName} (${shop.town})"? All ledger entries will be removed.`)) {
+                window.db.shops = window.db.shops.filter(s => s.id !== shopId);
+                window.db.transactions = window.db.transactions.filter(t => t.shopId !== shopId);
+                saveDB();
+                closeModal('editShopModal');
+                refreshAll();
+                switchTab('main');
+            }
+        }
+
+        function openCartonPurchaseModal() {
+            document.getElementById("purchaseDate").value = todayStr();
+            document.getElementById("purchaseCartons").value = "";
+            document.getElementById("purchaseNote").value = "";
+            openModal('cartonPurchaseModal');
+        }
+
+        function saveCartonPurchase(e) {
+            e.preventDefault();
+            const date = document.getElementById("purchaseDate").value;
+            const cartons = Number(document.getElementById("purchaseCartons").value);
+            const note = document.getElementById("purchaseNote").value.trim() || "Company Carton Purchase";
+
+            window.db.purchases.push({ id: "p_" + Date.now(), date, cartons, note });
+            saveDB();
+            closeModal('cartonPurchaseModal');
+            refreshAll();
+            switchTab('stock');
+        }
+
+        function deletePurchase(id) {
+            if (!confirm("Delete this carton purchase record?")) return;
+            window.db.purchases = window.db.purchases.filter(p => p.id !== id);
+            saveDB();
+            refreshAll();
+            renderStockPage();
+        }
+
+        function populateShopDropdown(selectedShopId = null) {
+            const sel = document.getElementById("txShopSelect");
+            sel.innerHTML = window.db.shops.map(s =>
+                `<option value="${s.id}" ${s.id === selectedShopId ? 'selected' : ''}>${s.town} — ${s.shopName} (BDZ: ${s.booker})</option>`
+            ).join("");
+        }
+
+        function openTransactionModal(type, preselectShopId = null) {
+            document.getElementById("txEditId").value = "";
+            document.getElementById("txType").value = type;
+            document.getElementById("txDate").value = todayStr();
+            document.getElementById("txCartons").value = type === "SALE" ? "" : 0;
+            document.getElementById("txAmount").value = "";
+            document.getElementById("txDesc").value = "";
+            populateShopDropdown(preselectShopId);
+
+            if (type === "SALE") {
+                document.getElementById("txModalTitle").innerHTML = `<i class="fa-solid fa-file-invoice-dollar text-emerald-400 mr-2"></i> Carton Sale / Bill Entry (-)`;
+                document.getElementById("txRef").value = "INV-" + Math.floor(100 + Math.random() * 900);
+                document.getElementById("txCartonField").classList.remove("hidden");
+                document.getElementById("txAmountLabel").innerText = "Total Bill Amount (Rs.)";
+                document.getElementById("txSubmitBtn").className = "px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-900/50";
+            } else {
+                document.getElementById("txModalTitle").innerHTML = `<i class="fa-solid fa-hand-holding-dollar text-amber-400 mr-2"></i> Online / Cash Recovery`;
+                document.getElementById("txRef").value = "ONLINE";
+                document.getElementById("txCartonField").classList.add("hidden");
+                document.getElementById("txAmountLabel").innerText = "Recovery Amount Received (Rs.)";
+                document.getElementById("txSubmitBtn").className = "px-5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl text-xs font-extrabold shadow-lg shadow-amber-900/50";
+            }
+            openModal('txModal');
+        }
+
+        function openTransactionModalForActiveShop(type) {
+            openTransactionModal(type, activeShopId);
+        }
+
+        function editTransaction(txId) {
+            const tx = window.db.transactions.find(t => t.id === txId);
+            if (!tx) return;
+
+            openTransactionModal(tx.type, tx.shopId);
+            document.getElementById("txEditId").value = tx.id;
+            document.getElementById("txModalTitle").innerHTML = `<i class="fa-solid fa-pen-to-square text-indigo-400 mr-2"></i> Edit Ledger Entry`;
+            document.getElementById("txDate").value = tx.date;
+            document.getElementById("txRef").value = tx.ref;
+            document.getElementById("txCartons").value = tx.cartons || 0;
+            document.getElementById("txAmount").value = tx.amount;
+            document.getElementById("txDesc").value = tx.desc || "";
+        }
+
+        function saveTransaction(e) {
+            e.preventDefault();
+            const editId = document.getElementById("txEditId").value;
+            const type = document.getElementById("txType").value;
+            const shopId = document.getElementById("txShopSelect").value;
+            const date = document.getElementById("txDate").value;
+            const ref = document.getElementById("txRef").value.trim();
+            const cartons = type === "SALE" ? Number(document.getElementById("txCartons").value || 0) : 0;
+            const amount = Number(document.getElementById("txAmount").value || 0);
+            const desc = document.getElementById("txDesc").value.trim() || (type === "SALE" ? `${cartons} Cartons Supplied` : "Online Recovery");
+
+            if (type === "SALE" && cartons > 0) {
+                const stock = getCartonStockStats();
+                let oldCartons = 0;
+                if (editId) {
+                    const oldTx = window.db.transactions.find(t => t.id === editId);
+                    if (oldTx) oldCartons = Number(oldTx.cartons || 0);
+                }
+                if ((stock.available + oldCartons) < cartons) {
+                    alert(`Warning: Godown main sirf ${stock.available + oldCartons} Cartons hain! Add carton purchase first.`);
+                    return;
+                }
+            }
+
+            if (editId) {
+                const idx = window.db.transactions.findIndex(t => t.id === editId);
+                if (idx !== -1) {
+                    window.db.transactions[idx] = { id: editId, shopId, date, type, ref, cartons, amount, desc };
+                }
+            } else {
+                window.db.transactions.push({ id: "t_" + Date.now(), shopId, date, type, ref, cartons, amount, desc });
+            }
+
+            saveDB();
+            closeModal('txModal');
+            refreshAll();
+
+            const shop = window.db.shops.find(s => s.id === shopId);
+            if (shop) openTownSheet(shop.town, shop.id);
+        }
+
+        function deleteTransaction(txId) {
+            if (!confirm("Delete this ledger entry? Balances will auto-adjust.")) return;
+            window.db.transactions = window.db.transactions.filter(t => t.id !== txId);
+            saveDB();
+            refreshAll();
+            if (activeTown) renderTownSheet();
+        }
+
+        function openOpeningBalanceModal() {
+            const shop = window.db.shops.find(s => s.id === activeShopId);
+            if (!shop) return;
+            document.getElementById("openingBalShopLabel").innerText = `${shop.town} — ${shop.shopName}`;
+            document.getElementById("editOpeningBalInput").value = shop.openingBalance;
+            openModal('openingBalModal');
+        }
+
+        function updateOpeningBalance(e) {
+            e.preventDefault();
+            const shop = window.db.shops.find(s => s.id === activeShopId);
+            if (!shop) return;
+            shop.openingBalance = Number(document.getElementById("editOpeningBalInput").value || 0);
+            saveDB();
+            closeModal('openingBalModal');
+            refreshAll();
+            renderTownSheet();
+        }
+
+        function refreshAll() {
+            rebuildNavigation();
+            renderDashboard();
+            renderBdzReport();
+            renderStockPage();
+        }
+
+        window.refreshAll = refreshAll;
+        refreshAll();
+    </script>
+</body>
+</html>

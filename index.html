@@ -124,6 +124,9 @@
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3) !important;
             outline: none !important;
         }
+        input[type="date"] {
+            color-scheme: dark;
+        }
 
         /* ==================== CLEAN PRINT TEMPLATE STYLES ==================== */
         #printSheetArea {
@@ -344,6 +347,34 @@
 
         <!-- ==================== TAB 1: DASHBOARD ==================== -->
         <div id="tab-content-main" class="space-y-6">
+
+            <!-- Date Range Filter Bar (Dashboard) -->
+            <div class="glass-panel px-5 py-3.5 rounded-2xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 border border-indigo-500/20">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-xl bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 flex items-center justify-center text-xs">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-extrabold text-white block">Date Range Filter (Dashboard)</span>
+                        <span id="dashDateStatus" class="text-[11px] text-slate-400">Showing All Entries</span>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+                    <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-xl border border-white/10">
+                        <label class="text-[11px] font-bold text-slate-400">From:</label>
+                        <input type="date" id="dashFromDate" onchange="renderDashboard()" class="text-xs font-semibold rounded-lg px-2 py-1">
+                    </div>
+                    <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-xl border border-white/10">
+                        <label class="text-[11px] font-bold text-slate-400">To:</label>
+                        <input type="date" id="dashToDate" onchange="renderDashboard()" class="text-xs font-semibold rounded-lg px-2 py-1">
+                    </div>
+                    <button type="button" onclick="setQuickDateRange('dash', 'today')" class="px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-white/10 hover:bg-white/20 text-slate-200 transition">Today</button>
+                    <button type="button" onclick="setQuickDateRange('dash', 'month')" class="px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-white/10 hover:bg-white/20 text-slate-200 transition">This Month</button>
+                    <button type="button" onclick="clearDateRange('dash')" class="px-3 py-1.5 rounded-xl text-[11px] font-bold bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 transition">
+                        <i class="fa-solid fa-rotate-left mr-1"></i> Reset
+                    </button>
+                </div>
+            </div>
             
             <!-- Pro Glass Stat Cards Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -458,8 +489,19 @@
                     </h2>
                     <p class="text-xs text-slate-400 mt-1">Har BDZ ke tamam towns/shops aur summary totals</p>
                 </div>
-                <div class="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
-                    <label class="text-xs font-bold text-slate-400">Filter BDZ Booker:</label>
+                <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
+                    <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-xl border border-white/10">
+                        <i class="fa-solid fa-calendar-days text-indigo-400 text-xs"></i>
+                        <label class="text-[11px] font-bold text-slate-400">From:</label>
+                        <input type="date" id="bdzFromDate" onchange="renderBdzReport()" class="text-xs font-semibold rounded-lg px-2 py-1">
+                    </div>
+                    <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-xl border border-white/10">
+                        <label class="text-[11px] font-bold text-slate-400">To:</label>
+                        <input type="date" id="bdzToDate" onchange="renderBdzReport()" class="text-xs font-semibold rounded-lg px-2 py-1">
+                    </div>
+                    <button type="button" onclick="clearDateRange('bdz')" title="Reset Dates" class="px-2.5 py-2 rounded-xl text-xs font-bold bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 transition">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
                     <select id="bdzFilterSelect" onchange="renderBdzReport()" class="px-3.5 py-2 rounded-xl text-xs font-bold">
                         <option value="">All BDZs (Complete Sheet)</option>
                     </select>
@@ -505,6 +547,18 @@
                     <p class="text-xs text-slate-400 mt-1">Purchases (+) aur Invoice Sales (-) ka realtime stock</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-2.5">
+                    <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-xl border border-white/10">
+                        <i class="fa-solid fa-calendar-days text-purple-400 text-xs"></i>
+                        <label class="text-[11px] font-bold text-slate-400">From:</label>
+                        <input type="date" id="stockFromDate" onchange="renderStockPage()" class="text-xs font-semibold rounded-lg px-2 py-1">
+                    </div>
+                    <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-xl border border-white/10">
+                        <label class="text-[11px] font-bold text-slate-400">To:</label>
+                        <input type="date" id="stockToDate" onchange="renderStockPage()" class="text-xs font-semibold rounded-lg px-2 py-1">
+                    </div>
+                    <button type="button" onclick="clearDateRange('stock')" title="Reset Dates" class="px-2.5 py-2.5 rounded-xl text-xs font-bold bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 transition">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
                     <button onclick="printStockReport()" class="bg-sky-600/90 hover:bg-sky-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border border-sky-400/30 transition flex items-center shadow-lg">
                         <i class="fa-solid fa-print mr-2"></i> Print Stock
                     </button>
@@ -609,6 +663,29 @@
                         </button>
                         <button onclick="openTransactionModalForActiveShop('RECOVERY')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3 py-1.5 rounded-xl text-xs font-extrabold transition shadow-md shadow-amber-900/30">
                             <i class="fa-solid fa-plus mr-1"></i> Add Recovery
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Date Range Filter Bar (Party Ledger) -->
+                <div class="px-6 py-3 bg-slate-950/60 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5">
+                    <div class="flex items-center gap-2 text-xs">
+                        <i class="fa-solid fa-calendar-days text-amber-400"></i>
+                        <span class="font-bold text-slate-300">Ledger Date Filter:</span>
+                        <span id="ledgerDateStatus" class="text-[11px] text-slate-400">All Dates</span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div class="flex items-center gap-1.5 bg-slate-900/80 px-2.5 py-1 rounded-xl border border-white/10">
+                            <label class="text-[11px] font-bold text-slate-400">From:</label>
+                            <input type="date" id="ledgerFromDate" onchange="renderTownSheet()" class="text-xs font-semibold rounded-lg px-2 py-0.5">
+                        </div>
+                        <div class="flex items-center gap-1.5 bg-slate-900/80 px-2.5 py-1 rounded-xl border border-white/10">
+                            <label class="text-[11px] font-bold text-slate-400">To:</label>
+                            <input type="date" id="ledgerToDate" onchange="renderTownSheet()" class="text-xs font-semibold rounded-lg px-2 py-0.5">
+                        </div>
+                        <button type="button" onclick="setQuickDateRange('ledger', 'month')" class="px-2.5 py-1 rounded-xl text-[11px] font-bold bg-white/10 hover:bg-white/20 text-slate-200 transition">This Month</button>
+                        <button type="button" onclick="clearDateRange('ledger')" class="px-2.5 py-1 rounded-xl text-[11px] font-bold bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 transition">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset
                         </button>
                     </div>
                 </div>
@@ -1038,37 +1115,101 @@
             });
         }
 
-        function getShopStats(shop) {
-            const txs = window.db.transactions.filter(t => t.shopId === shop.id);
-            let totalSales = 0, totalRecovery = 0, totalCartons = 0;
+        function isDateInRange(dateStr, fromDate, toDate) {
+            if (!dateStr) return true;
+            if (fromDate && dateStr < fromDate) return false;
+            if (toDate && dateStr > toDate) return false;
+            return true;
+        }
 
-            txs.forEach(t => {
-                if (t.type === "SALE") {
-                    totalSales += Number(t.amount);
-                    totalCartons += Number(t.cartons || 0);
-                } else if (t.type === "RECOVERY") {
-                    totalRecovery += Number(t.amount);
+        function getDateRange(prefix) {
+            const fromEl = document.getElementById(prefix + "FromDate");
+            const toEl = document.getElementById(prefix + "ToDate");
+            return {
+                from: fromEl ? fromEl.value : "",
+                to: toEl ? toEl.value : ""
+            };
+        }
+
+        function formatDateRangeLabel(fromDate, toDate) {
+            if (fromDate && toDate) return `Date Period: ${fromDate} to ${toDate}`;
+            if (fromDate) return `From Date: ${fromDate} onwards`;
+            if (toDate) return `Up to Date: ${toDate}`;
+            return "";
+        }
+
+        function setQuickDateRange(prefix, mode) {
+            const fromEl = document.getElementById(prefix + "FromDate");
+            const toEl = document.getElementById(prefix + "ToDate");
+            if (!fromEl || !toEl) return;
+            const now = new Date();
+            const today = now.toISOString().split('T')[0];
+            if (mode === 'today') {
+                fromEl.value = today;
+                toEl.value = today;
+            } else if (mode === 'month') {
+                const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
+                fromEl.value = firstDay;
+                toEl.value = today;
+            }
+            if (prefix === 'dash') renderDashboard();
+            else if (prefix === 'bdz') renderBdzReport();
+            else if (prefix === 'stock') renderStockPage();
+            else if (prefix === 'ledger') renderTownSheet();
+        }
+
+        function clearDateRange(prefix) {
+            const fromEl = document.getElementById(prefix + "FromDate");
+            const toEl = document.getElementById(prefix + "ToDate");
+            if (fromEl) fromEl.value = "";
+            if (toEl) toEl.value = "";
+            if (prefix === 'dash') renderDashboard();
+            else if (prefix === 'bdz') renderBdzReport();
+            else if (prefix === 'stock') renderStockPage();
+            else if (prefix === 'ledger') renderTownSheet();
+        }
+
+        function getShopStats(shop, fromDate = "", toDate = "") {
+            const allTxs = window.db.transactions.filter(t => t.shopId === shop.id);
+            let priorSales = 0, priorRecovery = 0;
+            let totalSales = 0, totalRecovery = 0, totalCartons = 0, filteredCount = 0;
+
+            allTxs.forEach(t => {
+                if (fromDate && t.date < fromDate) {
+                    if (t.type === "SALE") priorSales += Number(t.amount);
+                    else if (t.type === "RECOVERY") priorRecovery += Number(t.amount);
+                } else if (isDateInRange(t.date, fromDate, toDate)) {
+                    filteredCount++;
+                    if (t.type === "SALE") {
+                        totalSales += Number(t.amount);
+                        totalCartons += Number(t.cartons || 0);
+                    } else if (t.type === "RECOVERY") {
+                        totalRecovery += Number(t.amount);
+                    }
                 }
             });
 
-            const totalCredit = Number(shop.openingBalance) + totalSales;
+            const effectiveOpening = Number(shop.openingBalance) + priorSales - priorRecovery;
+            const totalCredit = effectiveOpening + totalSales;
             const netBalance = totalCredit - totalRecovery;
 
             return {
-                openingBalance: Number(shop.openingBalance),
+                openingBalance: effectiveOpening,
                 totalSales,
                 totalCredit,
                 totalRecovery,
                 netBalance,
                 totalCartons,
-                txCount: txs.length
+                txCount: filteredCount
             };
         }
 
-        function getCartonStockStats() {
-            const totalIn = window.db.purchases.reduce((sum, p) => sum + Number(p.cartons || 0), 0);
+        function getCartonStockStats(fromDate = "", toDate = "") {
+            const totalIn = window.db.purchases
+                .filter(p => isDateInRange(p.date, fromDate, toDate))
+                .reduce((sum, p) => sum + Number(p.cartons || 0), 0);
             const totalOut = window.db.transactions
-                .filter(t => t.type === "SALE")
+                .filter(t => t.type === "SALE" && isDateInRange(t.date, fromDate, toDate))
                 .reduce((sum, t) => sum + Number(t.cartons || 0), 0);
             return { totalIn, totalOut, available: totalIn - totalOut };
         }
@@ -1108,11 +1249,18 @@
         }
 
         function renderDashboard() {
+            const { from: fromDate, to: toDate } = getDateRange('dash');
+            const statusEl = document.getElementById("dashDateStatus");
+            if (statusEl) {
+                const lbl = formatDateRangeLabel(fromDate, toDate);
+                statusEl.innerText = lbl ? lbl : "Showing All Entries";
+            }
+
             let grandRemaining = 0, grandRecovery = 0;
             const bdzMap = {};
 
             window.db.shops.forEach(shop => {
-                const st = getShopStats(shop);
+                const st = getShopStats(shop, fromDate, toDate);
                 grandRemaining += st.netBalance;
                 grandRecovery += st.totalRecovery;
 
@@ -1124,7 +1272,7 @@
                 bdzMap[shop.booker].shops += 1;
             });
 
-            const stock = getCartonStockStats();
+            const stock = getCartonStockStats(fromDate, toDate);
             document.getElementById("kpiTotalCredit").innerText = formatPKR(grandRemaining);
             document.getElementById("kpiTotalRecovery").innerText = formatPKR(grandRecovery);
             document.getElementById("kpiAvailableCartons").innerText = stock.available.toLocaleString() + " Cartons";
@@ -1195,7 +1343,7 @@
             }
 
             filteredShops.forEach(shop => {
-                const st = getShopStats(shop);
+                const st = getShopStats(shop, fromDate, toDate);
                 const tr = document.createElement("tr");
                 tr.className = "hover:bg-indigo-500/10 transition";
                 tr.innerHTML = `
@@ -1233,6 +1381,7 @@
         }
 
         function renderBdzReport() {
+            const { from: fromDate, to: toDate } = getDateRange('bdz');
             const filterBdz = document.getElementById("bdzFilterSelect").value;
             const bdzList = filterBdz ? [filterBdz] : getUniqueBdzs();
 
@@ -1253,7 +1402,7 @@
                 let subOpening = 0, subCartons = 0, subInvoices = 0, subTotalCredit = 0, subRecovery = 0, subRemaining = 0;
 
                 bdzShops.forEach(shop => {
-                    const st = getShopStats(shop);
+                    const st = getShopStats(shop, fromDate, toDate);
                     subOpening += st.openingBalance;
                     subCartons += st.totalCartons;
                     subInvoices += st.totalSales;
@@ -1342,7 +1491,8 @@
         }
 
         function renderStockPage() {
-            const st = getCartonStockStats();
+            const { from: fromDate, to: toDate } = getDateRange('stock');
+            const st = getCartonStockStats(fromDate, toDate);
             document.getElementById("stockTotalIn").innerText = st.totalIn.toLocaleString() + " Cartons";
             document.getElementById("stockTotalOut").innerText = st.totalOut.toLocaleString() + " Cartons";
             document.getElementById("stockNetAvailable").innerText = st.available.toLocaleString() + " Cartons";
@@ -1351,7 +1501,7 @@
             tbody.innerHTML = "";
 
             const movements = [];
-            window.db.purchases.forEach(p => {
+            window.db.purchases.filter(p => isDateInRange(p.date, fromDate, toDate)).forEach(p => {
                 movements.push({
                     id: p.id,
                     kind: "PURCHASE",
@@ -1362,7 +1512,7 @@
                 });
             });
 
-            window.db.transactions.filter(t => t.type === "SALE" && Number(t.cartons) > 0).forEach(t => {
+            window.db.transactions.filter(t => t.type === "SALE" && Number(t.cartons) > 0 && isDateInRange(t.date, fromDate, toDate)).forEach(t => {
                 const shop = window.db.shops.find(s => s.id === t.shopId);
                 const label = shop ? `${shop.town} — ${shop.shopName} (${t.ref})` : t.ref;
                 movements.push({
@@ -1480,17 +1630,34 @@
             document.getElementById("activeShopBdzBadge").innerText = `BDZ: ${activeShop.booker}`;
             document.getElementById("activeShopMeta").innerText = `Contact: ${activeShop.cell} | Opening Credit: ${formatPKR(activeShop.openingBalance)}`;
 
+            const { from: fromDate, to: toDate } = getDateRange('ledger');
+            const ledgerStatusEl = document.getElementById("ledgerDateStatus");
+            if (ledgerStatusEl) {
+                const lbl = formatDateRangeLabel(fromDate, toDate);
+                ledgerStatusEl.innerText = lbl ? lbl : "All Dates";
+            }
+
+            const allShopTxs = window.db.transactions.filter(t => t.shopId === activeShop.id);
+            let priorAdjustment = 0;
+            if (fromDate) {
+                allShopTxs.forEach(t => {
+                    if (t.date < fromDate) {
+                        priorAdjustment += (t.type === "SALE" ? Number(t.amount) : -Number(t.amount));
+                    }
+                });
+            }
+
             const tbody = document.getElementById("shopLedgerBody");
             tbody.innerHTML = "";
 
-            let runningBal = Number(activeShop.openingBalance);
+            let runningBal = Number(activeShop.openingBalance) + priorAdjustment;
 
             const openTr = document.createElement("tr");
             openTr.className = "bg-amber-500/10 font-semibold";
             openTr.innerHTML = `
-                <td class="py-3 px-5 text-xs text-slate-400">—</td>
-                <td class="py-3 px-5"><span class="bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-extrabold px-2 py-0.5 rounded">OPENING</span></td>
-                <td class="py-3 px-5 text-slate-200">Previous Opening Balance</td>
+                <td class="py-3 px-5 text-xs text-slate-400">${fromDate || '—'}</td>
+                <td class="py-3 px-5"><span class="bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-extrabold px-2 py-0.5 rounded">${fromDate ? 'B/F BAL' : 'OPENING'}</span></td>
+                <td class="py-3 px-5 text-slate-200">${fromDate ? 'Opening + Previous Balance Before ' + fromDate : 'Previous Opening Balance'}</td>
                 <td class="py-3 px-5 text-center text-slate-400">—</td>
                 <td class="py-3 px-5 text-right text-slate-400">—</td>
                 <td class="py-3 px-5 text-right text-slate-300 font-num">${formatPKR(runningBal)}</td>
@@ -1501,10 +1668,10 @@
             `;
             tbody.appendChild(openTr);
 
-            const shopTxs = window.db.transactions.filter(t => t.shopId === activeShop.id);
+            const shopTxs = allShopTxs.filter(t => isDateInRange(t.date, fromDate, toDate));
             if (shopTxs.length === 0) {
                 const emptyTr = document.createElement("tr");
-                emptyTr.innerHTML = `<td colspan="8" class="py-6 text-center text-slate-400 text-xs">No entries recorded yet for this shop.</td>`;
+                emptyTr.innerHTML = `<td colspan="8" class="py-6 text-center text-slate-400 text-xs">${allShopTxs.length === 0 ? 'No entries recorded yet for this shop.' : 'Is selected date range mein koi entry nahi mili.'}</td>`;
                 tbody.appendChild(emptyTr);
             }
 
@@ -1594,15 +1761,19 @@
                 return;
             }
 
-            const st = getShopStats(shop);
-            const shopTxs = window.db.transactions.filter(t => t.shopId === shop.id);
+            const isLedgerTab = !document.getElementById('town-sheet-container').classList.contains('hidden');
+            const { from: fromDate, to: toDate } = isLedgerTab ? getDateRange('ledger') : getDateRange('dash');
+            const dateLabel = formatDateRangeLabel(fromDate, toDate);
 
-            let runningBal = Number(shop.openingBalance);
+            const st = getShopStats(shop, fromDate, toDate);
+            const shopTxs = window.db.transactions.filter(t => t.shopId === shop.id && isDateInRange(t.date, fromDate, toDate));
+
+            let runningBal = Number(st.openingBalance);
             let rowsHtml = `
                 <tr class="subtotal-row">
-                    <td style="text-align: center;">—</td>
-                    <td>OPENING</td>
-                    <td>Previous Opening Balance Brought Forward</td>
+                    <td style="text-align: center;">${fromDate || '—'}</td>
+                    <td>${fromDate ? 'B/F BAL' : 'OPENING'}</td>
+                    <td>${fromDate ? 'Opening + Balance Brought Forward Before ' + fromDate : 'Previous Opening Balance Brought Forward'}</td>
                     <td style="text-align: center;">—</td>
                     <td style="text-align: right;">—</td>
                     <td style="text-align: right;">${formatPKR(runningBal)}</td>
@@ -1655,7 +1826,7 @@
             `;
 
             const html = `
-                ${buildPrintHeader("Party Ledger Statement")}
+                ${buildPrintHeader("Party Ledger Statement", dateLabel)}
                 ${partyMetaBox}
                 <table>
                     <thead>
@@ -1679,6 +1850,10 @@
 
         // 2. PRINT BDZ WISE REPORT (SINGLE BDZ OR ALL BDZs)
         function printBdzReport(specificBdz = null) {
+            const isBdzTab = !document.getElementById('tab-content-bdz').classList.contains('hidden');
+            const { from: fromDate, to: toDate } = isBdzTab ? getDateRange('bdz') : getDateRange('dash');
+            const dateLabel = formatDateRangeLabel(fromDate, toDate);
+
             const selectedFilter = specificBdz !== null ? specificBdz : document.getElementById("bdzFilterSelect").value;
             const bdzList = selectedFilter ? [selectedFilter] : getUniqueBdzs();
 
@@ -1690,7 +1865,7 @@
                 let subOpening = 0, subCartons = 0, subInvoices = 0, subTotalCredit = 0, subRecovery = 0, subRemaining = 0;
 
                 bdzShops.forEach(shop => {
-                    const st = getShopStats(shop);
+                    const st = getShopStats(shop, fromDate, toDate);
                     subOpening += st.openingBalance;
                     subCartons += st.totalCartons;
                     subInvoices += st.totalSales;
@@ -1746,7 +1921,8 @@
             `;
 
             const titleText = selectedFilter ? `BDZ Credit Sheet — ${selectedFilter}` : "BDZ Wise Master Credit Report";
-            const subLine = selectedFilter ? `Booker / BDZ Officer: ${selectedFilter}` : `Complete Booker Summary (${bdzList.length} BDZs)`;
+            const baseSubLine = selectedFilter ? `Booker / BDZ Officer: ${selectedFilter}` : `Complete Booker Summary (${bdzList.length} BDZs)`;
+            const subLine = dateLabel ? `${baseSubLine} | ${dateLabel}` : baseSubLine;
 
             const html = `
                 ${buildPrintHeader(titleText, subLine)}
@@ -1774,6 +1950,9 @@
 
         // 3. PRINT DASHBOARD MASTER DIRECTORY
         function printDashboardDirectory() {
+            const { from: fromDate, to: toDate } = getDateRange('dash');
+            const dateLabel = formatDateRangeLabel(fromDate, toDate);
+
             const query = document.getElementById("mainSearch").value.toLowerCase();
             const filteredShops = window.db.shops.filter(s =>
                 s.town.toLowerCase().includes(query) ||
@@ -1785,7 +1964,7 @@
             let rowsHtml = "";
 
             filteredShops.forEach((shop, idx) => {
-                const st = getShopStats(shop);
+                const st = getShopStats(shop, fromDate, toDate);
                 totOpening += st.openingBalance;
                 totRecovery += st.totalRecovery;
                 totNet += st.netBalance;
@@ -1813,7 +1992,8 @@
                 </tr>
             `;
 
-            const subLine = query ? `Filtered Search: "${query}"` : `All Active Towns & Distributors (${filteredShops.length} Shops)`;
+            const baseSubLine = query ? `Filtered Search: "${query}"` : `All Active Towns & Distributors (${filteredShops.length} Shops)`;
+            const subLine = dateLabel ? `${baseSubLine} | ${dateLabel}` : baseSubLine;
 
             const html = `
                 ${buildPrintHeader("Market Credit Directory", subLine)}
@@ -1840,10 +2020,12 @@
 
         // 4. PRINT WAREHOUSE CARTON STOCK LEDGER
         function printStockReport() {
-            const st = getCartonStockStats();
+            const { from: fromDate, to: toDate } = getDateRange('stock');
+            const dateLabel = formatDateRangeLabel(fromDate, toDate);
+            const st = getCartonStockStats(fromDate, toDate);
             const movements = [];
 
-            window.db.purchases.forEach(p => {
+            window.db.purchases.filter(p => isDateInRange(p.date, fromDate, toDate)).forEach(p => {
                 movements.push({
                     kind: "PURCHASE (+)",
                     date: p.date,
@@ -1853,7 +2035,7 @@
                 });
             });
 
-            window.db.transactions.filter(t => t.type === "SALE" && Number(t.cartons) > 0).forEach(t => {
+            window.db.transactions.filter(t => t.type === "SALE" && Number(t.cartons) > 0 && isDateInRange(t.date, fromDate, toDate)).forEach(t => {
                 const shop = window.db.shops.find(s => s.id === t.shopId);
                 const label = shop ? `${shop.town} — ${shop.shopName} (${t.ref})` : t.ref;
                 movements.push({
@@ -1892,8 +2074,11 @@
                 </tr>
             `;
 
+            const stockSubLine = dateLabel
+                ? `Net Stock (Selected Period): ${st.available.toLocaleString()} Cartons | ${dateLabel}`
+                : `Available Godown Stock: ${st.available.toLocaleString()} Cartons`;
             const html = `
-                ${buildPrintHeader("Warehouse Carton Stock Ledger", `Available Godown Stock: ${st.available.toLocaleString()} Cartons`)}
+                ${buildPrintHeader("Warehouse Carton Stock Ledger", stockSubLine)}
                 <table>
                     <thead>
                         <tr>

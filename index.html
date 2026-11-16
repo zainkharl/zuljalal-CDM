@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" class="dark">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,18 +13,18 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
 
         :root {
-            --bg-deep: #080c14;
+            --bg-light: #f4f9ff;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-deep);
-            color: #f1f5f9;
+            background-color: var(--bg-light);
+            color: #0f172a;
             background-image: 
-                radial-gradient(at 10% 10%, rgba(79, 70, 229, 0.22) 0px, transparent 50%),
-                radial-gradient(at 90% 15%, rgba(147, 51, 234, 0.18) 0px, transparent 50%),
-                radial-gradient(at 50% 85%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
-                radial-gradient(at 80% 80%, rgba(245, 158, 11, 0.1) 0px, transparent 50%);
+                radial-gradient(at 8% 8%, rgba(14, 165, 233, 0.16) 0px, transparent 52%),
+                radial-gradient(at 92% 12%, rgba(56, 189, 248, 0.18) 0px, transparent 50%),
+                radial-gradient(at 50% 88%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
+                radial-gradient(at 85% 82%, rgba(2, 132, 199, 0.10) 0px, transparent 50%);
             background-attachment: fixed;
             min-height: 100vh;
         }
@@ -33,14 +33,14 @@
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* Ambient Glowing Blobs */
+        /* Ambient Soft Sky Blobs */
         .ambient-blob {
             position: fixed;
             border-radius: 50%;
-            filter: blur(100px);
+            filter: blur(110px);
             z-index: 0;
             pointer-events: none;
-            opacity: 0.55;
+            opacity: 0.42;
             animation: floatBlob 22s infinite alternate ease-in-out;
         }
         @keyframes floatBlob {
@@ -49,83 +49,88 @@
             100% { transform: translate(-25px, 25px) scale(0.95); }
         }
 
-        /* Mirror Glass Visual Styles */
+        /* Crisp White & Sky Blue Glass Panels */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(186, 230, 253, 0.85);
+            box-shadow: 0 8px 28px -4px rgba(14, 116, 144, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
         }
 
         .glass-panel-interactive {
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.90);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(186, 230, 253, 0.85);
+            box-shadow: 0 8px 26px -4px rgba(14, 116, 144, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-panel-interactive:hover {
             transform: translateY(-4px);
-            border-color: rgba(255, 255, 255, 0.22);
-            box-shadow: 0 16px 40px -10px rgba(99, 102, 241, 0.3);
-            background: rgba(23, 32, 54, 0.78);
+            border-color: rgba(14, 165, 233, 0.55);
+            box-shadow: 0 16px 36px -8px rgba(2, 132, 199, 0.18);
+            background: #ffffff;
         }
 
         .glass-header {
-            background: rgba(10, 15, 29, 0.85);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-bottom: 1px solid rgba(186, 230, 253, 0.9);
+            box-shadow: 0 4px 20px -4px rgba(14, 165, 233, 0.08);
         }
 
         .glass-modal {
-            background: rgba(13, 19, 35, 0.94);
-            backdrop-filter: blur(28px);
-            -webkit-backdrop-filter: blur(28px);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(26px);
+            -webkit-backdrop-filter: blur(26px);
+            border: 1px solid rgba(125, 211, 252, 0.8);
+            box-shadow: 0 25px 50px -12px rgba(3, 105, 161, 0.22);
         }
 
         /* Navigation Buttons */
         .tab-btn {
             position: relative;
             transition: all 0.25s ease;
-            color: #94a3b8;
+            color: #475569;
         }
         .tab-btn:hover {
-            color: #f8fafc;
-            background: rgba(255, 255, 255, 0.06);
+            color: #0284c7;
+            background: rgba(224, 242, 254, 0.7);
         }
         .tab-btn.active {
-            color: #818cf8;
-            background: rgba(99, 102, 241, 0.16);
-            border: 1px solid rgba(99, 102, 241, 0.35);
+            color: #0369a1;
+            background: rgba(14, 165, 233, 0.14);
+            border: 1px solid rgba(14, 165, 233, 0.38);
             font-weight: 700;
         }
 
         /* Custom Scrollbars */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 999px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.6); }
+        ::-webkit-scrollbar-track { background: #e0f2fe; }
+        ::-webkit-scrollbar-thumb { background: #7dd3fc; border-radius: 999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0284c7; }
 
         /* Form Inputs Glow */
         input, select {
-            background: rgba(15, 23, 42, 0.7) !important;
-            border: 1px solid rgba(255, 255, 255, 0.13) !important;
-            color: #f8fafc !important;
+            background: #f8fafc !important;
+            border: 1px solid #bae6fd !important;
+            color: #0f172a !important;
             transition: all 0.2s ease !important;
         }
+        input::placeholder {
+            color: #94a3b8 !important;
+        }
         input:focus, select:focus {
-            border-color: #6366f1 !important;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3) !important;
+            background: #ffffff !important;
+            border-color: #0ea5e9 !important;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.22) !important;
             outline: none !important;
         }
         input[type="date"] {
-            color-scheme: dark;
+            color-scheme: light;
         }
 
         /* ==================== CLEAN PRINT TEMPLATE STYLES ==================== */
@@ -156,7 +161,8 @@
             #editShopModal,
             #cartonPurchaseModal,
             #txModal,
-            #openingBalModal {
+            #openingBalModal,
+            #themeModal {
                 display: none !important;
             }
             #printSheetArea {
@@ -199,67 +205,243 @@
                 font-size: 12px;
             }
         }
+
+        /* ==================== 24-THEME DYNAMIC STUDIO SYSTEM ==================== */
+        :root {
+            --t-bg: #f4f9ff;
+            --t-surface: rgba(255, 255, 255, 0.88);
+            --t-surface-solid: #ffffff;
+            --t-header-bg: rgba(255, 255, 255, 0.92);
+            --t-nav-bg: rgba(240, 249, 255, 0.92);
+            --t-border: #bae6fd;
+            --t-border-soft: rgba(186, 230, 253, 0.75);
+            --t-text: #0f172a;
+            --t-muted: #64748b;
+            --t-primary: #0284c7;
+            --t-primary-hover: #0369a1;
+            --t-primary-soft: #e0f2fe;
+            --t-primary-text: #0369a1;
+            --t-accent: #2563eb;
+            --t-blob1: #7dd3fc;
+            --t-blob2: #67e8f9;
+            --t-blob3: #bfdbfe;
+            --t-r1: rgba(14, 165, 233, 0.16);
+            --t-r2: rgba(56, 189, 248, 0.18);
+            --t-r3: rgba(16, 185, 129, 0.08);
+            --t-shadow: rgba(14, 116, 144, 0.10);
+            --t-grand-bg: #0c4a6e;
+            --t-input-bg: #f8fafc;
+        }
+
+        body {
+            background-color: var(--t-bg) !important;
+            color: var(--t-text) !important;
+            background-image:
+                radial-gradient(at 8% 8%, var(--t-r1) 0px, transparent 52%),
+                radial-gradient(at 92% 12%, var(--t-r2) 0px, transparent 50%),
+                radial-gradient(at 50% 88%, var(--t-r3) 0px, transparent 50%) !important;
+        }
+
+        .glass-panel {
+            background: var(--t-surface) !important;
+            border-color: var(--t-border-soft) !important;
+            box-shadow: 0 8px 28px -4px var(--t-shadow), 0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
+        }
+
+        .glass-panel-interactive {
+            background: var(--t-surface) !important;
+            border-color: var(--t-border-soft) !important;
+            box-shadow: 0 8px 26px -4px var(--t-shadow), 0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
+        }
+        .glass-panel-interactive:hover {
+            border-color: var(--t-primary) !important;
+            box-shadow: 0 16px 36px -8px var(--t-shadow) !important;
+            background: var(--t-surface-solid) !important;
+        }
+
+        .glass-header {
+            background: var(--t-header-bg) !important;
+            border-bottom-color: var(--t-border) !important;
+            box-shadow: 0 4px 20px -4px var(--t-shadow) !important;
+        }
+
+        .glass-modal {
+            background: var(--t-surface-solid) !important;
+            border-color: var(--t-border) !important;
+        }
+
+        header nav {
+            background: var(--t-nav-bg) !important;
+            border-top-color: var(--t-border-soft) !important;
+            border-bottom-color: var(--t-border-soft) !important;
+        }
+
+        .tab-btn {
+            color: var(--t-muted) !important;
+        }
+        .tab-btn:hover {
+            color: var(--t-primary) !important;
+            background: var(--t-primary-soft) !important;
+        }
+        .tab-btn.active {
+            color: var(--t-primary-text) !important;
+            background: var(--t-primary-soft) !important;
+            border-color: var(--t-border) !important;
+        }
+
+        input, select {
+            background: var(--t-input-bg) !important;
+            border-color: var(--t-border) !important;
+            color: var(--t-text) !important;
+        }
+        input:focus, select:focus {
+            background: var(--t-surface-solid) !important;
+            border-color: var(--t-primary) !important;
+            box-shadow: 0 0 0 3px var(--t-primary-soft) !important;
+        }
+
+        /* Dynamic Theme Utility Mapping for Smooth Live Switching */
+        .text-slate-900, .text-slate-800 { color: var(--t-text) !important; }
+        .text-slate-500, .text-slate-600 { color: var(--t-muted) !important; }
+        .text-slate-700 { color: var(--t-text) !important; opacity: 0.88; }
+
+        .text-sky-600, .text-sky-700, .text-sky-800 { color: var(--t-primary-text) !important; }
+        .bg-sky-50, .bg-sky-50\/90, .bg-sky-50\/60, .bg-sky-100, .bg-sky-100\/70, .bg-sky-100\/80 {
+            background-color: var(--t-primary-soft) !important;
+        }
+        .border-sky-200, .border-sky-200\/80, .border-sky-200\/70, .border-sky-300 {
+            border-color: var(--t-border) !important;
+        }
+        .divide-sky-100 > :not([hidden]) ~ :not([hidden]) {
+            border-color: var(--t-border-soft) !important;
+        }
+
+        .bg-sky-600 {
+            background-color: var(--t-primary) !important;
+            color: #ffffff !important;
+        }
+        .bg-sky-600:hover, .hover\:bg-sky-700:hover {
+            background-color: var(--t-primary-hover) !important;
+            color: #ffffff !important;
+        }
+        .bg-sky-900 {
+            background-color: var(--t-grand-bg) !important;
+            color: #ffffff !important;
+        }
+
+        .brand-logo-glow {
+            background: linear-gradient(135deg, var(--t-primary), var(--t-accent)) !important;
+        }
+        .brand-title-gradient {
+            background-image: linear-gradient(90deg, var(--t-primary-hover), var(--t-primary), var(--t-accent)) !important;
+        }
+        .brand-icon-box {
+            background: var(--t-surface-solid) !important;
+            border-color: var(--t-border) !important;
+            color: var(--t-primary) !important;
+        }
+
+        /* Dark Mode Theme Enhancements when data-theme-mode="dark" */
+        html[data-theme-mode="dark"] input[type="date"] {
+            color-scheme: dark;
+        }
+        html[data-theme-mode="dark"] .bg-emerald-100 { background-color: rgba(16, 185, 129, 0.18) !important; }
+        html[data-theme-mode="dark"] .text-emerald-600, html[data-theme-mode="dark"] .text-emerald-700 { color: #34d399 !important; }
+        html[data-theme-mode="dark"] .border-emerald-300 { border-color: rgba(52, 211, 153, 0.35) !important; }
+
+        html[data-theme-mode="dark"] .bg-amber-100, html[data-theme-mode="dark"] .bg-amber-50\/90 { background-color: rgba(245, 158, 11, 0.16) !important; }
+        html[data-theme-mode="dark"] .text-amber-600, html[data-theme-mode="dark"] .text-amber-700 { color: #fbbf24 !important; }
+
+        html[data-theme-mode="dark"] .bg-rose-100 { background-color: rgba(244, 63, 94, 0.18) !important; }
+        html[data-theme-mode="dark"] .text-rose-600, html[data-theme-mode="dark"] .text-rose-700 { color: #fb7185 !important; }
+        html[data-theme-mode="dark"] .border-rose-300 { border-color: rgba(251, 113, 133, 0.35) !important; }
+
+        html[data-theme-mode="dark"] .bg-indigo-100 { background-color: rgba(99, 102, 241, 0.2) !important; }
+        html[data-theme-mode="dark"] .text-indigo-600, html[data-theme-mode="dark"] .text-indigo-700 { color: #a5b4fc !important; }
+
+        html[data-theme-mode="dark"] .bg-white { background-color: var(--t-surface-solid) !important; }
+        html[data-theme-mode="dark"] .hover\:bg-sky-50\/90:hover,
+        html[data-theme-mode="dark"] .hover\:bg-sky-50\/80:hover,
+        html[data-theme-mode="dark"] .hover\:bg-sky-100:hover {
+            background-color: var(--t-primary-soft) !important;
+        }
+
+        /* Theme Swatch Card Styling */
+        .theme-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1.5px solid var(--t-border);
+            background: var(--t-surface-solid);
+        }
+        .theme-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--t-primary);
+            box-shadow: 0 8px 20px -4px var(--t-shadow);
+        }
+        .theme-card.active-theme {
+            border: 2px solid var(--t-primary) !important;
+            box-shadow: 0 0 0 3px var(--t-primary-soft) !important;
+        }
     </style>
 </head>
-<body class="relative min-h-screen flex flex-col text-slate-100 overflow-x-hidden">
+<body class="relative min-h-screen flex flex-col text-slate-800 overflow-x-hidden">
 
     <!-- ==================== DEDICATED PRINT STATEMENT SHEET ==================== -->
     <div id="printSheetArea"></div>
 
     <!-- Glowing Background Ambient Spheres -->
-    <div class="ambient-blob w-96 h-96 bg-indigo-600 top-10 left-10 no-print"></div>
-    <div class="ambient-blob w-80 h-80 bg-purple-600 top-1/3 right-10 no-print"></div>
-    <div class="ambient-blob w-96 h-96 bg-emerald-600 bottom-10 left-1/3 no-print"></div>
+    <div id="ambientBlob1" class="ambient-blob w-96 h-96 bg-sky-300 top-10 left-10 no-print"></div>
+    <div id="ambientBlob2" class="ambient-blob w-80 h-80 bg-cyan-300 top-1/3 right-10 no-print"></div>
+    <div id="ambientBlob3" class="ambient-blob w-96 h-96 bg-blue-200 bottom-10 left-1/3 no-print"></div>
 
     <!-- ==================== FIREBASE AUTHENTICATION OVERLAY ==================== -->
-    <div id="authOverlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-xl no-print">
-        <div class="glass-modal w-full max-w-md p-8 rounded-3xl relative overflow-hidden border border-white/20 shadow-2xl">
-            <div class="absolute -top-12 -left-12 w-32 h-32 bg-indigo-500/30 rounded-full blur-2xl"></div>
+    <div id="authOverlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/45 backdrop-blur-xl no-print">
+        <div class="glass-modal w-full max-w-md p-8 rounded-3xl relative overflow-hidden border border-sky-200 shadow-2xl">
+            <div class="absolute -top-12 -left-12 w-32 h-32 bg-sky-400/25 rounded-full blur-2xl"></div>
             <div class="text-center mb-6 relative">
-                <div class="inline-flex bg-gradient-to-br from-indigo-500 to-purple-600 p-4 rounded-2xl text-3xl text-white shadow-lg mb-3">
+                <div class="inline-flex bg-gradient-to-br from-sky-500 to-blue-600 p-4 rounded-2xl text-3xl text-white shadow-lg mb-3">
                     <i class="fa-solid fa-boxes-packing"></i>
                 </div>
-                <h2 class="text-2xl font-extrabold text-white tracking-tight">ZULJALAL TRADERS</h2>
-                <p class="text-xs text-indigo-300 font-semibold mt-1">Smart Cloud ERP &bull; User Account Login</p>
+                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">ZULJALAL TRADERS</h2>
+                <p class="text-xs text-sky-700 font-semibold mt-1">Smart Cloud ERP &bull; User Account Login</p>
             </div>
 
             <!-- Login / Signup Tabs -->
-            <div class="flex bg-slate-900/80 p-1 rounded-xl mb-5 border border-white/10">
-                <button type="button" id="tabAuthLogin" onclick="toggleAuthTab('login')" class="w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-white bg-indigo-600">
+            <div class="flex bg-sky-50 p-1 rounded-xl mb-5 border border-sky-200">
+                <button type="button" id="tabAuthLogin" onclick="toggleAuthTab('login')" class="w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-white bg-sky-600 shadow-sm">
                     <i class="fa-solid fa-right-to-bracket mr-1"></i> Sign In
                 </button>
-                <button type="button" id="tabAuthSignup" onclick="toggleAuthTab('signup')" class="w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-slate-400 hover:text-white">
+                <button type="button" id="tabAuthSignup" onclick="toggleAuthTab('signup')" class="w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-slate-600 hover:text-sky-700">
                     <i class="fa-solid fa-user-plus mr-1"></i> Create Account
                 </button>
             </div>
 
             <!-- Auth Alert Box -->
-            <div id="authAlert" class="hidden mb-4 p-3 rounded-xl text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30"></div>
+            <div id="authAlert" class="hidden mb-4 p-3 rounded-xl text-xs font-semibold bg-rose-100 text-rose-700 border border-rose-300"></div>
 
             <!-- Auth Form -->
             <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Email Address</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Email Address</label>
                     <div class="relative">
-                        <i class="fa-solid fa-envelope absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                        <i class="fa-solid fa-envelope absolute left-3.5 top-3 text-slate-500 text-xs"></i>
                         <input type="email" id="authEmail" required class="w-full pl-9 pr-3.5 py-2.5 rounded-xl text-sm font-medium" placeholder="zuljalal@traders.com">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Password</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Password</label>
                     <div class="relative">
-                        <i class="fa-solid fa-lock absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                        <i class="fa-solid fa-lock absolute left-3.5 top-3 text-slate-500 text-xs"></i>
                         <input type="password" id="authPassword" required minlength="6" class="w-full pl-9 pr-3.5 py-2.5 rounded-xl text-sm font-medium" placeholder="••••••••">
                     </div>
                 </div>
 
-                <button type="submit" id="authBtnSubmit" class="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-sm font-extrabold shadow-lg shadow-indigo-950/50 transition duration-200 mt-2 flex items-center justify-center">
+                <button type="submit" id="authBtnSubmit" class="w-full py-3 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white rounded-xl text-sm font-extrabold shadow-lg shadow-sky-200 transition duration-200 mt-2 flex items-center justify-center">
                     <i class="fa-solid fa-circle-notch fa-spin mr-2 hidden" id="authSpinner"></i>
                     <span id="authBtnText">Sign In to Dashboard</span>
                 </button>
             </form>
 
-            <p class="text-[11px] text-slate-400 text-center mt-5">
+            <p class="text-[11px] text-slate-500 text-center mt-5">
                 Har new user ko bilkul fresh aur blank ERP workspace milega.
             </p>
         </div>
@@ -272,52 +454,59 @@
             <!-- Logo & Brand Info -->
             <div class="flex items-center space-x-3.5">
                 <div class="relative group cursor-pointer">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-70 group-hover:opacity-100 transition duration-300"></div>
-                    <div class="relative bg-slate-900 border border-white/20 p-3 rounded-2xl text-2xl text-indigo-400 flex items-center justify-center">
+                    <div class="brand-logo-glow absolute -inset-1 bg-gradient-to-r from-sky-500 to-blue-600 rounded-2xl blur opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="brand-icon-box relative bg-white border border-sky-200 p-3 rounded-2xl text-2xl text-sky-600 shadow-sm flex items-center justify-center">
                         <i class="fa-solid fa-boxes-packing"></i>
                     </div>
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-indigo-200">
+                        <h1 class="brand-title-gradient text-xl sm:text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-sky-700 via-blue-700 to-sky-500">
                             ZULJALAL TRADERS
                         </h1>
-                        <span class="text-[10px] uppercase tracking-widest bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2.5 py-0.5 rounded-full font-bold shadow-sm">
+                        <span class="text-[10px] uppercase tracking-widest bg-emerald-100 text-emerald-700 border border-emerald-300 px-2.5 py-0.5 rounded-full font-bold shadow-sm">
                             FIREBASE LIVE
                         </span>
                     </div>
-                    <p class="text-xs text-slate-400 mt-0.5 flex items-center gap-2">
-                        <span><i class="fa-solid fa-layer-group text-indigo-400 mr-1"></i> Stock</span>
+                    <p class="text-xs text-slate-500 mt-0.5 flex items-center gap-2">
+                        <span><i class="fa-solid fa-layer-group text-sky-600 mr-1"></i> Stock</span>
                         <span>&bull;</span>
-                        <span><i class="fa-solid fa-store text-amber-400 mr-1"></i> Ledgers</span>
+                        <span><i class="fa-solid fa-store text-amber-600 mr-1"></i> Ledgers</span>
                         <span>&bull;</span>
-                        <span><i class="fa-solid fa-print text-sky-400 mr-1"></i> Print Statements</span>
+                        <span><i class="fa-solid fa-print text-sky-600 mr-1"></i> Print Statements</span>
                     </p>
                 </div>
             </div>
 
             <!-- Quick Action Buttons & User Profile -->
             <div class="flex flex-wrap items-center justify-center gap-2.5">
-                <button onclick="openShopModal()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold backdrop-blur-md border border-white/15 transition flex items-center">
-                    <i class="fa-solid fa-store mr-2 text-sky-400"></i> + Add Shop
+                <button onclick="openShopModal()" class="bg-sky-50 hover:bg-sky-100 text-sky-800 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold border border-sky-200 shadow-xs transition flex items-center">
+                    <i class="fa-solid fa-store mr-2 text-sky-600"></i> + Add Shop
                 </button>
-                <button onclick="openCartonPurchaseModal()" class="bg-purple-600/80 hover:bg-purple-600 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold backdrop-blur-md border border-purple-400/30 transition flex items-center">
+                <button onclick="openCartonPurchaseModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold backdrop-blur-md border border-indigo-300 transition flex items-center">
                     <i class="fa-solid fa-truck-loading mr-2"></i> Purchase (+)
                 </button>
-                <button onclick="openTransactionModal('SALE')" class="bg-emerald-600/80 hover:bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold backdrop-blur-md border border-emerald-400/30 transition flex items-center">
+                <button onclick="openTransactionModal('SALE')" class="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold backdrop-blur-md border border-emerald-300 transition flex items-center">
                     <i class="fa-solid fa-file-invoice-dollar mr-2"></i> Bill (-)
                 </button>
-                <button onclick="openTransactionModal('RECOVERY')" class="bg-amber-500/90 hover:bg-amber-400 text-slate-950 px-3 py-2 rounded-xl text-xs sm:text-sm font-extrabold backdrop-blur-md border border-amber-300/50 transition flex items-center">
+                <button onclick="openTransactionModal('RECOVERY')" class="bg-amber-500 hover:bg-amber-600 text-white shadow-sm px-3 py-2 rounded-xl text-xs sm:text-sm font-extrabold backdrop-blur-md border border-amber-300 transition flex items-center">
                     <i class="fa-solid fa-hand-holding-dollar mr-2"></i> Recovery
                 </button>
 
-                <div class="h-6 w-[1px] bg-white/15 mx-1 hidden sm:block"></div>
+                <div class="h-6 w-[1px] bg-sky-200 mx-1 hidden sm:block"></div>
+
+                <!-- Theme Studio Button (24 Color Combinations) -->
+                <button onclick="openThemeModal()" title="Change Theme (24 Combinations)" class="bg-sky-50 hover:bg-sky-100 text-sky-800 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold border border-sky-200 shadow-xs transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-palette text-sky-600"></i>
+                    <span>Theme</span>
+                    <span id="activeThemeDot" class="w-2.5 h-2.5 rounded-full border border-white shadow-xs" style="background:#0284c7;"></span>
+                </button>
 
                 <!-- User Badge & Logout -->
-                <div class="flex items-center gap-2 bg-slate-900/80 border border-white/15 px-3 py-1.5 rounded-xl text-xs">
-                    <i class="fa-solid fa-user-circle text-indigo-400 text-sm"></i>
-                    <span id="userDisplayEmail" class="font-semibold text-slate-200 max-w-[130px] truncate">User</span>
-                    <button onclick="handleLogout()" title="Logout" class="text-rose-400 hover:text-rose-300 ml-1">
+                <div class="flex items-center gap-2 bg-sky-50 border border-sky-200 px-3 py-1.5 rounded-xl text-xs">
+                    <i class="fa-solid fa-user-circle text-sky-600 text-sm"></i>
+                    <span id="userDisplayEmail" class="font-semibold text-slate-800 max-w-[130px] truncate">User</span>
+                    <button onclick="handleLogout()" title="Logout" class="text-rose-600 hover:text-rose-700 ml-1">
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </div>
@@ -325,7 +514,7 @@
         </div>
 
         <!-- Navigation Tabs Bar -->
-        <nav class="bg-slate-900/60 border-t border-b border-white/5 backdrop-blur-md">
+        <nav class="bg-sky-50/90 border-t border-b border-sky-200/80 backdrop-blur-md">
             <div id="navTabsContainer" class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center space-x-2 overflow-x-auto py-2">
                 <button onclick="switchTab('main')" id="btn-main" class="tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center whitespace-nowrap">
                     <i class="fa-solid fa-gauge-high mr-2"></i> Dashboard
@@ -336,7 +525,7 @@
                 <button onclick="switchTab('stock')" id="btn-stock" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center whitespace-nowrap">
                     <i class="fa-solid fa-cubes mr-2"></i> Carton Stock
                 </button>
-                <div class="h-5 w-[1px] bg-white/10 mx-1"></div>
+                <div class="h-5 w-[1px] bg-sky-200 mx-1"></div>
                 <div id="townTabsList" class="flex items-center space-x-1.5"></div>
             </div>
         </nav>
@@ -349,28 +538,28 @@
         <div id="tab-content-main" class="space-y-6">
 
             <!-- Date Range Filter Bar (Dashboard) -->
-            <div class="glass-panel px-5 py-3.5 rounded-2xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 border border-indigo-500/20">
+            <div class="glass-panel px-5 py-3.5 rounded-2xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3 border border-sky-200">
                 <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-xl bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 flex items-center justify-center text-xs">
+                    <div class="w-8 h-8 rounded-xl bg-sky-100 border border-sky-300 text-sky-700 flex items-center justify-center text-xs">
                         <i class="fa-solid fa-calendar-days"></i>
                     </div>
                     <div>
-                        <span class="text-xs font-extrabold text-white block">Date Range Filter (Dashboard)</span>
-                        <span id="dashDateStatus" class="text-[11px] text-slate-400">Showing All Entries</span>
+                        <span class="text-xs font-extrabold text-slate-900 block">Date Range Filter (Dashboard)</span>
+                        <span id="dashDateStatus" class="text-[11px] text-slate-500">Showing All Entries</span>
                     </div>
                 </div>
                 <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
-                    <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-xl border border-white/10">
-                        <label class="text-[11px] font-bold text-slate-400">From:</label>
+                    <div class="flex items-center gap-1.5 bg-sky-50/90 px-2.5 py-1.5 rounded-xl border border-sky-200">
+                        <label class="text-[11px] font-bold text-slate-500">From:</label>
                         <input type="date" id="dashFromDate" onchange="renderDashboard()" class="text-xs font-semibold rounded-lg px-2 py-1">
                     </div>
-                    <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-xl border border-white/10">
-                        <label class="text-[11px] font-bold text-slate-400">To:</label>
+                    <div class="flex items-center gap-1.5 bg-sky-50/90 px-2.5 py-1.5 rounded-xl border border-sky-200">
+                        <label class="text-[11px] font-bold text-slate-500">To:</label>
                         <input type="date" id="dashToDate" onchange="renderDashboard()" class="text-xs font-semibold rounded-lg px-2 py-1">
                     </div>
-                    <button type="button" onclick="setQuickDateRange('dash', 'today')" class="px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-white/10 hover:bg-white/20 text-slate-200 transition">Today</button>
-                    <button type="button" onclick="setQuickDateRange('dash', 'month')" class="px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-white/10 hover:bg-white/20 text-slate-200 transition">This Month</button>
-                    <button type="button" onclick="clearDateRange('dash')" class="px-3 py-1.5 rounded-xl text-[11px] font-bold bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 transition">
+                    <button type="button" onclick="setQuickDateRange('dash', 'today')" class="px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 transition">Today</button>
+                    <button type="button" onclick="setQuickDateRange('dash', 'month')" class="px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 transition">This Month</button>
+                    <button type="button" onclick="clearDateRange('dash')" class="px-3 py-1.5 rounded-xl text-[11px] font-bold bg-rose-100 hover:bg-rose-200 text-rose-700 border border-rose-300 transition">
                         <i class="fa-solid fa-rotate-left mr-1"></i> Reset
                     </button>
                 </div>
@@ -380,46 +569,46 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div class="glass-panel-interactive p-5 rounded-2xl flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Market Credit</p>
-                        <h3 id="kpiTotalCredit" class="text-2xl sm:text-3xl font-extrabold text-white mt-1 font-num">Rs. 0</h3>
-                        <p class="text-[11px] text-rose-400 font-semibold mt-1 flex items-center">
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Market Credit</p>
+                        <h3 id="kpiTotalCredit" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 font-num">Rs. 0</h3>
+                        <p class="text-[11px] text-rose-600 font-semibold mt-1 flex items-center">
                             <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5 animate-pulse"></span> Market Receivable
                         </p>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-400 flex items-center justify-center text-xl">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-100 border border-rose-300 text-rose-600 flex items-center justify-center text-xl">
                         <i class="fa-solid fa-wallet"></i>
                     </div>
                 </div>
 
                 <div class="glass-panel-interactive p-5 rounded-2xl flex items-center justify-between">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Online Recovery</p>
-                        <h3 id="kpiTotalRecovery" class="text-2xl sm:text-3xl font-extrabold text-emerald-400 mt-1 font-num">Rs. 0</h3>
-                        <p class="text-[11px] text-emerald-400 font-semibold mt-1"><i class="fa-solid fa-arrow-trend-up mr-1"></i> Bank Collected</p>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Online Recovery</p>
+                        <h3 id="kpiTotalRecovery" class="text-2xl sm:text-3xl font-extrabold text-emerald-600 mt-1 font-num">Rs. 0</h3>
+                        <p class="text-[11px] text-emerald-600 font-semibold mt-1"><i class="fa-solid fa-arrow-trend-up mr-1"></i> Bank Collected</p>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-100 border border-emerald-500/30 text-emerald-600 flex items-center justify-center text-xl">
                         <i class="fa-solid fa-money-bill-transfer"></i>
                     </div>
                 </div>
 
                 <div class="glass-panel-interactive p-5 rounded-2xl flex items-center justify-between cursor-pointer" onclick="switchTab('stock')">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Available Cartons</p>
-                        <h3 id="kpiAvailableCartons" class="text-2xl sm:text-3xl font-extrabold text-purple-300 mt-1 font-num">0 Cartons</h3>
-                        <p class="text-[11px] text-purple-400 font-semibold mt-1">View godown stock &rarr;</p>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Available Cartons</p>
+                        <h3 id="kpiAvailableCartons" class="text-2xl sm:text-3xl font-extrabold text-indigo-700 mt-1 font-num">0 Cartons</h3>
+                        <p class="text-[11px] text-indigo-600 font-semibold mt-1">View godown stock &rarr;</p>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-100 border border-purple-500/30 text-indigo-600 flex items-center justify-center text-xl">
                         <i class="fa-solid fa-box-open"></i>
                     </div>
                 </div>
 
                 <div class="glass-panel-interactive p-5 rounded-2xl flex items-center justify-between cursor-pointer" onclick="switchTab('bdz')">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Active Towns / Shops</p>
-                        <h3 id="kpiTownShopCount" class="text-2xl sm:text-3xl font-extrabold text-amber-300 mt-1 font-num">0 / 0</h3>
-                        <p class="text-[11px] text-amber-400 font-semibold mt-1">View BDZ summary &rarr;</p>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Active Towns / Shops</p>
+                        <h3 id="kpiTownShopCount" class="text-2xl sm:text-3xl font-extrabold text-amber-700 mt-1 font-num">0 / 0</h3>
+                        <p class="text-[11px] text-amber-600 font-semibold mt-1">View BDZ summary &rarr;</p>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 border border-amber-500/30 text-amber-600 flex items-center justify-center text-xl">
                         <i class="fa-solid fa-map-location-dot"></i>
                     </div>
                 </div>
@@ -429,12 +618,12 @@
             <div class="glass-panel p-5 rounded-2xl">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                     <div>
-                        <h3 class="font-extrabold text-white text-base flex items-center gap-2">
-                            <i class="fa-solid fa-user-tie text-indigo-400"></i> BDZ Booker Overview Cards
+                        <h3 class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+                            <i class="fa-solid fa-user-tie text-sky-600"></i> BDZ Booker Overview Cards
                         </h3>
-                        <p class="text-xs text-slate-400">Har BDZ booker ka remaining credit status</p>
+                        <p class="text-xs text-slate-500">Har BDZ booker ka remaining credit status</p>
                     </div>
-                    <button onclick="switchTab('bdz')" class="text-xs font-bold text-indigo-300 hover:text-white bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 px-3 py-1.5 rounded-xl transition">
+                    <button onclick="switchTab('bdz')" class="text-xs font-bold text-sky-700 hover:text-sky-950 bg-sky-100 hover:bg-sky-200 border border-sky-300 px-3 py-1.5 rounded-xl transition">
                         Full BDZ Sheet <i class="fa-solid fa-arrow-right ml-1"></i>
                     </button>
                 </div>
@@ -442,20 +631,20 @@
             </div>
 
             <!-- Dashboard Master Directory Table -->
-            <div class="glass-panel rounded-2xl overflow-hidden border border-white/10">
-                <div class="px-6 py-4 bg-slate-900/80 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div class="glass-panel rounded-2xl overflow-hidden border border-sky-200/80">
+                <div class="px-6 py-4 bg-sky-50/90 border-b border-sky-200/80 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                     <div>
-                        <h3 class="font-extrabold text-white text-lg flex items-center">
-                            <i class="fa-solid fa-sitemap mr-2.5 text-indigo-400"></i> Town & Distributor / Shop Directory
+                        <h3 class="font-extrabold text-slate-900 text-lg flex items-center">
+                            <i class="fa-solid fa-sitemap mr-2.5 text-sky-600"></i> Town & Distributor / Shop Directory
                         </h3>
-                        <p class="text-xs text-slate-400">Live cloud synced directory</p>
+                        <p class="text-xs text-slate-500">Live cloud synced directory</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
                         <div class="relative flex-grow sm:w-64">
-                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-500 text-xs"></i>
                             <input type="text" id="mainSearch" onkeyup="renderDashboard()" placeholder="Search town, shop, BDZ..." class="w-full pl-9 pr-3.5 py-2 rounded-xl text-xs font-medium">
                         </div>
-                        <button onclick="printDashboardDirectory()" class="bg-sky-600/85 hover:bg-sky-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-sky-400/30 transition flex items-center whitespace-nowrap shadow-md">
+                        <button onclick="printDashboardDirectory()" class="bg-sky-600 hover:bg-sky-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold border border-sky-300 transition flex items-center whitespace-nowrap shadow-md">
                             <i class="fa-solid fa-print mr-1.5"></i> Print Directory
                         </button>
                     </div>
@@ -463,7 +652,7 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-slate-900/90 text-slate-400 text-[11px] uppercase font-bold tracking-wider border-b border-white/10">
+                            <tr class="bg-sky-50 text-sky-800 text-[11px] uppercase font-bold tracking-wider border-b border-sky-200">
                                 <th class="py-3.5 px-5">Town Sheet Link</th>
                                 <th class="py-3.5 px-5">Shop / Distributor Link</th>
                                 <th class="py-3.5 px-5">Assigned BDZ</th>
@@ -474,7 +663,7 @@
                                 <th class="py-3.5 px-5 text-center">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="dashboardTableBody" class="divide-y divide-white/5 text-sm"></tbody>
+                        <tbody id="dashboardTableBody" class="divide-y divide-sky-100 text-sm"></tbody>
                     </table>
                 </div>
             </div>
@@ -484,28 +673,28 @@
         <div id="tab-content-bdz" class="hidden space-y-6">
             <div class="glass-panel p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h2 class="text-xl sm:text-2xl font-extrabold text-white flex items-center gap-2">
-                        <i class="fa-solid fa-users-viewfinder text-indigo-400"></i> BDZ Wise Towns & Credit Report
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-users-viewfinder text-sky-600"></i> BDZ Wise Towns & Credit Report
                     </h2>
-                    <p class="text-xs text-slate-400 mt-1">Har BDZ ke tamam towns/shops aur summary totals</p>
+                    <p class="text-xs text-slate-500 mt-1">Har BDZ ke tamam towns/shops aur summary totals</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
-                    <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-xl border border-white/10">
-                        <i class="fa-solid fa-calendar-days text-indigo-400 text-xs"></i>
-                        <label class="text-[11px] font-bold text-slate-400">From:</label>
+                    <div class="flex items-center gap-1.5 bg-sky-50/90 px-2.5 py-1.5 rounded-xl border border-sky-200">
+                        <i class="fa-solid fa-calendar-days text-sky-600 text-xs"></i>
+                        <label class="text-[11px] font-bold text-slate-500">From:</label>
                         <input type="date" id="bdzFromDate" onchange="renderBdzReport()" class="text-xs font-semibold rounded-lg px-2 py-1">
                     </div>
-                    <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-xl border border-white/10">
-                        <label class="text-[11px] font-bold text-slate-400">To:</label>
+                    <div class="flex items-center gap-1.5 bg-sky-50/90 px-2.5 py-1.5 rounded-xl border border-sky-200">
+                        <label class="text-[11px] font-bold text-slate-500">To:</label>
                         <input type="date" id="bdzToDate" onchange="renderBdzReport()" class="text-xs font-semibold rounded-lg px-2 py-1">
                     </div>
-                    <button type="button" onclick="clearDateRange('bdz')" title="Reset Dates" class="px-2.5 py-2 rounded-xl text-xs font-bold bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 transition">
+                    <button type="button" onclick="clearDateRange('bdz')" title="Reset Dates" class="px-2.5 py-2 rounded-xl text-xs font-bold bg-rose-100 hover:bg-rose-200 text-rose-700 border border-rose-300 transition">
                         <i class="fa-solid fa-rotate-left"></i>
                     </button>
                     <select id="bdzFilterSelect" onchange="renderBdzReport()" class="px-3.5 py-2 rounded-xl text-xs font-bold">
                         <option value="">All BDZs (Complete Sheet)</option>
                     </select>
-                    <button onclick="printBdzReport()" class="bg-sky-600/90 hover:bg-sky-500 text-white px-4 py-2 rounded-xl text-xs font-bold border border-sky-400/30 transition flex items-center shadow-lg">
+                    <button onclick="printBdzReport()" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-xl text-xs font-bold border border-sky-300 transition flex items-center shadow-lg">
                         <i class="fa-solid fa-print mr-1.5"></i> Print BDZ Report
                     </button>
                 </div>
@@ -519,7 +708,7 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-slate-900/90 text-indigo-300 text-[11px] uppercase font-bold tracking-wider border-b border-white/10">
+                            <tr class="bg-sky-50 text-sky-800 text-[11px] uppercase font-bold tracking-wider border-b border-sky-200">
                                 <th class="py-3.5 px-5">BDZ Name</th>
                                 <th class="py-3.5 px-5">Town</th>
                                 <th class="py-3.5 px-5">Shop / Distributor</th>
@@ -531,7 +720,7 @@
                                 <th class="py-3.5 px-5 text-right">Remaining Credit</th>
                             </tr>
                         </thead>
-                        <tbody id="bdzReportBody" class="divide-y divide-white/5 text-sm"></tbody>
+                        <tbody id="bdzReportBody" class="divide-y divide-sky-100 text-sm"></tbody>
                     </table>
                 </div>
             </div>
@@ -541,28 +730,28 @@
         <div id="tab-content-stock" class="hidden space-y-6">
             <div class="glass-panel p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h2 class="text-xl sm:text-2xl font-extrabold text-white flex items-center gap-2">
-                        <i class="fa-solid fa-boxes-stacked text-purple-400"></i> Warehouse Carton Stock Ledger
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-boxes-stacked text-indigo-600"></i> Warehouse Carton Stock Ledger
                     </h2>
-                    <p class="text-xs text-slate-400 mt-1">Purchases (+) aur Invoice Sales (-) ka realtime stock</p>
+                    <p class="text-xs text-slate-500 mt-1">Purchases (+) aur Invoice Sales (-) ka realtime stock</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-2.5">
-                    <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-xl border border-white/10">
-                        <i class="fa-solid fa-calendar-days text-purple-400 text-xs"></i>
-                        <label class="text-[11px] font-bold text-slate-400">From:</label>
+                    <div class="flex items-center gap-1.5 bg-sky-50/90 px-2.5 py-1.5 rounded-xl border border-sky-200">
+                        <i class="fa-solid fa-calendar-days text-indigo-600 text-xs"></i>
+                        <label class="text-[11px] font-bold text-slate-500">From:</label>
                         <input type="date" id="stockFromDate" onchange="renderStockPage()" class="text-xs font-semibold rounded-lg px-2 py-1">
                     </div>
-                    <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-xl border border-white/10">
-                        <label class="text-[11px] font-bold text-slate-400">To:</label>
+                    <div class="flex items-center gap-1.5 bg-sky-50/90 px-2.5 py-1.5 rounded-xl border border-sky-200">
+                        <label class="text-[11px] font-bold text-slate-500">To:</label>
                         <input type="date" id="stockToDate" onchange="renderStockPage()" class="text-xs font-semibold rounded-lg px-2 py-1">
                     </div>
-                    <button type="button" onclick="clearDateRange('stock')" title="Reset Dates" class="px-2.5 py-2.5 rounded-xl text-xs font-bold bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 transition">
+                    <button type="button" onclick="clearDateRange('stock')" title="Reset Dates" class="px-2.5 py-2.5 rounded-xl text-xs font-bold bg-rose-100 hover:bg-rose-200 text-rose-700 border border-rose-300 transition">
                         <i class="fa-solid fa-rotate-left"></i>
                     </button>
-                    <button onclick="printStockReport()" class="bg-sky-600/90 hover:bg-sky-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border border-sky-400/30 transition flex items-center shadow-lg">
+                    <button onclick="printStockReport()" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold border border-sky-300 transition flex items-center shadow-lg">
                         <i class="fa-solid fa-print mr-2"></i> Print Stock
                     </button>
-                    <button onclick="openCartonPurchaseModal()" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-purple-900/40 transition flex items-center border border-purple-400/30">
+                    <button onclick="openCartonPurchaseModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-indigo-200 transition flex items-center border border-indigo-300">
                         <i class="fa-solid fa-plus mr-2"></i> Add Carton Purchase (+)
                     </button>
                 </div>
@@ -570,29 +759,29 @@
 
             <!-- Stock KPIs -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-purple-500">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Purchased Cartons (+)</span>
-                    <h3 id="stockTotalIn" class="text-2xl sm:text-3xl font-extrabold text-purple-300 mt-1 font-num">0 Cartons</h3>
+                <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-indigo-500">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Purchased Cartons (+)</span>
+                    <h3 id="stockTotalIn" class="text-2xl sm:text-3xl font-extrabold text-indigo-700 mt-1 font-num">0 Cartons</h3>
                 </div>
                 <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Dispatched / Sold (-)</span>
-                    <h3 id="stockTotalOut" class="text-2xl sm:text-3xl font-extrabold text-amber-400 mt-1 font-num">0 Cartons</h3>
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Dispatched / Sold (-)</span>
+                    <h3 id="stockTotalOut" class="text-2xl sm:text-3xl font-extrabold text-amber-600 mt-1 font-num">0 Cartons</h3>
                 </div>
-                <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-emerald-500 bg-gradient-to-r from-slate-900/90 to-indigo-950/60">
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Net Available Cartons in Godown</span>
-                    <h3 id="stockNetAvailable" class="text-3xl font-extrabold text-white mt-1 font-num">0 Cartons</h3>
+                <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-sky-500 bg-gradient-to-r from-sky-500/10 to-blue-500/10">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">Net Available Cartons in Godown</span>
+                    <h3 id="stockNetAvailable" class="text-3xl font-extrabold text-slate-900 mt-1 font-num">0 Cartons</h3>
                 </div>
             </div>
 
             <!-- Stock History -->
             <div class="glass-panel rounded-2xl overflow-hidden">
-                <div class="px-6 py-4 bg-slate-900/80 border-b border-white/10">
-                    <h3 class="font-bold text-slate-200">Carton Stock Movement History</h3>
+                <div class="px-6 py-4 bg-sky-50/90 border-b border-sky-200/80">
+                    <h3 class="font-bold text-slate-800">Carton Stock Movement History</h3>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-slate-900/90 text-slate-400 text-xs uppercase font-bold border-b border-white/10">
+                            <tr class="bg-sky-50 text-sky-800 text-xs uppercase font-bold border-b border-sky-200">
                                 <th class="py-3 px-6">Date</th>
                                 <th class="py-3 px-6">Type</th>
                                 <th class="py-3 px-6">Reference / Details</th>
@@ -601,7 +790,7 @@
                                 <th class="py-3 px-6 text-center">Action</th>
                             </tr>
                         </thead>
-                        <tbody id="stockHistoryBody" class="divide-y divide-white/5 text-sm"></tbody>
+                        <tbody id="stockHistoryBody" class="divide-y divide-sky-100 text-sm"></tbody>
                     </table>
                 </div>
             </div>
@@ -609,82 +798,82 @@
 
         <!-- ==================== TAB 4+: TOWN & SHOP WISE SHEET ==================== -->
         <div id="town-sheet-container" class="hidden space-y-6">
-            <div class="glass-panel p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border border-indigo-500/30">
+            <div class="glass-panel p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border border-sky-300">
                 <div>
                     <div class="flex items-center gap-2.5">
-                        <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-extrabold px-3 py-1 rounded-lg uppercase">
+                        <span class="bg-sky-100 text-sky-700 border border-sky-300 text-xs font-extrabold px-3 py-1 rounded-lg uppercase">
                             Town Sheet
                         </span>
-                        <h2 id="townSheetTitle" class="text-2xl sm:text-3xl font-extrabold text-white">Town Name</h2>
+                        <h2 id="townSheetTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-900">Town Name</h2>
                     </div>
-                    <p id="townSheetSubtitle" class="text-xs text-slate-400 mt-1">Shop-wise distribution & party ledgers</p>
+                    <p id="townSheetSubtitle" class="text-xs text-slate-500 mt-1">Shop-wise distribution & party ledgers</p>
                 </div>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="openShopModalForCurrentTown()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-indigo-900/30">
+                    <button onclick="openShopModalForCurrentTown()" class="bg-sky-600 hover:bg-sky-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-sky-200">
                         <i class="fa-solid fa-plus mr-1.5"></i> Add Shop in This Town
                     </button>
-                    <button onclick="switchTab('main')" class="bg-white/10 hover:bg-white/20 text-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold transition border border-white/15">
+                    <button onclick="switchTab('main')" class="bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 px-3.5 py-2 rounded-xl text-xs font-bold transition border border-white/15">
                         <i class="fa-solid fa-arrow-left mr-1.5"></i> Back to Dashboard
                     </button>
                 </div>
             </div>
 
             <div>
-                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-                    Shops in <span id="townNameLabel" class="text-indigo-400"></span>:
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+                    Shops in <span id="townNameLabel" class="text-sky-600"></span>:
                 </h3>
                 <div id="townShopsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </div>
 
             <!-- Active Selected Shop Detailed Ledger -->
-            <div id="shopLedgerSection" class="glass-panel rounded-2xl overflow-hidden border border-white/10">
-                <div class="px-6 py-4 bg-slate-900/90 text-white flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-white/10">
+            <div id="shopLedgerSection" class="glass-panel rounded-2xl overflow-hidden border border-sky-200/80">
+                <div class="px-6 py-4 bg-gradient-to-r from-sky-50 to-white text-slate-900 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-sky-200">
                     <div>
                         <div class="flex items-center gap-2.5 flex-wrap">
-                            <i class="fa-solid fa-store text-amber-400 text-lg"></i>
-                            <h3 id="activeShopName" class="font-extrabold text-lg sm:text-xl text-white">Shop Name</h3>
-                            <span id="activeShopBdzBadge" class="text-xs bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 px-2.5 py-0.5 rounded-full font-bold">BDZ</span>
-                            <button onclick="openEditShopModal()" class="bg-indigo-500/20 hover:bg-indigo-500/40 text-indigo-300 border border-indigo-400/30 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center">
-                                <i class="fa-solid fa-pen-to-square mr-1 text-indigo-400"></i> Edit Distributor Details
+                            <i class="fa-solid fa-store text-amber-600 text-lg"></i>
+                            <h3 id="activeShopName" class="font-extrabold text-lg sm:text-xl text-slate-900">Shop Name</h3>
+                            <span id="activeShopBdzBadge" class="text-xs bg-sky-100 text-sky-700 border border-sky-300 px-2.5 py-0.5 rounded-full font-bold">BDZ</span>
+                            <button onclick="openEditShopModal()" class="bg-sky-100 hover:bg-sky-200 text-sky-800 border border-sky-300 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center">
+                                <i class="fa-solid fa-pen-to-square mr-1 text-sky-600"></i> Edit Distributor Details
                             </button>
                         </div>
-                        <p id="activeShopMeta" class="text-xs text-slate-400 mt-1">Contact & Opening Balance Info</p>
+                        <p id="activeShopMeta" class="text-xs text-slate-500 mt-1">Contact & Opening Balance Info</p>
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2">
-                        <button onclick="printShopLedger(activeShopId)" class="bg-sky-600 hover:bg-sky-500 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold border border-sky-400/30 transition shadow-md shadow-sky-900/30 flex items-center">
+                        <button onclick="printShopLedger(activeShopId)" class="bg-sky-600 hover:bg-sky-700 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold border border-sky-300 transition shadow-md shadow-sky-200 flex items-center">
                             <i class="fa-solid fa-print mr-1.5"></i> Print Ledger
                         </button>
-                        <button onclick="openOpeningBalanceModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold border border-white/15 transition">
-                            <i class="fa-solid fa-scale-balanced mr-1 text-amber-400"></i> Edit Opening Bal
+                        <button onclick="openOpeningBalanceModal()" class="bg-white hover:bg-sky-50 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-bold border border-sky-200 shadow-xs transition">
+                            <i class="fa-solid fa-scale-balanced mr-1 text-amber-600"></i> Edit Opening Bal
                         </button>
-                        <button onclick="openTransactionModalForActiveShop('SALE')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-md shadow-emerald-900/30">
+                        <button onclick="openTransactionModalForActiveShop('SALE')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition shadow-md shadow-emerald-200">
                             <i class="fa-solid fa-plus mr-1"></i> Add Carton Bill
                         </button>
-                        <button onclick="openTransactionModalForActiveShop('RECOVERY')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3 py-1.5 rounded-xl text-xs font-extrabold transition shadow-md shadow-amber-900/30">
+                        <button onclick="openTransactionModalForActiveShop('RECOVERY')" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-xl text-xs font-extrabold transition shadow-md shadow-amber-200">
                             <i class="fa-solid fa-plus mr-1"></i> Add Recovery
                         </button>
                     </div>
                 </div>
 
                 <!-- Date Range Filter Bar (Party Ledger) -->
-                <div class="px-6 py-3 bg-slate-950/60 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5">
+                <div class="px-6 py-3 bg-sky-50/60 border-b border-sky-200/70 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5">
                     <div class="flex items-center gap-2 text-xs">
-                        <i class="fa-solid fa-calendar-days text-amber-400"></i>
-                        <span class="font-bold text-slate-300">Ledger Date Filter:</span>
-                        <span id="ledgerDateStatus" class="text-[11px] text-slate-400">All Dates</span>
+                        <i class="fa-solid fa-calendar-days text-amber-600"></i>
+                        <span class="font-bold text-slate-700">Ledger Date Filter:</span>
+                        <span id="ledgerDateStatus" class="text-[11px] text-slate-500">All Dates</span>
                     </div>
                     <div class="flex flex-wrap items-center gap-2">
-                        <div class="flex items-center gap-1.5 bg-slate-900/80 px-2.5 py-1 rounded-xl border border-white/10">
-                            <label class="text-[11px] font-bold text-slate-400">From:</label>
+                        <div class="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-xl border border-sky-200">
+                            <label class="text-[11px] font-bold text-slate-500">From:</label>
                             <input type="date" id="ledgerFromDate" onchange="renderTownSheet()" class="text-xs font-semibold rounded-lg px-2 py-0.5">
                         </div>
-                        <div class="flex items-center gap-1.5 bg-slate-900/80 px-2.5 py-1 rounded-xl border border-white/10">
-                            <label class="text-[11px] font-bold text-slate-400">To:</label>
+                        <div class="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-xl border border-sky-200">
+                            <label class="text-[11px] font-bold text-slate-500">To:</label>
                             <input type="date" id="ledgerToDate" onchange="renderTownSheet()" class="text-xs font-semibold rounded-lg px-2 py-0.5">
                         </div>
-                        <button type="button" onclick="setQuickDateRange('ledger', 'month')" class="px-2.5 py-1 rounded-xl text-[11px] font-bold bg-white/10 hover:bg-white/20 text-slate-200 transition">This Month</button>
-                        <button type="button" onclick="clearDateRange('ledger')" class="px-2.5 py-1 rounded-xl text-[11px] font-bold bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 transition">
+                        <button type="button" onclick="setQuickDateRange('ledger', 'month')" class="px-2.5 py-1 rounded-xl text-[11px] font-bold bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 transition">This Month</button>
+                        <button type="button" onclick="clearDateRange('ledger')" class="px-2.5 py-1 rounded-xl text-[11px] font-bold bg-rose-100 hover:bg-rose-200 text-rose-700 border border-rose-300 transition">
                             <i class="fa-solid fa-rotate-left mr-1"></i> Reset
                         </button>
                     </div>
@@ -694,7 +883,7 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-slate-950/80 text-slate-400 text-[11px] uppercase font-bold border-b border-white/10">
+                            <tr class="bg-sky-100/70 text-sky-900 text-[11px] uppercase font-bold border-b border-sky-200">
                                 <th class="py-3 px-5">Date</th>
                                 <th class="py-3 px-5">Ref / Inv #</th>
                                 <th class="py-3 px-5">Description</th>
@@ -705,7 +894,7 @@
                                 <th class="py-3 px-5 text-center">Edit / Del</th>
                             </tr>
                         </thead>
-                        <tbody id="shopLedgerBody" class="divide-y divide-white/5 text-sm"></tbody>
+                        <tbody id="shopLedgerBody" class="divide-y divide-sky-100 text-sm"></tbody>
                     </table>
                 </div>
             </div>
@@ -714,10 +903,10 @@
     </main>
 
     <!-- Footer -->
-    <footer class="glass-header py-4 text-center text-xs text-slate-400 border-t border-white/10 mt-10 relative z-10 no-print">
+    <footer class="glass-header py-4 text-center text-xs text-slate-500 border-t border-sky-200/80 mt-10 relative z-10 no-print">
         <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
             <span>Zuljalal Traders Cloud ERP v4.2 &bull; Firebase Powered</span>
-            <button onclick="resetToCleanDefaults()" class="text-rose-400 hover:text-rose-300 underline font-semibold transition">
+            <button onclick="resetToCleanDefaults()" class="text-rose-600 hover:text-rose-700 underline font-semibold transition">
                 <i class="fa-solid fa-trash-can mr-1"></i> Clear All Data (Start Fresh)
             </button>
         </div>
@@ -726,83 +915,83 @@
     <!-- ==================== MODALS ==================== -->
 
     <!-- MODAL 1: ADD NEW TOWN / SHOP -->
-    <div id="shopModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
+    <div id="shopModal" class="fixed inset-0 bg-slate-900/45 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
         <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
-            <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
-                <h3 class="text-lg font-extrabold text-white flex items-center">
-                    <i class="fa-solid fa-store text-indigo-400 mr-2.5"></i> Add Town & Shop / Distributor
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-sky-200/80">
+                <h3 class="text-lg font-extrabold text-slate-900 flex items-center">
+                    <i class="fa-solid fa-store text-sky-600 mr-2.5"></i> Add Town & Shop / Distributor
                 </h3>
-                <button onclick="closeModal('shopModal')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeModal('shopModal')" class="text-slate-600 hover:text-sky-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="saveNewShop(event)" class="space-y-3.5">
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Town Name</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Town Name</label>
                     <input type="text" id="formTownName" list="existingTownsList" required class="w-full p-2.5 rounded-xl text-sm" placeholder="">
                     <datalist id="existingTownsList"></datalist>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Shop / Distributor Name</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Shop / Distributor Name</label>
                     <input type="text" id="formShopName" required class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Al-Madina Traders">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Assigned BDZ (Booker)</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Assigned BDZ (Booker)</label>
                         <input type="text" id="formBdzName" list="existingBdzList" required class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Usman">
                         <datalist id="existingBdzList"></datalist>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Cell / Contact No</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Cell / Contact No</label>
                         <input type="text" id="formCellNo" required class="w-full p-2.5 rounded-xl text-sm" placeholder="0300-1234567">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Opening Balance (Previous Credit Rs.)</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Opening Balance (Previous Credit Rs.)</label>
                     <input type="number" id="formOpeningBal" value="0" required class="w-full p-2.5 rounded-xl text-sm font-bold font-num">
                 </div>
                 <div class="flex justify-end gap-2 pt-3">
-                    <button type="button" onclick="closeModal('shopModal')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-900/50">Save Shop</button>
+                    <button type="button" onclick="closeModal('shopModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-sky-200">Save Shop</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- MODAL 2: EDIT DISTRIBUTOR / SHOP DETAILS -->
-    <div id="editShopModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
+    <div id="editShopModal" class="fixed inset-0 bg-slate-900/45 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
         <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
-            <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
-                <h3 class="text-lg font-extrabold text-white flex items-center">
-                    <i class="fa-solid fa-user-pen text-indigo-400 mr-2.5"></i> Edit Distributor / Shop Details
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-sky-200/80">
+                <h3 class="text-lg font-extrabold text-slate-900 flex items-center">
+                    <i class="fa-solid fa-user-pen text-sky-600 mr-2.5"></i> Edit Distributor / Shop Details
                 </h3>
-                <button onclick="closeModal('editShopModal')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeModal('editShopModal')" class="text-slate-600 hover:text-sky-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="updateShopDetails(event)" class="space-y-3.5">
                 <input type="hidden" id="editShopTargetId">
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Shop / Distributor Name</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Shop / Distributor Name</label>
                     <input type="text" id="editShopName" required class="w-full p-2.5 rounded-xl text-sm font-semibold" placeholder="e.g. Aslam Traders">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Town Name</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Town Name</label>
                     <input type="text" id="editTownName" list="existingTownsList" required class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Chiniot">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Assigned BDZ (Booker)</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Assigned BDZ (Booker)</label>
                         <input type="text" id="editBdzName" list="existingBdzList" required class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Usman">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Cell / Contact No</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Cell / Contact No</label>
                         <input type="text" id="editCellNo" required class="w-full p-2.5 rounded-xl text-sm" placeholder="0322-1234567">
                     </div>
                 </div>
                 <div class="flex justify-between items-center pt-3">
-                    <button type="button" onclick="deleteDistributorShop()" class="text-xs text-rose-400 hover:text-rose-300 font-bold flex items-center">
+                    <button type="button" onclick="deleteDistributorShop()" class="text-xs text-rose-600 hover:text-rose-700 font-bold flex items-center">
                         <i class="fa-solid fa-trash mr-1"></i> Delete Shop
                     </button>
                     <div class="flex gap-2">
-                        <button type="button" onclick="closeModal('editShopModal')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
-                        <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-900/50">Update Details</button>
+                        <button type="button" onclick="closeModal('editShopModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold">Cancel</button>
+                        <button type="submit" class="px-5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-sky-200">Update Details</button>
                     </div>
                 </div>
             </form>
@@ -810,102 +999,140 @@
     </div>
 
     <!-- MODAL 3: CARTON PURCHASE (+) -->
-    <div id="cartonPurchaseModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
+    <div id="cartonPurchaseModal" class="fixed inset-0 bg-slate-900/45 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
         <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
-            <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
-                <h3 class="text-lg font-extrabold text-white flex items-center">
-                    <i class="fa-solid fa-truck-ramp-box text-purple-400 mr-2.5"></i> Company Carton Purchase (+)
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-sky-200/80">
+                <h3 class="text-lg font-extrabold text-slate-900 flex items-center">
+                    <i class="fa-solid fa-truck-ramp-box text-indigo-600 mr-2.5"></i> Company Carton Purchase (+)
                 </h3>
-                <button onclick="closeModal('cartonPurchaseModal')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeModal('cartonPurchaseModal')" class="text-slate-600 hover:text-sky-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="saveCartonPurchase(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Date</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Date</label>
                     <input type="date" id="purchaseDate" required class="w-full p-2.5 rounded-xl text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Total Cartons Received (+)</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Total Cartons Received (+)</label>
                     <input type="number" id="purchaseCartons" required min="1" class="w-full p-2.5 rounded-xl text-sm font-bold font-num" placeholder="e.g. 500">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Company / Bilty Note</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Company / Bilty Note</label>
                     <input type="text" id="purchaseNote" class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Factory Stock Arrival #102">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeModal('cartonPurchaseModal')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-purple-900/50">Add Cartons (+)</button>
+                    <button type="button" onclick="closeModal('cartonPurchaseModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-200">Add Cartons (+)</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- MODAL 4: TRANSACTION (SALE / RECOVERY) -->
-    <div id="txModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
+    <div id="txModal" class="fixed inset-0 bg-slate-900/45 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
         <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
-            <div class="flex justify-between items-center mb-4 pb-3 border-b border-white/10">
-                <h3 id="txModalTitle" class="text-lg font-extrabold text-white">New Entry</h3>
-                <button onclick="closeModal('txModal')" class="text-slate-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-sky-200/80">
+                <h3 id="txModalTitle" class="text-lg font-extrabold text-slate-900">New Entry</h3>
+                <button onclick="closeModal('txModal')" class="text-slate-600 hover:text-sky-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="saveTransaction(event)" class="space-y-3.5">
                 <input type="hidden" id="txEditId" value="">
                 <input type="hidden" id="txType" value="SALE">
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Select Town & Shop</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Select Town & Shop</label>
                     <select id="txShopSelect" required class="w-full p-2.5 rounded-xl text-sm font-semibold"></select>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Date</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Date</label>
                         <input type="date" id="txDate" required class="w-full p-2.5 rounded-xl text-sm">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Invoice / Ref #</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Invoice / Ref #</label>
                         <input type="text" id="txRef" required class="w-full p-2.5 rounded-xl text-sm" placeholder="INV-101 / ONLINE">
                     </div>
                 </div>
 
                 <div id="txCartonField">
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Total Cartons Sold (-)</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Total Cartons Sold (-)</label>
                     <input type="number" id="txCartons" min="0" value="0" class="w-full p-2.5 rounded-xl text-sm font-bold font-num" placeholder="Number of cartons">
                 </div>
 
                 <div>
-                    <label id="txAmountLabel" class="block text-xs font-bold text-slate-300 mb-1">Amount (Rs.)</label>
+                    <label id="txAmountLabel" class="block text-xs font-bold text-slate-700 mb-1">Amount (Rs.)</label>
                     <input type="number" id="txAmount" required min="0" class="w-full p-2.5 rounded-xl text-sm font-bold font-num" placeholder="0">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Description / Note</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Description / Note</label>
                     <input type="text" id="txDesc" class="w-full p-2.5 rounded-xl text-sm" placeholder="Carton Supply / Bank Transfer">
                 </div>
 
                 <div class="flex justify-end gap-2 pt-3">
-                    <button type="button" onclick="closeModal('txModal')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
-                    <button type="submit" id="txSubmitBtn" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-900/50">Save Entry</button>
+                    <button type="button" onclick="closeModal('txModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold">Cancel</button>
+                    <button type="submit" id="txSubmitBtn" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-200">Save Entry</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- MODAL 5: EDIT OPENING BALANCE -->
-    <div id="openingBalModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
+    <div id="openingBalModal" class="fixed inset-0 bg-slate-900/45 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
         <div class="glass-modal p-6 rounded-3xl w-full max-w-sm relative">
-            <h3 class="text-lg font-extrabold text-white mb-1 flex items-center">
-                <i class="fa-solid fa-scale-balanced text-amber-400 mr-2"></i> Edit Opening Balance
+            <h3 class="text-lg font-extrabold text-slate-900 mb-1 flex items-center">
+                <i class="fa-solid fa-scale-balanced text-amber-600 mr-2"></i> Edit Opening Balance
             </h3>
-            <p id="openingBalShopLabel" class="text-xs text-slate-400 mb-4">Shop Name</p>
+            <p id="openingBalShopLabel" class="text-xs text-slate-500 mb-4">Shop Name</p>
             <form onsubmit="updateOpeningBalance(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">Opening Balance Amount (Rs.)</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Opening Balance Amount (Rs.)</label>
                     <input type="number" id="editOpeningBalInput" required class="w-full p-2.5 rounded-xl text-base font-extrabold font-num">
                 </div>
                 <div class="flex justify-end gap-2">
-                    <button type="button" onclick="closeModal('openingBalModal')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-semibold">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold">Update Balance</button>
+                    <button type="button" onclick="closeModal('openingBalModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold">Update Balance</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+
+    <!-- MODAL 6: 24-THEME STUDIO SELECTOR -->
+    <div id="themeModal" class="fixed inset-0 bg-slate-900/45 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
+        <div class="glass-modal p-6 rounded-3xl w-full max-w-4xl max-h-[90vh] flex flex-col relative">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 pb-3 border-b border-sky-200/80">
+                <div>
+                    <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-palette text-sky-600"></i>
+                        <span>Theme Studio — 24 Color Combinations</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Apni pasand ka theme select karein — aapki choice automatically save rahegi</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="flex bg-sky-50 p-1 rounded-xl border border-sky-200 text-xs font-bold">
+                        <button type="button" id="filterThemeAll" onclick="filterThemeCategory('all')" class="px-2.5 py-1 rounded-lg bg-sky-600 text-white transition">All (24)</button>
+                        <button type="button" id="filterThemeLight" onclick="filterThemeCategory('light')" class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-sky-700 transition">Light (16)</button>
+                        <button type="button" id="filterThemeDark" onclick="filterThemeCategory('dark')" class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-sky-700 transition">Dark (8)</button>
+                    </div>
+                    <button onclick="closeModal('themeModal')" class="text-slate-600 hover:text-sky-700 text-xl px-1.5"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+
+            <div id="themeGridContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 overflow-y-auto pr-1 py-1"></div>
+
+            <div class="mt-4 pt-3 border-t border-sky-200/80 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs">
+                <span class="text-slate-500">Current Active Theme: <b id="currentThemeNameLabel" class="text-sky-700">1. Sky Breeze (White & Sky Blue)</b></span>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="applyTheme('sky-breeze')" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl font-bold transition">
+                        <i class="fa-solid fa-rotate-left mr-1"></i> Default Sky Blue
+                    </button>
+                    <button type="button" onclick="closeModal('themeModal')" class="px-4 py-1.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold transition">
+                        Done
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1048,12 +1275,12 @@
             alertBox.classList.add("hidden");
 
             if (mode === "login") {
-                tabLogin.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-white bg-indigo-600";
-                tabSignup.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-slate-400 hover:text-white";
+                tabLogin.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-white bg-sky-600 shadow-sm";
+                tabSignup.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-slate-600 hover:text-sky-700";
                 btnText.innerText = "Sign In to Dashboard";
             } else {
-                tabSignup.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-white bg-indigo-600";
-                tabLogin.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-slate-400 hover:text-white";
+                tabSignup.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-white bg-sky-600 shadow-sm";
+                tabLogin.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-slate-600 hover:text-sky-700";
                 btnText.innerText = "Create New Account";
             }
         }
@@ -1235,7 +1462,7 @@
                 if (activeTown === town && !document.getElementById("town-sheet-container").classList.contains("hidden")) {
                     btn.classList.add("active");
                 }
-                btn.innerHTML = `<i class="fa-solid fa-location-dot mr-1.5 text-indigo-400"></i>${town}`;
+                btn.innerHTML = `<i class="fa-solid fa-location-dot mr-1.5 text-sky-600"></i>${town}`;
                 townTabsList.appendChild(btn);
             });
 
@@ -1284,7 +1511,7 @@
 
             if (bdzEntries.length === 0) {
                 bdzCards.innerHTML = `
-                    <div class="col-span-full py-6 text-center text-slate-400 text-xs border border-dashed border-white/10 rounded-xl">
+                    <div class="col-span-full py-6 text-center text-slate-500 text-xs border border-dashed border-sky-300 rounded-xl">
                         Abhi koi BDZ ya Shop add nahi hui. Upar <b>"+ Add Shop"</b> par click karke apna data shuru karein.
                     </div>
                 `;
@@ -1299,19 +1526,19 @@
                     card.className = "glass-panel-interactive p-3.5 rounded-xl cursor-pointer relative overflow-hidden";
                     card.innerHTML = `
                         <div class="flex justify-between items-center gap-1">
-                            <span class="text-xs font-extrabold text-indigo-300 flex items-center truncate">
-                                <i class="fa-solid fa-user-check mr-1 text-indigo-400"></i>${bdzName}
+                            <span class="text-xs font-extrabold text-sky-700 flex items-center truncate">
+                                <i class="fa-solid fa-user-check mr-1 text-sky-600"></i>${bdzName}
                             </span>
                             <div class="flex items-center gap-1 shrink-0">
-                                <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded-full font-bold text-slate-300">${info.shops} Shops</span>
-                                <button onclick="event.stopPropagation(); printBdzReport('${bdzName.replace(/'/g, "\'")}')" title="Print ${bdzName} Sheet" class="p-1 rounded-lg bg-sky-500/20 hover:bg-sky-500/40 text-sky-300 border border-sky-400/30 transition">
+                                <span class="text-[10px] bg-sky-100 px-2 py-0.5 rounded-full font-bold text-sky-700">${info.shops} Shops</span>
+                                <button onclick="event.stopPropagation(); printBdzReport('${bdzName.replace(/'/g, "\'")}')" title="Print ${bdzName} Sheet" class="p-1 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-700 border border-sky-300 transition">
                                     <i class="fa-solid fa-print text-[10px]"></i>
                                 </button>
                             </div>
                         </div>
                         <div class="mt-2.5">
-                            <p class="text-[10px] uppercase text-slate-400 font-bold">Credit Balance</p>
-                            <p class="text-base font-extrabold text-white font-num">${formatPKR(info.credit)}</p>
+                            <p class="text-[10px] uppercase text-slate-500 font-bold">Credit Balance</p>
+                            <p class="text-base font-extrabold text-slate-900 font-num">${formatPKR(info.credit)}</p>
                         </div>
                     `;
                     bdzCards.appendChild(card);
@@ -1331,8 +1558,8 @@
             if (filteredShops.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="8" class="py-10 text-center text-slate-400 text-sm">
-                            <i class="fa-solid fa-folder-open text-2xl text-indigo-400/70 mb-2 block"></i>
+                        <td colspan="8" class="py-10 text-center text-slate-500 text-sm">
+                            <i class="fa-solid fa-folder-open text-2xl text-sky-500/80 mb-2 block"></i>
                             ${window.db.shops.length === 0
                                 ? 'Workspace bilkul clear hai! Nayi shop ya town add karne ke liye <b>"+ Add Shop"</b> dabayein.'
                                 : 'Search ke mutabiq koi shop nahi mili.'}
@@ -1345,33 +1572,33 @@
             filteredShops.forEach(shop => {
                 const st = getShopStats(shop, fromDate, toDate);
                 const tr = document.createElement("tr");
-                tr.className = "hover:bg-indigo-500/10 transition";
+                tr.className = "hover:bg-sky-50/90 transition";
                 tr.innerHTML = `
                     <td class="py-3.5 px-5">
-                        <button onclick="openTownSheet('${shop.town}')" class="inline-flex items-center font-bold text-indigo-300 hover:text-white">
-                            <i class="fa-solid fa-folder-open mr-2 text-indigo-400"></i> ${shop.town}
+                        <button onclick="openTownSheet('${shop.town}')" class="inline-flex items-center font-bold text-sky-700 hover:text-sky-950">
+                            <i class="fa-solid fa-folder-open mr-2 text-sky-600"></i> ${shop.town}
                         </button>
                     </td>
                     <td class="py-3.5 px-5">
-                        <button onclick="openTownSheet('${shop.town}', '${shop.id}')" class="font-extrabold text-white hover:text-indigo-300 text-left">
-                            ${shop.shopName} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400 ml-1"></i>
+                        <button onclick="openTownSheet('${shop.town}', '${shop.id}')" class="font-extrabold text-slate-900 hover:text-sky-700 text-left">
+                            ${shop.shopName} <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-500 ml-1"></i>
                         </button>
                     </td>
                     <td class="py-3.5 px-5">
-                        <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 text-xs font-bold px-2.5 py-1 rounded-lg">${shop.booker}</span>
+                        <span class="bg-sky-100 text-sky-700 border border-sky-300 text-xs font-bold px-2.5 py-1 rounded-lg">${shop.booker}</span>
                     </td>
-                    <td class="py-3.5 px-5 text-xs text-slate-400 font-medium">${shop.cell}</td>
-                    <td class="py-3.5 px-5 text-right text-slate-300 font-num">${formatPKR(st.openingBalance)}</td>
-                    <td class="py-3.5 px-5 text-right text-emerald-400 font-bold font-num">${formatPKR(st.totalRecovery)}</td>
-                    <td class="py-3.5 px-5 text-right font-extrabold font-num ${st.netBalance < 0 ? 'text-emerald-400' : 'text-white'}">${formatPKR(st.netBalance)}</td>
+                    <td class="py-3.5 px-5 text-xs text-slate-500 font-medium">${shop.cell}</td>
+                    <td class="py-3.5 px-5 text-right text-slate-700 font-num">${formatPKR(st.openingBalance)}</td>
+                    <td class="py-3.5 px-5 text-right text-emerald-600 font-bold font-num">${formatPKR(st.totalRecovery)}</td>
+                    <td class="py-3.5 px-5 text-right font-extrabold font-num ${st.netBalance < 0 ? 'text-emerald-600' : 'text-slate-900'}">${formatPKR(st.netBalance)}</td>
                     <td class="py-3.5 px-5 text-center flex justify-center items-center gap-1.5">
-                        <button onclick="printShopLedger('${shop.id}')" title="Print Shop Ledger" class="bg-sky-500/20 hover:bg-sky-500/40 text-sky-300 border border-sky-400/30 px-2.5 py-1 rounded-lg text-xs font-bold transition">
+                        <button onclick="printShopLedger('${shop.id}')" title="Print Shop Ledger" class="bg-sky-100 hover:bg-sky-200 text-sky-700 border border-sky-300 px-2.5 py-1 rounded-lg text-xs font-bold transition">
                             <i class="fa-solid fa-print"></i>
                         </button>
-                        <button onclick="openEditShopModalDirect('${shop.id}')" title="Edit Shop Details" class="bg-white/10 hover:bg-white/20 text-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold transition">
-                            <i class="fa-solid fa-pen-to-square text-indigo-300"></i>
+                        <button onclick="openEditShopModalDirect('${shop.id}')" title="Edit Shop Details" class="bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 px-2.5 py-1 rounded-lg text-xs font-bold transition">
+                            <i class="fa-solid fa-pen-to-square text-sky-700"></i>
                         </button>
-                        <button onclick="openTownSheet('${shop.town}', '${shop.id}')" class="bg-indigo-600/80 hover:bg-indigo-600 text-white px-3 py-1 rounded-lg text-xs font-bold transition">
+                        <button onclick="openTownSheet('${shop.town}', '${shop.id}')" class="bg-sky-600 hover:bg-sky-700 text-white px-3 py-1 rounded-lg text-xs font-bold transition">
                             Open Ledger
                         </button>
                     </td>
@@ -1391,7 +1618,7 @@
             tbody.innerHTML = "";
 
             if (bdzList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="py-10 text-center text-slate-400 text-sm">Abhi koi BDZ record maujood nahi hai. Pehle <b>"+ Add Shop"</b> se shops add karein.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="py-10 text-center text-slate-500 text-sm">Abhi koi BDZ record maujood nahi hai. Pehle <b>"+ Add Shop"</b> se shops add karein.</td></tr>`;
                 return;
             }
 
@@ -1411,37 +1638,37 @@
                     subRemaining += st.netBalance;
 
                     const tr = document.createElement("tr");
-                    tr.className = "hover:bg-slate-800/40 transition";
+                    tr.className = "hover:bg-sky-50/80 transition";
                     tr.innerHTML = `
-                        <td class="py-3 px-5 font-bold text-indigo-300">${bdz}</td>
-                        <td class="py-3 px-5 font-semibold text-slate-300">
-                            <button onclick="openTownSheet('${shop.town}')" class="hover:underline text-indigo-300">${shop.town}</button>
+                        <td class="py-3 px-5 font-bold text-sky-700">${bdz}</td>
+                        <td class="py-3 px-5 font-semibold text-slate-700">
+                            <button onclick="openTownSheet('${shop.town}')" class="hover:underline text-sky-700">${shop.town}</button>
                         </td>
-                        <td class="py-3 px-5 font-semibold text-white">
+                        <td class="py-3 px-5 font-semibold text-slate-900">
                             <button onclick="openTownSheet('${shop.town}', '${shop.id}')" class="hover:underline">${shop.shopName}</button>
                         </td>
-                        <td class="py-3 px-5 text-right text-slate-300 font-num">${formatPKR(st.openingBalance)}</td>
-                        <td class="py-3 px-5 text-right font-bold text-purple-300 font-num">${st.totalCartons} Ctn</td>
-                        <td class="py-3 px-5 text-right text-sky-300 font-medium font-num">${formatPKR(st.totalSales)}</td>
-                        <td class="py-3 px-5 text-right font-bold text-slate-200 font-num">${formatPKR(st.totalCredit)}</td>
-                        <td class="py-3 px-5 text-right text-emerald-400 font-bold font-num">${formatPKR(st.totalRecovery)}</td>
-                        <td class="py-3 px-5 text-right font-extrabold text-white font-num">${formatPKR(st.netBalance)}</td>
+                        <td class="py-3 px-5 text-right text-slate-700 font-num">${formatPKR(st.openingBalance)}</td>
+                        <td class="py-3 px-5 text-right font-bold text-indigo-700 font-num">${st.totalCartons} Ctn</td>
+                        <td class="py-3 px-5 text-right text-sky-700 font-medium font-num">${formatPKR(st.totalSales)}</td>
+                        <td class="py-3 px-5 text-right font-bold text-slate-800 font-num">${formatPKR(st.totalCredit)}</td>
+                        <td class="py-3 px-5 text-right text-emerald-600 font-bold font-num">${formatPKR(st.totalRecovery)}</td>
+                        <td class="py-3 px-5 text-right font-extrabold text-slate-900 font-num">${formatPKR(st.netBalance)}</td>
                     `;
                     tbody.appendChild(tr);
                 });
 
                 const subRow = document.createElement("tr");
-                subRow.className = "bg-indigo-950/70 font-extrabold text-indigo-200 border-t border-b border-indigo-500/30";
+                subRow.className = "bg-sky-100/80 font-extrabold text-sky-900 border-t border-b border-sky-300";
                 subRow.innerHTML = `
-                    <td colspan="3" class="py-3.5 px-5 text-xs uppercase tracking-wider text-indigo-300">
-                        <i class="fa-solid fa-calculator mr-1.5 text-indigo-400"></i> ${bdz} — Sub Total
+                    <td colspan="3" class="py-3.5 px-5 text-xs uppercase tracking-wider text-sky-700">
+                        <i class="fa-solid fa-calculator mr-1.5 text-sky-600"></i> ${bdz} — Sub Total
                     </td>
                     <td class="py-3.5 px-5 text-right font-num">${formatPKR(subOpening)}</td>
-                    <td class="py-3.5 px-5 text-right text-purple-300 font-num">${subCartons} Ctn</td>
-                    <td class="py-3.5 px-5 text-right text-sky-300 font-num">${formatPKR(subInvoices)}</td>
+                    <td class="py-3.5 px-5 text-right text-indigo-700 font-num">${subCartons} Ctn</td>
+                    <td class="py-3.5 px-5 text-right text-sky-700 font-num">${formatPKR(subInvoices)}</td>
                     <td class="py-3.5 px-5 text-right font-num">${formatPKR(subTotalCredit)}</td>
-                    <td class="py-3.5 px-5 text-right text-emerald-400 font-num">${formatPKR(subRecovery)}</td>
-                    <td class="py-3.5 px-5 text-right text-base text-indigo-300 font-num">${formatPKR(subRemaining)}</td>
+                    <td class="py-3.5 px-5 text-right text-emerald-600 font-num">${formatPKR(subRecovery)}</td>
+                    <td class="py-3.5 px-5 text-right text-base text-sky-700 font-num">${formatPKR(subRemaining)}</td>
                 `;
                 tbody.appendChild(subRow);
 
@@ -1449,19 +1676,19 @@
                 card.className = "glass-panel p-4 rounded-2xl";
                 card.innerHTML = `
                     <div class="flex items-center justify-between gap-1 mb-2">
-                        <span class="font-extrabold text-white text-sm truncate">${bdz}</span>
+                        <span class="font-extrabold text-slate-900 text-sm truncate">${bdz}</span>
                         <div class="flex items-center gap-1.5 shrink-0">
-                            <span class="text-[10px] font-bold bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-full border border-indigo-400/30">${bdzShops.length} Shops</span>
-                            <button onclick="printBdzReport('${bdz.replace(/'/g, "\'")}')" title="Print ${bdz} Sheet" class="p-1.5 rounded-lg bg-sky-500/20 hover:bg-sky-500/40 text-sky-300 border border-sky-400/30 transition">
+                            <span class="text-[10px] font-bold bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full border border-sky-300">${bdzShops.length} Shops</span>
+                            <button onclick="printBdzReport('${bdz.replace(/'/g, "\'")}')" title="Print ${bdz} Sheet" class="p-1.5 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-700 border border-sky-300 transition">
                                 <i class="fa-solid fa-print text-xs"></i>
                             </button>
                         </div>
                     </div>
-                    <p class="text-[11px] text-slate-400 font-semibold">Remaining Credit:</p>
-                    <p class="text-lg font-extrabold text-indigo-300 font-num">${formatPKR(subRemaining)}</p>
-                    <div class="mt-2 pt-2 border-t border-white/10 flex justify-between text-[11px]">
-                        <span class="text-slate-400">Recovery:</span>
-                        <span class="font-bold text-emerald-400 font-num">${formatPKR(subRecovery)}</span>
+                    <p class="text-[11px] text-slate-500 font-semibold">Remaining Credit:</p>
+                    <p class="text-lg font-extrabold text-sky-700 font-num">${formatPKR(subRemaining)}</p>
+                    <div class="mt-2 pt-2 border-t border-sky-200/80 flex justify-between text-[11px]">
+                        <span class="text-slate-500">Recovery:</span>
+                        <span class="font-bold text-emerald-600 font-num">${formatPKR(subRecovery)}</span>
                     </div>
                 `;
                 summaryGrid.appendChild(card);
@@ -1475,17 +1702,17 @@
             });
 
             const grandRow = document.createElement("tr");
-            grandRow.className = "bg-slate-950 text-white font-extrabold text-sm border-t-2 border-amber-500/40";
+            grandRow.className = "bg-sky-900 text-white font-extrabold text-sm border-t-2 border-sky-600";
             grandRow.innerHTML = `
-                <td colspan="3" class="py-4 px-5 uppercase tracking-wider text-amber-400 flex items-center">
-                    <i class="fa-solid fa-coins mr-2 text-amber-400"></i> GRAND TOTAL (ALL BDZs)
+                <td colspan="3" class="py-4 px-5 uppercase tracking-wider text-amber-300 flex items-center">
+                    <i class="fa-solid fa-coins mr-2 text-amber-300"></i> GRAND TOTAL (ALL BDZs)
                 </td>
                 <td class="py-4 px-5 text-right font-num">${formatPKR(grandOpening)}</td>
-                <td class="py-4 px-5 text-right text-purple-300 font-num">${grandCartons} Ctn</td>
-                <td class="py-4 px-5 text-right text-sky-300 font-num">${formatPKR(grandInvoices)}</td>
+                <td class="py-4 px-5 text-right text-sky-200 font-num">${grandCartons} Ctn</td>
+                <td class="py-4 px-5 text-right text-cyan-200 font-num">${formatPKR(grandInvoices)}</td>
                 <td class="py-4 px-5 text-right font-num">${formatPKR(grandTotalCredit)}</td>
-                <td class="py-4 px-5 text-right text-emerald-400 font-num">${formatPKR(grandRecovery)}</td>
-                <td class="py-4 px-5 text-right text-base text-amber-400 font-num">${formatPKR(grandRemaining)}</td>
+                <td class="py-4 px-5 text-right text-emerald-300 font-num">${formatPKR(grandRecovery)}</td>
+                <td class="py-4 px-5 text-right text-base text-amber-300 font-num">${formatPKR(grandRemaining)}</td>
             `;
             tbody.appendChild(grandRow);
         }
@@ -1528,27 +1755,27 @@
             movements.sort((a, b) => b.date.localeCompare(a.date));
 
             if (movements.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400 text-sm">Stock movement history is clean.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 text-sm">Stock movement history is clean.</td></tr>`;
                 return;
             }
 
             movements.forEach(m => {
                 const tr = document.createElement("tr");
-                tr.className = "hover:bg-slate-800/40";
+                tr.className = "hover:bg-sky-50/80";
                 tr.innerHTML = `
-                    <td class="py-3 px-6 text-xs text-slate-400 font-medium">${m.date}</td>
+                    <td class="py-3 px-6 text-xs text-slate-500 font-medium">${m.date}</td>
                     <td class="py-3 px-6">
                         ${m.kind === "PURCHASE"
-                            ? '<span class="bg-purple-500/20 text-purple-300 border border-purple-400/30 text-xs font-bold px-2.5 py-0.5 rounded-full">Purchase (+)</span>'
-                            : '<span class="bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-bold px-2.5 py-0.5 rounded-full">Invoice Sale (-)</span>'}
+                            ? '<span class="bg-indigo-100 text-indigo-700 border border-indigo-300 text-xs font-bold px-2.5 py-0.5 rounded-full">Purchase (+)</span>'
+                            : '<span class="bg-amber-100 text-amber-700 border border-amber-400/30 text-xs font-bold px-2.5 py-0.5 rounded-full">Invoice Sale (-)</span>'}
                     </td>
-                    <td class="py-3 px-6 font-semibold text-white">${m.ref}</td>
-                    <td class="py-3 px-6 text-right font-bold text-purple-300 font-num">${m.inQty ? '+' + m.inQty : '-'}</td>
-                    <td class="py-3 px-6 text-right font-bold text-amber-400 font-num">${m.outQty ? '-' + m.outQty : '-'}</td>
+                    <td class="py-3 px-6 font-semibold text-slate-900">${m.ref}</td>
+                    <td class="py-3 px-6 text-right font-bold text-indigo-700 font-num">${m.inQty ? '+' + m.inQty : '-'}</td>
+                    <td class="py-3 px-6 text-right font-bold text-amber-600 font-num">${m.outQty ? '-' + m.outQty : '-'}</td>
                     <td class="py-3 px-6 text-center">
                         ${m.kind === "PURCHASE"
-                            ? `<button onclick="deletePurchase('${m.id}')" class="text-rose-400 hover:text-rose-300 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>`
-                            : '<span class="text-[11px] text-slate-400">Via Ledger</span>'}
+                            ? `<button onclick="deletePurchase('${m.id}')" class="text-rose-600 hover:text-rose-700 text-xs font-bold"><i class="fa-solid fa-trash"></i></button>`
+                            : '<span class="text-[11px] text-slate-500">Via Ledger</span>'}
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -1588,35 +1815,35 @@
                 };
                 card.className = `p-4 rounded-2xl cursor-pointer transition-all duration-200 ${
                     isSelected
-                        ? 'bg-indigo-600/20 border-2 border-indigo-500 shadow-lg shadow-indigo-950/50'
-                        : 'glass-panel-interactive border border-white/10'
+                        ? 'bg-indigo-600/20 border-2 border-indigo-500 shadow-lg shadow-sky-200'
+                        : 'glass-panel-interactive border border-sky-200/80'
                 }`;
                 card.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div>
-                            <h4 class="font-extrabold text-white text-base">${shop.shopName}</h4>
-                            <p class="text-xs text-slate-400 mt-1">
-                                <i class="fa-solid fa-user-tie mr-1 text-indigo-400"></i>BDZ: <b class="text-slate-200">${shop.booker}</b> &bull; ${shop.cell}
+                            <h4 class="font-extrabold text-slate-900 text-base">${shop.shopName}</h4>
+                            <p class="text-xs text-slate-500 mt-1">
+                                <i class="fa-solid fa-user-tie mr-1 text-sky-600"></i>BDZ: <b class="text-slate-800">${shop.booker}</b> &bull; ${shop.cell}
                             </p>
                         </div>
                         <div class="flex items-center gap-1">
-                            <button onclick="event.stopPropagation(); printShopLedger('${shop.id}')" title="Print Ledger" class="p-1.5 rounded-lg bg-sky-500/20 hover:bg-sky-500/40 text-sky-300 border border-sky-400/30">
+                            <button onclick="event.stopPropagation(); printShopLedger('${shop.id}')" title="Print Ledger" class="p-1.5 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-700 border border-sky-300">
                                 <i class="fa-solid fa-print text-xs"></i>
                             </button>
-                            <button onclick="event.stopPropagation(); openEditShopModalDirect('${shop.id}')" title="Edit Shop Details" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-indigo-300">
+                            <button onclick="event.stopPropagation(); openEditShopModalDirect('${shop.id}')" title="Edit Shop Details" class="p-1.5 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-700">
                                 <i class="fa-solid fa-pen-to-square text-xs"></i>
                             </button>
-                            ${isSelected ? '<span class="bg-indigo-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full">Active</span>' : ''}
+                            ${isSelected ? '<span class="bg-sky-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full">Active</span>' : ''}
                         </div>
                     </div>
-                    <div class="mt-3.5 pt-3 border-t border-white/10 flex justify-between items-end">
+                    <div class="mt-3.5 pt-3 border-t border-sky-200/80 flex justify-between items-end">
                         <div>
-                            <span class="text-[10px] uppercase text-slate-400 font-bold block">Opening Bal</span>
-                            <span class="text-xs font-bold text-slate-300 font-num">${formatPKR(st.openingBalance)}</span>
+                            <span class="text-[10px] uppercase text-slate-500 font-bold block">Opening Bal</span>
+                            <span class="text-xs font-bold text-slate-700 font-num">${formatPKR(st.openingBalance)}</span>
                         </div>
                         <div class="text-right">
-                            <span class="text-[10px] uppercase text-slate-400 font-bold block">Net Credit Balance</span>
-                            <span class="text-base font-extrabold font-num ${st.netBalance < 0 ? 'text-emerald-400' : 'text-indigo-300'}">${formatPKR(st.netBalance)}</span>
+                            <span class="text-[10px] uppercase text-slate-500 font-bold block">Net Credit Balance</span>
+                            <span class="text-base font-extrabold font-num ${st.netBalance < 0 ? 'text-emerald-600' : 'text-sky-700'}">${formatPKR(st.netBalance)}</span>
                         </div>
                     </div>
                 `;
@@ -1653,17 +1880,17 @@
             let runningBal = Number(activeShop.openingBalance) + priorAdjustment;
 
             const openTr = document.createElement("tr");
-            openTr.className = "bg-amber-500/10 font-semibold";
+            openTr.className = "bg-amber-50/90 font-semibold";
             openTr.innerHTML = `
-                <td class="py-3 px-5 text-xs text-slate-400">${fromDate || '—'}</td>
-                <td class="py-3 px-5"><span class="bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-extrabold px-2 py-0.5 rounded">${fromDate ? 'B/F BAL' : 'OPENING'}</span></td>
-                <td class="py-3 px-5 text-slate-200">${fromDate ? 'Opening + Previous Balance Before ' + fromDate : 'Previous Opening Balance'}</td>
-                <td class="py-3 px-5 text-center text-slate-400">—</td>
-                <td class="py-3 px-5 text-right text-slate-400">—</td>
-                <td class="py-3 px-5 text-right text-slate-300 font-num">${formatPKR(runningBal)}</td>
-                <td class="py-3 px-5 text-right font-extrabold text-white font-num">${formatPKR(runningBal)}</td>
+                <td class="py-3 px-5 text-xs text-slate-500">${fromDate || '—'}</td>
+                <td class="py-3 px-5"><span class="bg-amber-100 text-amber-700 border border-amber-400/30 text-xs font-extrabold px-2 py-0.5 rounded">${fromDate ? 'B/F BAL' : 'OPENING'}</span></td>
+                <td class="py-3 px-5 text-slate-800">${fromDate ? 'Opening + Previous Balance Before ' + fromDate : 'Previous Opening Balance'}</td>
+                <td class="py-3 px-5 text-center text-slate-500">—</td>
+                <td class="py-3 px-5 text-right text-slate-500">—</td>
+                <td class="py-3 px-5 text-right text-slate-700 font-num">${formatPKR(runningBal)}</td>
+                <td class="py-3 px-5 text-right font-extrabold text-slate-900 font-num">${formatPKR(runningBal)}</td>
                 <td class="py-3 px-5 text-center">
-                    <button onclick="openOpeningBalanceModal()" class="text-amber-400 hover:text-amber-300 text-xs font-bold underline">Edit</button>
+                    <button onclick="openOpeningBalanceModal()" class="text-amber-600 hover:text-amber-700 text-xs font-bold underline">Edit</button>
                 </td>
             `;
             tbody.appendChild(openTr);
@@ -1671,7 +1898,7 @@
             const shopTxs = allShopTxs.filter(t => isDateInRange(t.date, fromDate, toDate));
             if (shopTxs.length === 0) {
                 const emptyTr = document.createElement("tr");
-                emptyTr.innerHTML = `<td colspan="8" class="py-6 text-center text-slate-400 text-xs">${allShopTxs.length === 0 ? 'No entries recorded yet for this shop.' : 'Is selected date range mein koi entry nahi mili.'}</td>`;
+                emptyTr.innerHTML = `<td colspan="8" class="py-6 text-center text-slate-500 text-xs">${allShopTxs.length === 0 ? 'No entries recorded yet for this shop.' : 'Is selected date range mein koi entry nahi mili.'}</td>`;
                 tbody.appendChild(emptyTr);
             }
 
@@ -1683,20 +1910,20 @@
                 }
 
                 const tr = document.createElement("tr");
-                tr.className = "hover:bg-slate-800/40 transition";
+                tr.className = "hover:bg-sky-50/80 transition";
                 tr.innerHTML = `
-                    <td class="py-3 px-5 text-xs text-slate-400">${tx.date}</td>
-                    <td class="py-3 px-5 font-bold text-slate-200">${tx.ref}</td>
-                    <td class="py-3 px-5 text-slate-300">${tx.desc || (tx.type === 'SALE' ? 'Carton Bill' : 'Online Payment')}</td>
-                    <td class="py-3 px-5 text-center font-bold text-purple-300 font-num">${tx.cartons ? tx.cartons + ' Ctn' : '—'}</td>
-                    <td class="py-3 px-5 text-right font-bold text-emerald-400 font-num">${tx.type === 'RECOVERY' ? formatPKR(tx.amount) : '—'}</td>
-                    <td class="py-3 px-5 text-right font-bold text-sky-300 font-num">${tx.type === 'SALE' ? formatPKR(tx.amount) : '—'}</td>
-                    <td class="py-3 px-5 text-right font-extrabold text-white font-num">${formatPKR(runningBal)}</td>
+                    <td class="py-3 px-5 text-xs text-slate-500">${tx.date}</td>
+                    <td class="py-3 px-5 font-bold text-slate-800">${tx.ref}</td>
+                    <td class="py-3 px-5 text-slate-700">${tx.desc || (tx.type === 'SALE' ? 'Carton Bill' : 'Online Payment')}</td>
+                    <td class="py-3 px-5 text-center font-bold text-indigo-700 font-num">${tx.cartons ? tx.cartons + ' Ctn' : '—'}</td>
+                    <td class="py-3 px-5 text-right font-bold text-emerald-600 font-num">${tx.type === 'RECOVERY' ? formatPKR(tx.amount) : '—'}</td>
+                    <td class="py-3 px-5 text-right font-bold text-sky-700 font-num">${tx.type === 'SALE' ? formatPKR(tx.amount) : '—'}</td>
+                    <td class="py-3 px-5 text-right font-extrabold text-slate-900 font-num">${formatPKR(runningBal)}</td>
                     <td class="py-3 px-5 text-center space-x-1.5">
-                        <button onclick="editTransaction('${tx.id}')" title="Edit Entry" class="text-indigo-300 hover:text-white bg-indigo-500/20 p-1.5 rounded-lg border border-indigo-500/30">
+                        <button onclick="editTransaction('${tx.id}')" title="Edit Entry" class="text-sky-700 hover:text-sky-950 bg-sky-100 p-1.5 rounded-lg border border-sky-300">
                             <i class="fa-solid fa-pen text-xs"></i>
                         </button>
-                        <button onclick="deleteTransaction('${tx.id}')" title="Delete Entry" class="text-rose-400 hover:text-rose-200 bg-rose-500/20 p-1.5 rounded-lg border border-rose-500/30">
+                        <button onclick="deleteTransaction('${tx.id}')" title="Delete Entry" class="text-rose-600 hover:text-rose-800 bg-rose-100 p-1.5 rounded-lg border border-rose-300">
                             <i class="fa-solid fa-trash text-xs"></i>
                         </button>
                     </td>
@@ -2275,17 +2502,17 @@
             populateShopDropdown(preselectShopId);
 
             if (type === "SALE") {
-                document.getElementById("txModalTitle").innerHTML = `<i class="fa-solid fa-file-invoice-dollar text-emerald-400 mr-2"></i> Carton Sale / Bill Entry (-)`;
+                document.getElementById("txModalTitle").innerHTML = `<i class="fa-solid fa-file-invoice-dollar text-emerald-600 mr-2"></i> Carton Sale / Bill Entry (-)`;
                 document.getElementById("txRef").value = "INV-" + Math.floor(100 + Math.random() * 900);
                 document.getElementById("txCartonField").classList.remove("hidden");
                 document.getElementById("txAmountLabel").innerText = "Total Bill Amount (Rs.)";
-                document.getElementById("txSubmitBtn").className = "px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-900/50";
+                document.getElementById("txSubmitBtn").className = "px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-200";
             } else {
-                document.getElementById("txModalTitle").innerHTML = `<i class="fa-solid fa-hand-holding-dollar text-amber-400 mr-2"></i> Online / Cash Recovery`;
+                document.getElementById("txModalTitle").innerHTML = `<i class="fa-solid fa-hand-holding-dollar text-amber-600 mr-2"></i> Online / Cash Recovery`;
                 document.getElementById("txRef").value = "ONLINE";
                 document.getElementById("txCartonField").classList.add("hidden");
                 document.getElementById("txAmountLabel").innerText = "Recovery Amount Received (Rs.)";
-                document.getElementById("txSubmitBtn").className = "px-5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl text-xs font-extrabold shadow-lg shadow-amber-900/50";
+                document.getElementById("txSubmitBtn").className = "px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-extrabold shadow-lg shadow-amber-900/50";
             }
             openModal('txModal');
         }
@@ -2300,7 +2527,7 @@
 
             openTransactionModal(tx.type, tx.shopId);
             document.getElementById("txEditId").value = tx.id;
-            document.getElementById("txModalTitle").innerHTML = `<i class="fa-solid fa-pen-to-square text-indigo-400 mr-2"></i> Edit Ledger Entry`;
+            document.getElementById("txModalTitle").innerHTML = `<i class="fa-solid fa-pen-to-square text-sky-600 mr-2"></i> Edit Ledger Entry`;
             document.getElementById("txDate").value = tx.date;
             document.getElementById("txRef").value = tx.ref;
             document.getElementById("txCartons").value = tx.cartons || 0;
@@ -2387,7 +2614,546 @@
             renderStockPage();
         }
 
+
+        /* ==================== 24-THEME STUDIO ENGINE ==================== */
+        const THEME_STORAGE_KEY = "zuljalal_erp_selected_theme_v1";
+
+        const ERP_THEMES = [
+            // --- 16 LIGHT / WHITE & PASTEL COMBINATIONS ---
+            {
+                id: "sky-breeze",
+                name: "1. Sky Breeze",
+                tag: "White + Sky Blue",
+                mode: "light",
+                swatches: ["#ffffff", "#0284c7", "#38bdf8", "#0f172a"],
+                vars: {
+                    bg: "#f4f9ff", surface: "rgba(255,255,255,0.90)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.94)", nav: "rgba(240,249,255,0.92)",
+                    border: "#bae6fd", borderSoft: "rgba(186,230,253,0.8)",
+                    text: "#0f172a", muted: "#64748b",
+                    primary: "#0284c7", primaryHover: "#0369a1", primarySoft: "#e0f2fe", primaryText: "#0369a1",
+                    accent: "#2563eb", grandBg: "#0c4a6e", inputBg: "#f8fafc",
+                    blob1: "#7dd3fc", blob2: "#67e8f9", blob3: "#bfdbfe",
+                    r1: "rgba(14,165,233,0.16)", r2: "rgba(56,189,248,0.18)", r3: "rgba(16,185,129,0.08)",
+                    shadow: "rgba(14,116,144,0.10)"
+                }
+            },
+            {
+                id: "arctic-cyan",
+                name: "2. Arctic Cyan",
+                tag: "Ice White + Teal",
+                mode: "light",
+                swatches: ["#ffffff", "#0891b2", "#22d3ee", "#164e63"],
+                vars: {
+                    bg: "#f0fdfa", surface: "rgba(255,255,255,0.90)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.94)", nav: "rgba(236,254,255,0.92)",
+                    border: "#a5f3fc", borderSoft: "rgba(165,243,252,0.8)",
+                    text: "#0f172a", muted: "#475569",
+                    primary: "#0891b2", primaryHover: "#0e7490", primarySoft: "#cffafe", primaryText: "#0e7490",
+                    accent: "#0284c7", grandBg: "#164e63", inputBg: "#f8fafc",
+                    blob1: "#67e8f9", blob2: "#5eead4", blob3: "#bae6fd",
+                    r1: "rgba(6,182,212,0.16)", r2: "rgba(20,184,166,0.15)", r3: "rgba(14,165,233,0.08)",
+                    shadow: "rgba(8,145,178,0.10)"
+                }
+            },
+            {
+                id: "royal-sapphire",
+                name: "3. Royal Sapphire",
+                tag: "White + Cobalt Blue",
+                mode: "light",
+                swatches: ["#ffffff", "#2563eb", "#60a5fa", "#1e3a8a"],
+                vars: {
+                    bg: "#f5f8ff", surface: "rgba(255,255,255,0.90)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.94)", nav: "rgba(239,246,255,0.92)",
+                    border: "#bfdbfe", borderSoft: "rgba(191,219,254,0.8)",
+                    text: "#0f172a", muted: "#64748b",
+                    primary: "#2563eb", primaryHover: "#1d4ed8", primarySoft: "#dbeafe", primaryText: "#1d4ed8",
+                    accent: "#4f46e5", grandBg: "#1e3a8a", inputBg: "#f8fafc",
+                    blob1: "#93c5fd", blob2: "#a5b4fc", blob3: "#bae6fd",
+                    r1: "rgba(37,99,235,0.15)", r2: "rgba(99,102,241,0.14)", r3: "rgba(14,165,233,0.08)",
+                    shadow: "rgba(37,99,235,0.10)"
+                }
+            },
+            {
+                id: "emerald-mint",
+                name: "4. Emerald Mint",
+                tag: "White + Fresh Green",
+                mode: "light",
+                swatches: ["#ffffff", "#059669", "#34d399", "#064e3b"],
+                vars: {
+                    bg: "#f2fbf7", surface: "rgba(255,255,255,0.90)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.94)", nav: "rgba(236,253,245,0.92)",
+                    border: "#a7f3d0", borderSoft: "rgba(167,243,208,0.8)",
+                    text: "#0f172a", muted: "#475569",
+                    primary: "#059669", primaryHover: "#047857", primarySoft: "#d1fae5", primaryText: "#047857",
+                    accent: "#0d9488", grandBg: "#064e3b", inputBg: "#f8fafc",
+                    blob1: "#6ee7b7", blob2: "#5eead4", blob3: "#a7f3d0",
+                    r1: "rgba(16,185,129,0.15)", r2: "rgba(20,184,166,0.14)", r3: "rgba(5,150,105,0.08)",
+                    shadow: "rgba(5,150,105,0.10)"
+                }
+            },
+            {
+                id: "lavender-mist",
+                name: "5. Lavender Mist",
+                tag: "White + Soft Violet",
+                mode: "light",
+                swatches: ["#ffffff", "#7c3aed", "#a78bfa", "#4c1d95"],
+                vars: {
+                    bg: "#f8f6ff", surface: "rgba(255,255,255,0.90)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.94)", nav: "rgba(245,243,255,0.92)",
+                    border: "#ddd6fe", borderSoft: "rgba(221,214,254,0.8)",
+                    text: "#1e1b4b", muted: "#64748b",
+                    primary: "#7c3aed", primaryHover: "#6d28d9", primarySoft: "#ede9fe", primaryText: "#6d28d9",
+                    accent: "#4f46e5", grandBg: "#4c1d95", inputBg: "#faf9ff",
+                    blob1: "#c4b5fd", blob2: "#a5b4fc", blob3: "#f5d0fe",
+                    r1: "rgba(124,58,237,0.14)", r2: "rgba(99,102,241,0.14)", r3: "rgba(192,132,252,0.08)",
+                    shadow: "rgba(124,58,237,0.10)"
+                }
+            },
+            {
+                id: "rose-quartz",
+                name: "6. Rose Quartz",
+                tag: "White + Blush Pink",
+                mode: "light",
+                swatches: ["#ffffff", "#e11d48", "#fb7185", "#881337"],
+                vars: {
+                    bg: "#fff5f7", surface: "rgba(255,255,255,0.90)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.94)", nav: "rgba(255,241,242,0.92)",
+                    border: "#fecdd3", borderSoft: "rgba(254,205,211,0.8)",
+                    text: "#1f2937", muted: "#64748b",
+                    primary: "#e11d48", primaryHover: "#be123c", primarySoft: "#ffe4e6", primaryText: "#be123c",
+                    accent: "#db2777", grandBg: "#881337", inputBg: "#fffafa",
+                    blob1: "#fda4af", blob2: "#f9a8d4", blob3: "#fed7aa",
+                    r1: "rgba(225,29,72,0.13)", r2: "rgba(236,72,153,0.12)", r3: "rgba(251,146,60,0.08)",
+                    shadow: "rgba(225,29,72,0.09)"
+                }
+            },
+            {
+                id: "sunset-amber",
+                name: "7. Sunset Amber",
+                tag: "Cream + Warm Gold",
+                mode: "light",
+                swatches: ["#fffbeb", "#d97706", "#fbbf24", "#78350f"],
+                vars: {
+                    bg: "#fffbeb", surface: "rgba(255,255,255,0.92)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.95)", nav: "rgba(254,243,199,0.75)",
+                    border: "#fde68a", borderSoft: "rgba(253,230,138,0.85)",
+                    text: "#1c1917", muted: "#57534e",
+                    primary: "#d97706", primaryHover: "#b45309", primarySoft: "#fef3c7", primaryText: "#b45309",
+                    accent: "#ea580c", grandBg: "#78350f", inputBg: "#fffdf5",
+                    blob1: "#fcd34d", blob2: "#fdba74", blob3: "#fde68a",
+                    r1: "rgba(245,158,11,0.15)", r2: "rgba(234,88,12,0.12)", r3: "rgba(234,179,8,0.08)",
+                    shadow: "rgba(217,119,6,0.10)"
+                }
+            },
+            {
+                id: "coral-peach",
+                name: "8. Coral Peach",
+                tag: "Ivory + Tangerine",
+                mode: "light",
+                swatches: ["#fff7ed", "#ea580c", "#fb923c", "#7c2d12"],
+                vars: {
+                    bg: "#fff7ed", surface: "rgba(255,255,255,0.91)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.94)", nav: "rgba(255,237,213,0.80)",
+                    border: "#fed7aa", borderSoft: "rgba(254,215,170,0.8)",
+                    text: "#1c1917", muted: "#57534e",
+                    primary: "#ea580c", primaryHover: "#c2410c", primarySoft: "#ffedd5", primaryText: "#c2410c",
+                    accent: "#e11d48", grandBg: "#7c2d12", inputBg: "#fffaf5",
+                    blob1: "#fdba74", blob2: "#fda4af", blob3: "#fde68a",
+                    r1: "rgba(234,88,12,0.14)", r2: "rgba(244,63,94,0.11)", r3: "rgba(245,158,11,0.08)",
+                    shadow: "rgba(234,88,12,0.10)"
+                }
+            },
+            {
+                id: "nordic-slate",
+                name: "9. Nordic Slate",
+                tag: "Pure White + Steel",
+                mode: "light",
+                swatches: ["#ffffff", "#334155", "#64748b", "#0f172a"],
+                vars: {
+                    bg: "#f8fafc", surface: "rgba(255,255,255,0.92)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.95)", nav: "rgba(241,245,249,0.92)",
+                    border: "#cbd5e1", borderSoft: "rgba(203,213,225,0.8)",
+                    text: "#0f172a", muted: "#475569",
+                    primary: "#334155", primaryHover: "#1e293b", primarySoft: "#e2e8f0", primaryText: "#1e293b",
+                    accent: "#0284c7", grandBg: "#0f172a", inputBg: "#f8fafc",
+                    blob1: "#cbd5e1", blob2: "#bae6fd", blob3: "#e2e8f0",
+                    r1: "rgba(71,85,105,0.12)", r2: "rgba(14,165,233,0.12)", r3: "rgba(148,163,184,0.10)",
+                    shadow: "rgba(15,23,42,0.08)"
+                }
+            },
+            {
+                id: "ocean-teal",
+                name: "10. Ocean Teal",
+                tag: "White + Deep Teal",
+                mode: "light",
+                swatches: ["#ffffff", "#0d9488", "#2dd4bf", "#134e4a"],
+                vars: {
+                    bg: "#f0fdfa", surface: "rgba(255,255,255,0.90)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.94)", nav: "rgba(204,251,241,0.65)",
+                    border: "#99f6e4", borderSoft: "rgba(153,246,228,0.8)",
+                    text: "#0f172a", muted: "#475569",
+                    primary: "#0d9488", primaryHover: "#0f766e", primarySoft: "#ccfbf1", primaryText: "#0f766e",
+                    accent: "#0284c7", grandBg: "#134e4a", inputBg: "#f7fffd",
+                    blob1: "#5eead4", blob2: "#7dd3fc", blob3: "#a7f3d0",
+                    r1: "rgba(13,148,136,0.15)", r2: "rgba(14,165,233,0.13)", r3: "rgba(16,185,129,0.08)",
+                    shadow: "rgba(13,148,136,0.10)"
+                }
+            },
+            {
+                id: "indigo-pearl",
+                name: "11. Indigo Pearl",
+                tag: "Pearl White + Indigo",
+                mode: "light",
+                swatches: ["#ffffff", "#4f46e5", "#818cf8", "#312e81"],
+                vars: {
+                    bg: "#f5f7ff", surface: "rgba(255,255,255,0.90)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.94)", nav: "rgba(238,242,255,0.92)",
+                    border: "#c7d2fe", borderSoft: "rgba(199,210,254,0.8)",
+                    text: "#1e1b4b", muted: "#64748b",
+                    primary: "#4f46e5", primaryHover: "#4338ca", primarySoft: "#e0e7ff", primaryText: "#4338ca",
+                    accent: "#0284c7", grandBg: "#312e81", inputBg: "#f8f9ff",
+                    blob1: "#a5b4fc", blob2: "#93c5fd", blob3: "#c4b5fd",
+                    r1: "rgba(79,70,229,0.15)", r2: "rgba(59,130,246,0.14)", r3: "rgba(139,92,246,0.08)",
+                    shadow: "rgba(79,70,229,0.10)"
+                }
+            },
+            {
+                id: "olive-sage",
+                name: "12. Olive Sage",
+                tag: "Warm White + Sage",
+                mode: "light",
+                swatches: ["#f7fee7", "#4d7c0f", "#84cc16", "#365314"],
+                vars: {
+                    bg: "#f9fced", surface: "rgba(255,255,255,0.91)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.94)", nav: "rgba(236,252,203,0.72)",
+                    border: "#d9f99d", borderSoft: "rgba(217,249,157,0.8)",
+                    text: "#1a2e05", muted: "#4b5563",
+                    primary: "#4d7c0f", primaryHover: "#3f6212", primarySoft: "#ecfccb", primaryText: "#3f6212",
+                    accent: "#059669", grandBg: "#365314", inputBg: "#fcfef8",
+                    blob1: "#bef264", blob2: "#86efac", blob3: "#fde68a",
+                    r1: "rgba(101,163,13,0.14)", r2: "rgba(16,185,129,0.12)", r3: "rgba(234,179,8,0.08)",
+                    shadow: "rgba(77,124,15,0.09)"
+                }
+            },
+            {
+                id: "orchid-bloom",
+                name: "13. Orchid Bloom",
+                tag: "White + Fuchsia",
+                mode: "light",
+                swatches: ["#fdf4ff", "#c026d3", "#e879f9", "#701a75"],
+                vars: {
+                    bg: "#fdf4ff", surface: "rgba(255,255,255,0.90)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.94)", nav: "rgba(250,232,255,0.80)",
+                    border: "#f5d0fe", borderSoft: "rgba(245,208,254,0.8)",
+                    text: "#2e1065", muted: "#64748b",
+                    primary: "#c026d3", primaryHover: "#a21caf", primarySoft: "#fae8ff", primaryText: "#a21caf",
+                    accent: "#7c3aed", grandBg: "#701a75", inputBg: "#fefaff",
+                    blob1: "#f0abfc", blob2: "#c4b5fd", blob3: "#fbcfe8",
+                    r1: "rgba(192,38,211,0.14)", r2: "rgba(139,92,246,0.13)", r3: "rgba(236,72,153,0.08)",
+                    shadow: "rgba(192,38,211,0.10)"
+                }
+            },
+            {
+                id: "glacier-blue",
+                name: "14. Glacier Blue",
+                tag: "Frost + Cerulean",
+                mode: "light",
+                swatches: ["#f0f9ff", "#0369a1", "#0ea5e9", "#082f49"],
+                vars: {
+                    bg: "#eef6fc", surface: "rgba(255,255,255,0.91)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.95)", nav: "rgba(224,242,254,0.90)",
+                    border: "#7dd3fc", borderSoft: "rgba(125,211,252,0.75)",
+                    text: "#082f49", muted: "#475569",
+                    primary: "#0369a1", primaryHover: "#075985", primarySoft: "#e0f2fe", primaryText: "#075985",
+                    accent: "#0284c7", grandBg: "#082f49", inputBg: "#f5faff",
+                    blob1: "#38bdf8", blob2: "#7dd3fc", blob3: "#bae6fd",
+                    r1: "rgba(3,105,161,0.15)", r2: "rgba(14,165,233,0.16)", r3: "rgba(56,189,248,0.10)",
+                    shadow: "rgba(3,105,161,0.11)"
+                }
+            },
+            {
+                id: "sandstone-gold",
+                name: "15. Sandstone Gold",
+                tag: "Beige + Bronze",
+                mode: "light",
+                swatches: ["#faf8f5", "#a16207", "#eab308", "#422006"],
+                vars: {
+                    bg: "#faf7f2", surface: "rgba(255,255,255,0.92)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.95)", nav: "rgba(254,249,195,0.70)",
+                    border: "#e7e5e4", borderSoft: "rgba(214,211,209,0.8)",
+                    text: "#292524", muted: "#57534e",
+                    primary: "#a16207", primaryHover: "#854d0e", primarySoft: "#fef9c3", primaryText: "#854d0e",
+                    accent: "#d97706", grandBg: "#422006", inputBg: "#fdfbf7",
+                    blob1: "#fde047", blob2: "#fed7aa", blob3: "#e7e5e4",
+                    r1: "rgba(161,98,7,0.13)", r2: "rgba(217,119,6,0.12)", r3: "rgba(120,113,108,0.08)",
+                    shadow: "rgba(161,98,7,0.09)"
+                }
+            },
+            {
+                id: "mint-sky-duo",
+                name: "16. Mint & Sky Duo",
+                tag: "Sky + Emerald Mix",
+                mode: "light",
+                swatches: ["#ffffff", "#0284c7", "#10b981", "#065f46"],
+                vars: {
+                    bg: "#f1fbf9", surface: "rgba(255,255,255,0.90)", solid: "#ffffff",
+                    header: "rgba(255,255,255,0.94)", nav: "rgba(224,242,254,0.85)",
+                    border: "#99f6e4", borderSoft: "rgba(153,246,228,0.8)",
+                    text: "#0f172a", muted: "#475569",
+                    primary: "#0284c7", primaryHover: "#0369a1", primarySoft: "#e0f2fe", primaryText: "#0369a1",
+                    accent: "#10b981", grandBg: "#065f46", inputBg: "#f8fcff",
+                    blob1: "#7dd3fc", blob2: "#6ee7b7", blob3: "#a5f3fc",
+                    r1: "rgba(2,132,199,0.15)", r2: "rgba(16,185,129,0.15)", r3: "rgba(56,189,248,0.08)",
+                    shadow: "rgba(2,132,199,0.10)"
+                }
+            },
+
+            // --- 8 DARK / PRO NIGHT COMBINATIONS ---
+            {
+                id: "midnight-sky",
+                name: "17. Midnight Sky",
+                tag: "Dark Navy + Sky",
+                mode: "dark",
+                swatches: ["#0b1324", "#38bdf8", "#0284c7", "#f1f5f9"],
+                vars: {
+                    bg: "#09111e", surface: "rgba(15,27,48,0.78)", solid: "#0f1b30",
+                    header: "rgba(11,20,38,0.90)", nav: "rgba(15,27,48,0.82)",
+                    border: "rgba(56,189,248,0.28)", borderSoft: "rgba(56,189,248,0.16)",
+                    text: "#f1f5f9", muted: "#94a3b8",
+                    primary: "#0284c7", primaryHover: "#0ea5e9", primarySoft: "rgba(14,165,233,0.18)", primaryText: "#38bdf8",
+                    accent: "#38bdf8", grandBg: "#0369a1", inputBg: "rgba(15,23,42,0.85)",
+                    blob1: "#0284c7", blob2: "#0369a1", blob3: "#0d9488",
+                    r1: "rgba(14,165,233,0.22)", r2: "rgba(56,189,248,0.16)", r3: "rgba(16,185,129,0.12)",
+                    shadow: "rgba(0,0,0,0.45)"
+                }
+            },
+            {
+                id: "cyber-indigo",
+                name: "18. Cyber Indigo",
+                tag: "Classic Glass Dark",
+                mode: "dark",
+                swatches: ["#080c14", "#6366f1", "#a855f7", "#f8fafc"],
+                vars: {
+                    bg: "#080c14", surface: "rgba(15,23,42,0.75)", solid: "#0f172a",
+                    header: "rgba(10,15,29,0.88)", nav: "rgba(15,23,42,0.78)",
+                    border: "rgba(129,140,248,0.28)", borderSoft: "rgba(255,255,255,0.10)",
+                    text: "#f1f5f9", muted: "#94a3b8",
+                    primary: "#4f46e5", primaryHover: "#6366f1", primarySoft: "rgba(99,102,241,0.20)", primaryText: "#a5b4fc",
+                    accent: "#9333ea", grandBg: "#312e81", inputBg: "rgba(15,23,42,0.85)",
+                    blob1: "#4f46e5", blob2: "#9333ea", blob3: "#10b981",
+                    r1: "rgba(79,70,229,0.22)", r2: "rgba(147,51,234,0.18)", r3: "rgba(16,185,129,0.12)",
+                    shadow: "rgba(0,0,0,0.45)"
+                }
+            },
+            {
+                id: "obsidian-gold",
+                name: "19. Obsidian Gold",
+                tag: "Luxury Black + Gold",
+                mode: "dark",
+                swatches: ["#0c0a09", "#f59e0b", "#fbbf24", "#fafaf9"],
+                vars: {
+                    bg: "#0c0a09", surface: "rgba(28,25,23,0.82)", solid: "#1c1917",
+                    header: "rgba(18,16,15,0.92)", nav: "rgba(28,25,23,0.84)",
+                    border: "rgba(245,158,11,0.30)", borderSoft: "rgba(245,158,11,0.16)",
+                    text: "#fafaf9", muted: "#a8a29e",
+                    primary: "#d97706", primaryHover: "#f59e0b", primarySoft: "rgba(245,158,11,0.18)", primaryText: "#fbbf24",
+                    accent: "#eab308", grandBg: "#78350f", inputBg: "rgba(24,22,20,0.9)",
+                    blob1: "#d97706", blob2: "#b45309", blob3: "#78350f",
+                    r1: "rgba(245,158,11,0.18)", r2: "rgba(217,119,6,0.14)", r3: "rgba(120,53,15,0.12)",
+                    shadow: "rgba(0,0,0,0.50)"
+                }
+            },
+            {
+                id: "matrix-emerald",
+                name: "20. Matrix Emerald",
+                tag: "Dark Forest + Green",
+                mode: "dark",
+                swatches: ["#04120e", "#10b981", "#34d399", "#ecfdf5"],
+                vars: {
+                    bg: "#04120e", surface: "rgba(6,32,25,0.80)", solid: "#062019",
+                    header: "rgba(4,22,17,0.92)", nav: "rgba(6,32,25,0.84)",
+                    border: "rgba(16,185,129,0.28)", borderSoft: "rgba(16,185,129,0.15)",
+                    text: "#ecfdf5", muted: "#9ca3af",
+                    primary: "#059669", primaryHover: "#10b981", primarySoft: "rgba(16,185,129,0.18)", primaryText: "#34d399",
+                    accent: "#14b8a6", grandBg: "#065f46", inputBg: "rgba(5,25,20,0.9)",
+                    blob1: "#059669", blob2: "#0d9488", blob3: "#047857",
+                    r1: "rgba(16,185,129,0.20)", r2: "rgba(20,184,166,0.15)", r3: "rgba(5,150,105,0.12)",
+                    shadow: "rgba(0,0,0,0.50)"
+                }
+            },
+            {
+                id: "crimson-night",
+                name: "21. Crimson Night",
+                tag: "Dark Charcoal + Ruby",
+                mode: "dark",
+                swatches: ["#12090d", "#f43f5e", "#fb7185", "#fff1f2"],
+                vars: {
+                    bg: "#12090d", surface: "rgba(33,16,23,0.80)", solid: "#211017",
+                    header: "rgba(22,10,15,0.92)", nav: "rgba(33,16,23,0.84)",
+                    border: "rgba(244,63,94,0.30)", borderSoft: "rgba(244,63,94,0.15)",
+                    text: "#fff1f2", muted: "#fda4af",
+                    primary: "#e11d48", primaryHover: "#f43f5e", primarySoft: "rgba(244,63,94,0.18)", primaryText: "#fb7185",
+                    accent: "#ec4899", grandBg: "#881337", inputBg: "rgba(26,12,18,0.9)",
+                    blob1: "#e11d48", blob2: "#be123c", blob3: "#9f1239",
+                    r1: "rgba(244,63,94,0.20)", r2: "rgba(236,72,153,0.15)", r3: "rgba(190,18,60,0.12)",
+                    shadow: "rgba(0,0,0,0.50)"
+                }
+            },
+            {
+                id: "deep-ocean-dark",
+                name: "22. Deep Ocean",
+                tag: "Abyss Blue + Cyan",
+                mode: "dark",
+                swatches: ["#06141b", "#06b6d4", "#22d3ee", "#ecfeff"],
+                vars: {
+                    bg: "#06141b", surface: "rgba(11,31,41,0.80)", solid: "#0b1f29",
+                    header: "rgba(7,22,30,0.92)", nav: "rgba(11,31,41,0.84)",
+                    border: "rgba(6,182,212,0.30)", borderSoft: "rgba(6,182,212,0.15)",
+                    text: "#ecfeff", muted: "#94a3b8",
+                    primary: "#0891b2", primaryHover: "#06b6d4", primarySoft: "rgba(6,182,212,0.18)", primaryText: "#22d3ee",
+                    accent: "#0284c7", grandBg: "#155e75", inputBg: "rgba(8,25,34,0.9)",
+                    blob1: "#0891b2", blob2: "#0284c7", blob3: "#0d9488",
+                    r1: "rgba(6,182,212,0.20)", r2: "rgba(14,165,233,0.16)", r3: "rgba(20,184,166,0.12)",
+                    shadow: "rgba(0,0,0,0.50)"
+                }
+            },
+            {
+                id: "royal-plum-dark",
+                name: "23. Royal Plum",
+                tag: "Dark Violet + Orchid",
+                mode: "dark",
+                swatches: ["#11091c", "#a855f7", "#c084fc", "#faf5ff"],
+                vars: {
+                    bg: "#11091c", surface: "rgba(28,16,46,0.80)", solid: "#1c102e",
+                    header: "rgba(19,10,32,0.92)", nav: "rgba(28,16,46,0.84)",
+                    border: "rgba(168,85,247,0.30)", borderSoft: "rgba(168,85,247,0.15)",
+                    text: "#faf5ff", muted: "#c4b5fd",
+                    primary: "#9333ea", primaryHover: "#a855f7", primarySoft: "rgba(168,85,247,0.20)", primaryText: "#c084fc",
+                    accent: "#ec4899", grandBg: "#581c87", inputBg: "rgba(22,12,38,0.9)",
+                    blob1: "#9333ea", blob2: "#7c3aed", blob3: "#c026d3",
+                    r1: "rgba(168,85,247,0.22)", r2: "rgba(124,58,237,0.18)", r3: "rgba(217,70,239,0.12)",
+                    shadow: "rgba(0,0,0,0.50)"
+                }
+            },
+            {
+                id: "graphite-steel",
+                name: "24. Graphite Steel",
+                tag: "Carbon Grey + Blue",
+                mode: "dark",
+                swatches: ["#111317", "#60a5fa", "#93c5fd", "#f3f4f6"],
+                vars: {
+                    bg: "#111317", surface: "rgba(26,29,36,0.84)", solid: "#1a1d24",
+                    header: "rgba(18,20,25,0.94)", nav: "rgba(26,29,36,0.86)",
+                    border: "rgba(96,165,250,0.26)", borderSoft: "rgba(255,255,255,0.10)",
+                    text: "#f3f4f6", muted: "#9ca3af",
+                    primary: "#2563eb", primaryHover: "#3b82f6", primarySoft: "rgba(59,130,246,0.18)", primaryText: "#60a5fa",
+                    accent: "#0ea5e9", grandBg: "#1e3a8a", inputBg: "rgba(20,23,29,0.92)",
+                    blob1: "#2563eb", blob2: "#475569", blob3: "#0284c7",
+                    r1: "rgba(59,130,246,0.18)", r2: "rgba(100,116,139,0.16)", r3: "rgba(14,165,233,0.10)",
+                    shadow: "rgba(0,0,0,0.50)"
+                }
+            }
+        ];
+
+        let currentThemeId = localStorage.getItem(THEME_STORAGE_KEY) || "sky-breeze";
+        let themeFilterMode = "all";
+
+        function applyTheme(themeId) {
+            const theme = ERP_THEMES.find(t => t.id === themeId) || ERP_THEMES[0];
+            currentThemeId = theme.id;
+            localStorage.setItem(THEME_STORAGE_KEY, theme.id);
+
+            const root = document.documentElement;
+            root.setAttribute("data-theme-mode", theme.mode);
+
+            const v = theme.vars;
+            root.style.setProperty("--t-bg", v.bg);
+            root.style.setProperty("--t-surface", v.surface);
+            root.style.setProperty("--t-surface-solid", v.solid);
+            root.style.setProperty("--t-header-bg", v.header);
+            root.style.setProperty("--t-nav-bg", v.nav);
+            root.style.setProperty("--t-border", v.border);
+            root.style.setProperty("--t-border-soft", v.borderSoft);
+            root.style.setProperty("--t-text", v.text);
+            root.style.setProperty("--t-muted", v.muted);
+            root.style.setProperty("--t-primary", v.primary);
+            root.style.setProperty("--t-primary-hover", v.primaryHover);
+            root.style.setProperty("--t-primary-soft", v.primarySoft);
+            root.style.setProperty("--t-primary-text", v.primaryText);
+            root.style.setProperty("--t-accent", v.accent);
+            root.style.setProperty("--t-grand-bg", v.grandBg);
+            root.style.setProperty("--t-input-bg", v.inputBg);
+            root.style.setProperty("--t-r1", v.r1);
+            root.style.setProperty("--t-r2", v.r2);
+            root.style.setProperty("--t-r3", v.r3);
+            root.style.setProperty("--t-shadow", v.shadow);
+
+            const b1 = document.getElementById("ambientBlob1");
+            const b2 = document.getElementById("ambientBlob2");
+            const b3 = document.getElementById("ambientBlob3");
+            if (b1) b1.style.backgroundColor = v.blob1;
+            if (b2) b2.style.backgroundColor = v.blob2;
+            if (b3) b3.style.backgroundColor = v.blob3;
+
+            const dot = document.getElementById("activeThemeDot");
+            if (dot) dot.style.backgroundColor = v.primary;
+
+            const nameLabel = document.getElementById("currentThemeNameLabel");
+            if (nameLabel) nameLabel.innerText = `${theme.name} (${theme.tag})`;
+
+            renderThemeGrid();
+        }
+
+        function filterThemeCategory(mode) {
+            themeFilterMode = mode;
+            const btnAll = document.getElementById("filterThemeAll");
+            const btnLight = document.getElementById("filterThemeLight");
+            const btnDark = document.getElementById("filterThemeDark");
+
+            [btnAll, btnLight, btnDark].forEach(b => {
+                if (b) b.className = "px-2.5 py-1 rounded-lg text-slate-600 hover:text-sky-700 transition";
+            });
+            const activeBtn = mode === "light" ? btnLight : mode === "dark" ? btnDark : btnAll;
+            if (activeBtn) activeBtn.className = "px-2.5 py-1 rounded-lg bg-sky-600 text-white transition";
+
+            renderThemeGrid();
+        }
+
+        function renderThemeGrid() {
+            const container = document.getElementById("themeGridContainer");
+            if (!container) return;
+
+            const filtered = ERP_THEMES.filter(t => themeFilterMode === "all" || t.mode === themeFilterMode);
+            container.innerHTML = filtered.map(t => {
+                const isActive = t.id === currentThemeId;
+                return `
+                    <button type="button" onclick="applyTheme('${t.id}')" class="theme-card ${isActive ? 'active-theme' : ''} p-3 rounded-2xl text-left flex flex-col justify-between gap-2 relative">
+                        <div class="flex items-center justify-between w-full">
+                            <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full ${t.mode === 'dark' ? 'bg-slate-800 text-slate-100' : 'bg-sky-100 text-sky-800'}">
+                                ${t.mode === 'dark' ? 'Dark' : 'Light'}
+                            </span>
+                            ${isActive ? '<i class="fa-solid fa-circle-check text-sky-600 text-sm"></i>' : ''}
+                        </div>
+                        <div class="flex items-center gap-1.5 my-0.5">
+                            ${t.swatches.map(c => `<span class="w-5 h-5 rounded-full border border-slate-300/80 shadow-xs" style="background:${c};"></span>`).join("")}
+                        </div>
+                        <div>
+                            <div class="text-xs font-extrabold text-slate-900 truncate">${t.name}</div>
+                            <div class="text-[10px] text-slate-500 font-semibold truncate">${t.tag}</div>
+                        </div>
+                    </button>
+                `;
+            }).join("");
+        }
+
+        function openThemeModal() {
+            renderThemeGrid();
+            openModal("themeModal");
+        }
+
         window.refreshAll = refreshAll;
+        applyTheme(currentThemeId);
         refreshAll();
     </script>
 </body>

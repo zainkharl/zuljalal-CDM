@@ -162,7 +162,9 @@
             #cartonPurchaseModal,
             #txModal,
             #openingBalModal,
-            #themeModal {
+            #themeModal,
+            #adminModal,
+            #adminAuthModal {
                 display: none !important;
             }
             #printSheetArea {
@@ -428,11 +430,23 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Password</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Staff / Login Password</label>
                     <div class="relative">
                         <i class="fa-solid fa-lock absolute left-3.5 top-3 text-slate-500 text-xs"></i>
                         <input type="password" id="authPassword" required minlength="6" class="w-full pl-9 pr-3.5 py-2.5 rounded-xl text-sm font-medium" placeholder="••••••••">
                     </div>
+                </div>
+                <div id="signupAdminPassWrapper" class="hidden bg-amber-50/90 border border-amber-300 p-3 rounded-2xl">
+                    <label class="block text-xs font-extrabold text-amber-800 mb-1">
+                        <i class="fa-solid fa-shield-halved mr-1"></i> Set Admin Master Password / PIN
+                    </label>
+                    <div class="relative">
+                        <i class="fa-solid fa-key absolute left-3.5 top-3 text-amber-600 text-xs"></i>
+                        <input type="password" id="authAdminPassword" minlength="4" class="w-full pl-9 pr-3.5 py-2 rounded-xl text-sm font-bold" placeholder="Admin Secret Password (min 4 chars)">
+                    </div>
+                    <p class="text-[10px] text-amber-700 mt-1 font-medium">
+                        Yeh password sirf aapke paas rahega — data reset, delete aur cloud backup isi se khulega.
+                    </p>
                 </div>
 
                 <button type="submit" id="authBtnSubmit" class="w-full py-3 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white rounded-xl text-sm font-extrabold shadow-lg shadow-sky-200 transition duration-200 mt-2 flex items-center justify-center">
@@ -494,6 +508,12 @@
                 </button>
 
                 <div class="h-6 w-[1px] bg-sky-200 mx-1 hidden sm:block"></div>
+
+                <!-- Admin Security & Backup Button -->
+                <button onclick="openAdminGate()" title="Admin Panel (Backup, Restore & Reset)" class="bg-slate-900 hover:bg-slate-800 text-amber-300 px-3 py-2 rounded-xl text-xs sm:text-sm font-extrabold border border-amber-400/50 shadow-sm transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-shield-halved text-amber-400"></i>
+                    <span>Admin</span>
+                </button>
 
                 <!-- Theme Studio Button (24 Color Combinations) -->
                 <button onclick="openThemeModal()" title="Change Theme (24 Combinations)" class="bg-sky-50 hover:bg-sky-100 text-sky-800 px-3 py-2 rounded-xl text-xs sm:text-sm font-bold border border-sky-200 shadow-xs transition flex items-center gap-1.5">
@@ -905,9 +925,9 @@
     <!-- Footer -->
     <footer class="glass-header py-4 text-center text-xs text-slate-500 border-t border-sky-200/80 mt-10 relative z-10 no-print">
         <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-            <span>Zuljalal Traders Cloud ERP v4.2 &bull; Firebase Powered</span>
-            <button onclick="resetToCleanDefaults()" class="text-rose-600 hover:text-rose-700 underline font-semibold transition">
-                <i class="fa-solid fa-trash-can mr-1"></i> Clear All Data (Start Fresh)
+            <span>Zuljalal Traders Cloud ERP v4.3 &bull; Firebase Cloud &amp; Backup Protected</span>
+            <button onclick="openAdminGate()" class="text-sky-700 hover:text-sky-900 font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-lock text-amber-600"></i> Admin Controls &amp; Cloud Backup
             </button>
         </div>
     </footer>
@@ -1136,6 +1156,128 @@
         </div>
     </div>
 
+
+    <!-- MODAL 7: ADMIN PASSWORD VERIFICATION GATE -->
+    <div id="adminAuthModal" class="fixed inset-0 bg-slate-900/55 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
+        <div class="glass-modal p-6 rounded-3xl w-full max-w-sm relative border border-amber-300">
+            <div class="flex justify-between items-center mb-3 pb-2.5 border-b border-sky-200/80">
+                <h3 class="text-lg font-extrabold text-slate-900 flex items-center">
+                    <i class="fa-solid fa-shield-halved text-amber-600 mr-2"></i> <span id="adminGateTitle">Admin Security Check</span>
+                </h3>
+                <button onclick="closeModal('adminAuthModal')" class="text-slate-600 hover:text-sky-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p id="adminGateDesc" class="text-xs text-slate-600 mb-4">
+                Admin panel kholne ke liye apna <b>Admin Master Password</b> darj karein.
+            </p>
+            <div id="adminGateError" class="hidden mb-3 p-2.5 rounded-xl text-xs font-bold bg-rose-100 text-rose-700 border border-rose-300"></div>
+            <form onsubmit="verifyAdminPassword(event)" class="space-y-3.5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1" id="adminGateInputLabel">Admin Password</label>
+                    <input type="password" id="adminGateInput" required minlength="4" class="w-full p-2.5 rounded-xl text-sm font-bold" placeholder="••••••••">
+                </div>
+                <div class="flex justify-end gap-2 pt-1">
+                    <button type="button" onclick="closeModal('adminAuthModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold">Cancel</button>
+                    <button type="submit" id="adminGateSubmitBtn" class="px-5 py-2 bg-slate-900 hover:bg-slate-800 text-amber-300 rounded-xl text-xs font-extrabold shadow-md">
+                        <i class="fa-solid fa-unlock-keyhole mr-1"></i> Unlock Admin
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 8: ADMIN CONTROL CENTER (FIREBASE CLOUD BACKUP + RESTORE + RESET + PIN CHANGE) -->
+    <div id="adminModal" class="fixed inset-0 bg-slate-900/55 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
+        <div class="glass-modal p-6 rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col relative border border-amber-300">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-sky-200/80">
+                <div>
+                    <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-amber-600"></i>
+                        <span>Admin Control Center &amp; Firebase Backup Vault</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Protected Zone &bull; Sirf Admin password se access mumkin hai</p>
+                </div>
+                <button onclick="closeModal('adminModal')" class="text-slate-600 hover:text-sky-700 text-xl px-1.5"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="overflow-y-auto pr-1 space-y-5">
+                <!-- Section 1: Firebase Cloud Backup Snapshots -->
+                <div class="p-4 rounded-2xl bg-sky-50/90 border border-sky-200 space-y-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <h4 class="text-sm font-extrabold text-slate-900 flex items-center gap-1.5">
+                                <i class="fa-solid fa-cloud-arrow-up text-sky-600"></i> Firebase Cloud Backup Snapshots
+                            </h4>
+                            <p class="text-[11px] text-slate-600">Apne poore ERP data ka secure snapshot Firebase Cloud mein save karein aur kisi bhi waqt 1-click restore karein.</p>
+                        </div>
+                        <button type="button" onclick="createFirebaseBackup()" id="btnCreateCloudBackup" class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-extrabold shadow-md flex items-center gap-1.5 shrink-0">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Save Cloud Backup Now
+                        </button>
+                    </div>
+
+                    <div id="cloudBackupStatusMsg" class="hidden text-xs font-bold p-2.5 rounded-xl"></div>
+
+                    <div class="bg-white rounded-xl border border-sky-200 overflow-hidden">
+                        <div class="px-3.5 py-2 bg-sky-100/70 border-b border-sky-200 flex justify-between items-center">
+                            <span class="text-[11px] font-extrabold uppercase text-sky-900">Saved Firebase Backups (Latest 10)</span>
+                            <button type="button" onclick="loadFirebaseBackupsList()" class="text-[11px] font-bold text-sky-700 hover:underline">
+                                <i class="fa-solid fa-rotate mr-1"></i> Refresh
+                            </button>
+                        </div>
+                        <div id="firebaseBackupsList" class="divide-y divide-sky-100 max-h-48 overflow-y-auto text-xs">
+                            <div class="p-4 text-center text-slate-500">Loading backups...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Offline PC / Mobile File Backup & Restore -->
+                <div class="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                        <h4 class="text-sm font-extrabold text-slate-900 flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-shield text-emerald-600"></i> Offline File Backup (.JSON)
+                        </h4>
+                        <p class="text-[11px] text-slate-600">Extra safety ke liye apne computer ya mobile mein backup file download ya restore karein.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 shrink-0">
+                        <button type="button" onclick="downloadJsonBackup()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs flex items-center gap-1.5">
+                            <i class="fa-solid fa-download"></i> Download Backup
+                        </button>
+                        <label class="px-3.5 py-2 bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-xl text-xs font-bold cursor-pointer flex items-center gap-1.5">
+                            <i class="fa-solid fa-upload"></i> Restore File
+                            <input type="file" id="restoreJsonInput" accept=".json" onchange="restoreJsonBackup(event)" class="hidden">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Section 3: Change Admin Master Password -->
+                <div class="p-4 rounded-2xl bg-amber-50/80 border border-amber-200">
+                    <h4 class="text-sm font-extrabold text-slate-900 flex items-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-key text-amber-600"></i> Change Admin Master Password
+                    </h4>
+                    <form onsubmit="changeAdminPassword(event)" class="flex flex-col sm:flex-row gap-2.5">
+                        <input type="password" id="newAdminPassInput" required minlength="4" class="flex-grow p-2 rounded-xl text-xs font-bold" placeholder="New Admin Password (min 4 characters)">
+                        <input type="password" id="confirmAdminPassInput" required minlength="4" class="flex-grow p-2 rounded-xl text-xs font-bold" placeholder="Confirm New Admin Password">
+                        <button type="submit" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-extrabold shrink-0">
+                            Update Password
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Section 4: Danger Zone (Clear All Data / Start Fresh) -->
+                <div class="p-4 rounded-2xl bg-rose-50/90 border border-rose-300 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                        <h4 class="text-sm font-extrabold text-rose-800 flex items-center gap-1.5">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-600"></i> Danger Zone — Clear All Data (Start Fresh)
+                        </h4>
+                        <p class="text-[11px] text-rose-700">Tamam shops, bills, recoveries aur stock data permanently delete karke system ko 0 kar dega (pehle auto cloud backup banega).</p>
+                    </div>
+                    <button type="button" onclick="resetToCleanDefaults()" class="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-extrabold shadow-md shrink-0 flex items-center gap-1.5">
+                        <i class="fa-solid fa-trash-can"></i> Clear All Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ==================== FIREBASE SDK MODULE ==================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -1151,6 +1293,14 @@
             getFirestore, 
             doc, 
             setDoc, 
+            getDoc,
+            collection,
+            addDoc,
+            getDocs,
+            deleteDoc,
+            query,
+            orderBy,
+            limit,
             onSnapshot 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
@@ -1177,6 +1327,14 @@
         window.signOut = signOut;
         window.doc = doc;
         window.setDoc = setDoc;
+        window.getDoc = getDoc;
+        window.collection = collection;
+        window.addDoc = addDoc;
+        window.getDocs = getDocs;
+        window.deleteDoc = deleteDoc;
+        window.fbQuery = query;
+        window.fbOrderBy = orderBy;
+        window.fbLimit = limit;
 
         let unbindFirestoreListener = null;
 
@@ -1196,13 +1354,31 @@
                 unbindFirestoreListener = onSnapshot(docRef, (docSnap) => {
                     if (docSnap.exists()) {
                         const data = docSnap.data();
+                        const pendingAdmin = window.pendingSignupAdminPass || "";
+                        const resolvedAdminPass = data.adminPassword || pendingAdmin || localStorage.getItem("zuljalal_admin_pass_" + user.uid) || "";
                         window.db = {
                             shops: Array.isArray(data.shops) ? data.shops : [],
                             purchases: Array.isArray(data.purchases) ? data.purchases : [],
-                            transactions: Array.isArray(data.transactions) ? data.transactions : []
+                            transactions: Array.isArray(data.transactions) ? data.transactions : [],
+                            adminPassword: resolvedAdminPass
                         };
+                        if (resolvedAdminPass) {
+                            localStorage.setItem("zuljalal_admin_pass_" + user.uid, resolvedAdminPass);
+                        }
+                        if (!data.adminPassword && pendingAdmin) {
+                            window.pendingSignupAdminPass = "";
+                            window.syncToCloud();
+                        }
                     } else {
-                        window.db = structuredClone(window.defaultData);
+                        const pendingAdmin = window.pendingSignupAdminPass || "";
+                        window.db = {
+                            ...structuredClone(window.defaultData),
+                            adminPassword: pendingAdmin
+                        };
+                        if (pendingAdmin) {
+                            localStorage.setItem("zuljalal_admin_pass_" + user.uid, pendingAdmin);
+                            window.pendingSignupAdminPass = "";
+                        }
                         window.syncToCloud();
                     }
                     window.refreshAll();
@@ -1231,7 +1407,8 @@
         const defaultData = {
             shops: [],
             purchases: [],
-            transactions: []
+            transactions: [],
+            adminPassword: ""
         };
 
         window.defaultData = defaultData;
@@ -1271,6 +1448,8 @@
             const tabSignup = document.getElementById("tabAuthSignup");
             const btnText = document.getElementById("authBtnText");
             const alertBox = document.getElementById("authAlert");
+            const adminWrap = document.getElementById("signupAdminPassWrapper");
+            const adminInput = document.getElementById("authAdminPassword");
 
             alertBox.classList.add("hidden");
 
@@ -1278,10 +1457,17 @@
                 tabLogin.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-white bg-sky-600 shadow-sm";
                 tabSignup.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-slate-600 hover:text-sky-700";
                 btnText.innerText = "Sign In to Dashboard";
+                if (adminWrap) adminWrap.classList.add("hidden");
+                if (adminInput) {
+                    adminInput.required = false;
+                    adminInput.value = "";
+                }
             } else {
                 tabSignup.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-white bg-sky-600 shadow-sm";
                 tabLogin.className = "w-1/2 py-2 text-xs font-extrabold rounded-lg transition text-slate-600 hover:text-sky-700";
-                btnText.innerText = "Create New Account";
+                btnText.innerText = "Create Account & Set Admin PIN";
+                if (adminWrap) adminWrap.classList.remove("hidden");
+                if (adminInput) adminInput.required = true;
             }
         }
 
@@ -1289,19 +1475,29 @@
             e.preventDefault();
             const email = document.getElementById("authEmail").value.trim();
             const password = document.getElementById("authPassword").value;
+            const adminPass = document.getElementById("authAdminPassword") ? document.getElementById("authAdminPassword").value.trim() : "";
             const alertBox = document.getElementById("authAlert");
             const spinner = document.getElementById("authSpinner");
 
             alertBox.classList.add("hidden");
+
+            if (currentAuthMode === "signup" && adminPass.length < 4) {
+                alertBox.innerText = "Baraye meharbani kam az kam 4 characters ka Admin Master Password set karein.";
+                alertBox.classList.remove("hidden");
+                return;
+            }
+
             spinner.classList.remove("hidden");
 
             try {
                 if (currentAuthMode === "login") {
                     await window.signInWithEmailAndPassword(window.auth, email, password);
                 } else {
+                    window.pendingSignupAdminPass = adminPass;
                     await window.createUserWithEmailAndPassword(window.auth, email, password);
                 }
             } catch (err) {
+                window.pendingSignupAdminPass = "";
                 alertBox.innerText = err.message || "Authentication failed. Please check details.";
                 alertBox.classList.remove("hidden");
             } finally {
@@ -1315,15 +1511,296 @@
             }
         }
 
-        function resetToCleanDefaults() {
-            if (confirm("Kya aap tamam shops, bills, recoveries aur stock data bilkul delete karke software ko 0 (blank) karna chahte hain?")) {
-                window.db = structuredClone(defaultData);
-                activeTown = null;
-                activeShopId = null;
-                saveDB();
-                refreshAll();
-                switchTab('main');
+        /* ==================== ADMIN GATE & FIREBASE BACKUP SYSTEM ==================== */
+        let adminGateMode = "verify"; // 'verify' or 'setup'
+
+        function getStoredAdminPassword() {
+            if (window.db && window.db.adminPassword) return window.db.adminPassword;
+            if (window.currentUser) {
+                const localPass = localStorage.getItem("zuljalal_admin_pass_" + window.currentUser.uid);
+                if (localPass) return localPass;
             }
+            return "";
+        }
+
+        function openAdminGate() {
+            const existingPass = getStoredAdminPassword();
+            const errBox = document.getElementById("adminGateError");
+            const input = document.getElementById("adminGateInput");
+            errBox.classList.add("hidden");
+            input.value = "";
+
+            if (!existingPass) {
+                adminGateMode = "setup";
+                document.getElementById("adminGateTitle").innerText = "Setup Admin Password";
+                document.getElementById("adminGateDesc").innerHTML = "Is account par abhi Admin Password set nahi hai. Naya <b>Admin Master Password</b> set karein:";
+                document.getElementById("adminGateInputLabel").innerText = "Create Admin Password (min 4 chars)";
+                document.getElementById("adminGateSubmitBtn").innerHTML = '<i class="fa-solid fa-shield-check mr-1"></i> Save & Open Admin';
+            } else {
+                adminGateMode = "verify";
+                document.getElementById("adminGateTitle").innerText = "Admin Security Check";
+                document.getElementById("adminGateDesc").innerHTML = "Admin panel kholne ke liye apna <b>Admin Master Password</b> darj karein.";
+                document.getElementById("adminGateInputLabel").innerText = "Admin Password";
+                document.getElementById("adminGateSubmitBtn").innerHTML = '<i class="fa-solid fa-unlock-keyhole mr-1"></i> Unlock Admin';
+            }
+            openModal("adminAuthModal");
+            setTimeout(() => input.focus(), 80);
+        }
+
+        function verifyAdminPassword(e) {
+            e.preventDefault();
+            const entered = document.getElementById("adminGateInput").value.trim();
+            const errBox = document.getElementById("adminGateError");
+            errBox.classList.add("hidden");
+
+            if (adminGateMode === "setup") {
+                if (entered.length < 4) {
+                    errBox.innerText = "Kam az kam 4 characters ka password rakhein.";
+                    errBox.classList.remove("hidden");
+                    return;
+                }
+                window.db.adminPassword = entered;
+                if (window.currentUser) {
+                    localStorage.setItem("zuljalal_admin_pass_" + window.currentUser.uid, entered);
+                }
+                saveDB();
+                closeModal("adminAuthModal");
+                openAdminPanel();
+                return;
+            }
+
+            const actual = getStoredAdminPassword();
+            if (entered === actual) {
+                closeModal("adminAuthModal");
+                openAdminPanel();
+            } else {
+                errBox.innerText = "Galat Admin Password! Staff ko is section ki ijazat nahi hai.";
+                errBox.classList.remove("hidden");
+            }
+        }
+
+        function openAdminPanel() {
+            const statusMsg = document.getElementById("cloudBackupStatusMsg");
+            if (statusMsg) statusMsg.classList.add("hidden");
+            openModal("adminModal");
+            loadFirebaseBackupsList();
+        }
+
+        function changeAdminPassword(e) {
+            e.preventDefault();
+            const p1 = document.getElementById("newAdminPassInput").value.trim();
+            const p2 = document.getElementById("confirmAdminPassInput").value.trim();
+            if (p1.length < 4) {
+                alert("Admin password kam az kam 4 characters ka hona chahiye.");
+                return;
+            }
+            if (p1 !== p2) {
+                alert("Dono passwords match nahi kar rahe!");
+                return;
+            }
+            window.db.adminPassword = p1;
+            if (window.currentUser) {
+                localStorage.setItem("zuljalal_admin_pass_" + window.currentUser.uid, p1);
+            }
+            saveDB();
+            document.getElementById("newAdminPassInput").value = "";
+            document.getElementById("confirmAdminPassInput").value = "";
+            alert("Admin Master Password kamyabi se update ho gaya!");
+        }
+
+        function showCloudBackupStatus(msg, isError = false) {
+            const el = document.getElementById("cloudBackupStatusMsg");
+            if (!el) return;
+            el.className = `text-xs font-bold p-2.5 rounded-xl ${isError ? 'bg-rose-100 text-rose-700 border border-rose-300' : 'bg-emerald-100 text-emerald-700 border border-emerald-300'}`;
+            el.innerText = msg;
+            el.classList.remove("hidden");
+        }
+
+        async function createFirebaseBackup(autoLabel = null) {
+            if (!window.currentUser || !window.dbFirestore || !window.collection || !window.addDoc) {
+                showCloudBackupStatus("Firebase connected nahi hai. Pehle internet check karein.", true);
+                return;
+            }
+            const btn = document.getElementById("btnCreateCloudBackup");
+            if (btn) btn.disabled = true;
+            try {
+                const backupsCol = window.collection(window.dbFirestore, 'artifacts', window.appId, 'users', window.currentUser.uid, 'backups');
+                const nowIso = new Date().toISOString();
+                const label = autoLabel || ("Manual Backup — " + new Date().toLocaleString('en-GB'));
+                await window.addDoc(backupsCol, {
+                    label,
+                    createdAt: nowIso,
+                    shopsCount: window.db.shops.length,
+                    txCount: window.db.transactions.length,
+                    purchasesCount: window.db.purchases.length,
+                    snapshot: {
+                        shops: window.db.shops,
+                        purchases: window.db.purchases,
+                        transactions: window.db.transactions
+                    }
+                });
+                showCloudBackupStatus("Firebase Cloud Backup mehfooz ho gaya! (" + label + ")");
+                await loadFirebaseBackupsList();
+            } catch (err) {
+                console.error("Backup error:", err);
+                showCloudBackupStatus("Backup save karne mein masla aaya: " + (err.message || err), true);
+            } finally {
+                if (btn) btn.disabled = false;
+            }
+        }
+
+        async function loadFirebaseBackupsList() {
+            const listEl = document.getElementById("firebaseBackupsList");
+            if (!listEl) return;
+            if (!window.currentUser || !window.dbFirestore || !window.collection || !window.getDocs) {
+                listEl.innerHTML = '<div class="p-4 text-center text-slate-500">Firebase cloud offline hai.</div>';
+                return;
+            }
+            listEl.innerHTML = '<div class="p-4 text-center text-slate-500"><i class="fa-solid fa-circle-notch fa-spin mr-1"></i> Loading cloud snapshots...</div>';
+            try {
+                const backupsCol = window.collection(window.dbFirestore, 'artifacts', window.appId, 'users', window.currentUser.uid, 'backups');
+                const q = window.fbQuery(backupsCol, window.fbOrderBy("createdAt", "desc"), window.fbLimit(10));
+                const snap = await window.getDocs(q);
+                if (snap.empty) {
+                    listEl.innerHTML = '<div class="p-4 text-center text-slate-500">Abhi koi cloud backup nahi bana. Upar "Save Cloud Backup Now" dabayein.</div>';
+                    return;
+                }
+                window._cachedCloudBackups = {};
+                let htmlRows = "";
+                snap.forEach(docItem => {
+                    const d = docItem.data();
+                    window._cachedCloudBackups[docItem.id] = d;
+                    htmlRows += `
+                        <div class="p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-sky-50">
+                            <div>
+                                <div class="font-extrabold text-slate-900">${d.label || 'Cloud Snapshot'}</div>
+                                <div class="text-[11px] text-slate-500">
+                                    Shops: <b>${d.shopsCount || 0}</b> &bull; Bills/Rec: <b>${d.txCount || 0}</b> &bull; Purchases: <b>${d.purchasesCount || 0}</b>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <button type="button" onclick="restoreFirebaseBackup('${docItem.id}')" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[11px] font-bold">
+                                    <i class="fa-solid fa-rotate-left mr-1"></i> Restore
+                                </button>
+                                <button type="button" onclick="deleteFirebaseBackup('${docItem.id}')" title="Delete Snapshot" class="px-2.5 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-lg text-[11px] font-bold">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                listEl.innerHTML = htmlRows;
+            } catch (err) {
+                console.error("Load backups error:", err);
+                listEl.innerHTML = '<div class="p-4 text-center text-rose-600">Backups load nahi ho sake.</div>';
+            }
+        }
+
+        function restoreFirebaseBackup(backupId) {
+            const item = window._cachedCloudBackups && window._cachedCloudBackups[backupId];
+            if (!item || !item.snapshot) return;
+            if (!confirm(`Kya aap "${item.label}" wala backup restore karna chahte hain? Maujooda data is backup se replace ho jayega.`)) return;
+
+            const keepAdminPass = getStoredAdminPassword();
+            window.db = {
+                shops: Array.isArray(item.snapshot.shops) ? item.snapshot.shops : [],
+                purchases: Array.isArray(item.snapshot.purchases) ? item.snapshot.purchases : [],
+                transactions: Array.isArray(item.snapshot.transactions) ? item.snapshot.transactions : [],
+                adminPassword: keepAdminPass
+            };
+            activeTown = null;
+            activeShopId = null;
+            saveDB();
+            refreshAll();
+            switchTab('main');
+            showCloudBackupStatus("Backup kamyabi se restore ho gaya!");
+        }
+
+        async function deleteFirebaseBackup(backupId) {
+            if (!confirm("Kya aap yeh cloud backup snapshot delete karna chahte hain?")) return;
+            try {
+                const docRef = window.doc(window.dbFirestore, 'artifacts', window.appId, 'users', window.currentUser.uid, 'backups', backupId);
+                await window.deleteDoc(docRef);
+                await loadFirebaseBackupsList();
+            } catch (err) {
+                showCloudBackupStatus("Snapshot delete nahi ho saka.", true);
+            }
+        }
+
+        function downloadJsonBackup() {
+            const payload = {
+                app: "Zuljalal Traders Cloud ERP",
+                exportedAt: new Date().toISOString(),
+                data: {
+                    shops: window.db.shops,
+                    purchases: window.db.purchases,
+                    transactions: window.db.transactions
+                }
+            };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `zuljalal-erp-backup-${todayStr()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function restoreJsonBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                try {
+                    const parsed = JSON.parse(ev.target.result);
+                    const raw = parsed.data ? parsed.data : parsed;
+                    if (!Array.isArray(raw.shops) || !Array.isArray(raw.transactions)) {
+                        alert("Invalid backup file format!");
+                        return;
+                    }
+                    if (!confirm("Kya aap is file se tamam data restore karna chahte hain?")) return;
+                    const keepAdminPass = getStoredAdminPassword();
+                    window.db = {
+                        shops: raw.shops,
+                        purchases: Array.isArray(raw.purchases) ? raw.purchases : [],
+                        transactions: raw.transactions,
+                        adminPassword: keepAdminPass
+                    };
+                    activeTown = null;
+                    activeShopId = null;
+                    saveDB();
+                    refreshAll();
+                    switchTab('main');
+                    alert("Offline JSON backup kamyabi se restore ho gaya!");
+                } catch (err) {
+                    alert("File read karne mein error aaya: " + err.message);
+                } finally {
+                    event.target.value = "";
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        async function resetToCleanDefaults() {
+            if (!confirm("ADMIN WARNING: Kya aap tamam shops, bills, recoveries aur stock data bilkul delete karke software ko 0 (blank) karna chahte hain?")) return;
+            // Auto safety backup in Firebase before clearing all data
+            if (window.db.shops.length > 0 || window.db.transactions.length > 0) {
+                await createFirebaseBackup("Auto-Backup Before Reset (" + new Date().toLocaleString('en-GB') + ")");
+            }
+            const keepAdminPass = getStoredAdminPassword();
+            window.db = {
+                ...structuredClone(defaultData),
+                adminPassword: keepAdminPass
+            };
+            activeTown = null;
+            activeShopId = null;
+            saveDB();
+            refreshAll();
+            closeModal('adminModal');
+            switchTab('main');
+            alert("Tamam data clear ho gaya (aur aik auto-backup Firebase mein mehfooz kar diya gaya hai).");
         }
 
         function formatPKR(num) {

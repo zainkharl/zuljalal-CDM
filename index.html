@@ -164,7 +164,9 @@
             #openingBalModal,
             #themeModal,
             #adminModal,
-            #adminAuthModal {
+            #adminAuthModal,
+            #companyDistModal,
+            #companyTxModal {
                 display: none !important;
             }
             #printSheetArea {
@@ -545,6 +547,9 @@
                 <button onclick="switchTab('stock')" id="btn-stock" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center whitespace-nowrap">
                     <i class="fa-solid fa-cubes mr-2"></i> Carton Stock
                 </button>
+                <button onclick="switchTab('company')" id="btn-company" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center whitespace-nowrap">
+                    <i class="fa-solid fa-building-columns mr-2"></i> Company Ledger
+                </button>
                 <div class="h-5 w-[1px] bg-sky-200 mx-1"></div>
                 <div id="townTabsList" class="flex items-center space-x-1.5"></div>
             </div>
@@ -811,6 +816,122 @@
                             </tr>
                         </thead>
                         <tbody id="stockHistoryBody" class="divide-y divide-sky-100 text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 4: COMPANY LEDGER (DISTRIBUTOR & COMPANY ACCOUNTS) ==================== -->
+        <div id="tab-content-company" class="hidden space-y-6">
+            <!-- Header & Actions -->
+            <div class="glass-panel p-6 rounded-2xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border border-sky-300">
+                <div>
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <span class="bg-indigo-100 text-indigo-700 border border-indigo-300 text-xs font-extrabold px-3 py-1 rounded-lg uppercase">
+                            Company Ledger
+                        </span>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Company &amp; Distributor Ledger</h2>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-1">Company purchases/invoices (Debit), company ko online/bank payments (Credit), aur distributor-wise running balance</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="openCompanyDistModal()" class="bg-sky-600 hover:bg-sky-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-md shadow-sky-200 flex items-center">
+                        <i class="fa-solid fa-building mr-1.5"></i> + Add Company / Distributor
+                    </button>
+                    <button onclick="openCompanyTxModal('PURCHASE')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-md shadow-indigo-200 flex items-center">
+                        <i class="fa-solid fa-file-invoice mr-1.5"></i> + Company Invoice / Purchase
+                    </button>
+                    <button onclick="openCompanyTxModal('PAYMENT')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-md shadow-emerald-200 flex items-center">
+                        <i class="fa-solid fa-money-bill-transfer mr-1.5"></i> + Payment to Company
+                    </button>
+                    <button onclick="printCompanyLedger()" class="bg-slate-800 hover:bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-md flex items-center">
+                        <i class="fa-solid fa-print mr-1.5"></i> Print Company Ledger
+                    </button>
+                </div>
+            </div>
+
+            <!-- Company Ledger KPI Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-slate-500">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Opening Balance</span>
+                    <h3 id="compKpiOpening" class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1 font-num">Rs. 0</h3>
+                </div>
+                <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-indigo-500">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Total Company Billing / Purchases</span>
+                    <h3 id="compKpiPurchase" class="text-xl sm:text-2xl font-extrabold text-indigo-700 mt-1 font-num">Rs. 0</h3>
+                </div>
+                <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-emerald-500">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Total Paid to Company</span>
+                    <h3 id="compKpiPaid" class="text-xl sm:text-2xl font-extrabold text-emerald-600 mt-1 font-num">Rs. 0</h3>
+                </div>
+                <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-rose-500 bg-gradient-to-r from-sky-500/10 to-indigo-500/10">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-rose-600">Net Payable Balance to Company</span>
+                    <h3 id="compKpiNet" class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1 font-num">Rs. 0</h3>
+                </div>
+            </div>
+
+            <!-- Distributor / Company Selector Cards -->
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">
+                        Registered Companies / Distributions (<span id="compDistCountLabel" class="text-sky-600">0</span>):
+                    </h3>
+                    <button type="button" onclick="selectCompanyDist('ALL')" id="btnShowAllCompDists" class="text-xs font-bold text-sky-700 hover:underline">
+                        Show Consolidated All Companies
+                    </button>
+                </div>
+                <div id="companyDistGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </div>
+
+            <!-- Active Company / Distributor Ledger Sheet -->
+            <div class="glass-panel rounded-2xl overflow-hidden border border-sky-200/80">
+                <div class="px-6 py-4 bg-gradient-to-r from-sky-50 to-white text-slate-900 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-sky-200">
+                    <div>
+                        <div class="flex items-center gap-2.5 flex-wrap">
+                            <i class="fa-solid fa-building-columns text-indigo-600 text-lg"></i>
+                            <h3 id="activeCompDistName" class="font-extrabold text-lg sm:text-xl text-slate-900">All Companies / Distributions</h3>
+                            <span id="activeCompDistNumBadge" class="text-xs bg-sky-100 text-sky-700 border border-sky-300 px-2.5 py-0.5 rounded-full font-bold hidden">Dist #</span>
+                            <button id="btnEditActiveCompDist" onclick="openEditCompanyDistModal()" class="hidden bg-sky-100 hover:bg-sky-200 text-sky-800 border border-sky-300 px-2.5 py-1 rounded-lg text-xs font-bold transition items-center">
+                                <i class="fa-solid fa-pen-to-square mr-1 text-sky-600"></i> Edit Distribution Details
+                            </button>
+                        </div>
+                        <p id="activeCompDistMeta" class="text-xs text-slate-500 mt-1">Select a distribution card above or add a new company/distribution</p>
+                    </div>
+
+                    <!-- Date Range Filter for Company Ledger -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div class="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-xl border border-sky-200">
+                            <label class="text-[11px] font-bold text-slate-500">From:</label>
+                            <input type="date" id="compFromDate" onchange="renderCompanyLedger()" class="text-xs font-semibold rounded-lg px-2 py-0.5">
+                        </div>
+                        <div class="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-xl border border-sky-200">
+                            <label class="text-[11px] font-bold text-slate-500">To:</label>
+                            <input type="date" id="compToDate" onchange="renderCompanyLedger()" class="text-xs font-semibold rounded-lg px-2 py-0.5">
+                        </div>
+                        <button type="button" onclick="clearDateRange('comp')" class="px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-rose-100 hover:bg-rose-200 text-rose-700 border border-rose-300 transition">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Company Ledger Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-sky-100/70 text-sky-900 text-[11px] uppercase font-bold border-b border-sky-200">
+                                <th class="py-3 px-4">Date</th>
+                                <th class="py-3 px-4">Dist. Num</th>
+                                <th class="py-3 px-4">Distribution Name</th>
+                                <th class="py-3 px-4">Inv / Bilty / Ref #</th>
+                                <th class="py-3 px-4">Particulars / Bank Details</th>
+                                <th class="py-3 px-4 text-center">Cartons</th>
+                                <th class="py-3 px-4 text-right">Purchase / Bill (Dr)</th>
+                                <th class="py-3 px-4 text-right">Payment Paid (Cr)</th>
+                                <th class="py-3 px-4 text-right">Running Balance</th>
+                                <th class="py-3 px-4 text-center">Edit / Del</th>
+                            </tr>
+                        </thead>
+                        <tbody id="companyLedgerBody" class="divide-y divide-sky-100 text-sm"></tbody>
                     </table>
                 </div>
             </div>
@@ -1278,6 +1399,124 @@
         </div>
     </div>
 
+    <!-- MODAL 9: ADD / EDIT COMPANY & DISTRIBUTION -->
+    <div id="companyDistModal" class="fixed inset-0 bg-slate-900/45 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
+        <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-sky-200/80">
+                <h3 id="companyDistModalTitle" class="text-lg font-extrabold text-slate-900 flex items-center">
+                    <i class="fa-solid fa-building-columns text-sky-600 mr-2.5"></i> Add Company / Distribution
+                </h3>
+                <button onclick="closeModal('companyDistModal')" class="text-slate-600 hover:text-sky-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="saveCompanyDist(event)" class="space-y-3.5">
+                <input type="hidden" id="compDistEditId" value="">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Distributor Num / Code</label>
+                        <input type="text" id="compDistNum" required class="w-full p-2.5 rounded-xl text-sm font-bold font-num" placeholder="e.g. DIST-01 / 1042">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Contact / Phone No</label>
+                        <input type="text" id="compDistPhone" class="w-full p-2.5 rounded-xl text-sm" placeholder="0300-1234567">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Distribution Name</label>
+                    <input type="text" id="compDistName" required class="w-full p-2.5 rounded-xl text-sm font-semibold" placeholder="e.g. Zuljalal Traders Main Distribution">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Company / Brand Name</label>
+                        <input type="text" id="compCompanyName" required class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. National Foods / Unilever">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">City / Territory</label>
+                        <input type="text" id="compDistCity" class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Sargodha">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Opening Payable Balance (Rs.)</label>
+                    <input type="number" id="compDistOpeningBal" value="0" required class="w-full p-2.5 rounded-xl text-sm font-bold font-num">
+                </div>
+                <div class="flex justify-between items-center pt-3">
+                    <button type="button" id="btnDeleteCompDist" onclick="deleteCompanyDist()" class="hidden text-xs text-rose-600 hover:text-rose-700 font-bold items-center">
+                        <i class="fa-solid fa-trash mr-1"></i> Delete Distribution
+                    </button>
+                    <div class="flex gap-2 ml-auto">
+                        <button type="button" onclick="closeModal('companyDistModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold">Cancel</button>
+                        <button type="submit" class="px-5 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-sky-200">Save Distribution</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 10: ADD / EDIT COMPANY LEDGER ENTRY (INVOICE / PAYMENT) -->
+    <div id="companyTxModal" class="fixed inset-0 bg-slate-900/45 backdrop-blur-md hidden items-center justify-center z-50 p-4 no-print">
+        <div class="glass-modal p-6 rounded-3xl w-full max-w-md relative">
+            <div class="flex justify-between items-center mb-4 pb-3 border-b border-sky-200/80">
+                <h3 id="compTxModalTitle" class="text-lg font-extrabold text-slate-900">Company Ledger Entry</h3>
+                <button onclick="closeModal('companyTxModal')" class="text-slate-600 hover:text-sky-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="saveCompanyTx(event)" class="space-y-3.5">
+                <input type="hidden" id="compTxEditId" value="">
+                <input type="hidden" id="compTxType" value="PURCHASE">
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Select Distribution (Distributor Num &amp; Name)</label>
+                    <select id="compTxDistSelect" required class="w-full p-2.5 rounded-xl text-sm font-semibold"></select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Date</label>
+                        <input type="date" id="compTxDate" required class="w-full p-2.5 rounded-xl text-sm">
+                    </div>
+                    <div>
+                        <label id="compTxRefLabel" class="block text-xs font-bold text-slate-700 mb-1">Invoice / Bilty / Slip #</label>
+                        <input type="text" id="compTxRef" required class="w-full p-2.5 rounded-xl text-sm" placeholder="CMP-INV-101">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div id="compTxCartonField">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Cartons / Qty</label>
+                        <input type="number" id="compTxCartons" min="0" value="0" class="w-full p-2.5 rounded-xl text-sm font-bold font-num" placeholder="0">
+                    </div>
+                    <div id="compTxPaymentModeField" class="hidden">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Payment Mode</label>
+                        <select id="compTxPayMode" class="w-full p-2.5 rounded-xl text-sm font-semibold">
+                            <option value="Online Bank Transfer">Online Bank Transfer</option>
+                            <option value="IBFT / Raast">IBFT / Raast</option>
+                            <option value="Cheque">Cheque</option>
+                            <option value="Cash Deposit">Cash Deposit</option>
+                            <option value="Credit Note / Claim">Credit Note / Claim</option>
+                        </select>
+                    </div>
+                    <div class="col-span-1">
+                        <label id="compTxAmountLabel" class="block text-xs font-bold text-slate-700 mb-1">Amount (Rs.)</label>
+                        <input type="number" id="compTxAmount" required min="0" class="w-full p-2.5 rounded-xl text-sm font-bold font-num" placeholder="0">
+                    </div>
+                </div>
+
+                <div id="compTxAutoStockWrap" class="flex items-center gap-2 bg-indigo-50/90 border border-indigo-200 px-3 py-2 rounded-xl">
+                    <input type="checkbox" id="compTxSyncStock" checked class="w-4 h-4 rounded accent-indigo-600">
+                    <label for="compTxSyncStock" class="text-xs font-semibold text-indigo-900">Agar Cartons &gt; 0 hon to Carton Stock (+) mein bhi automatically add karein</label>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Particulars / Bilty / Bank Note</label>
+                    <input type="text" id="compTxDesc" class="w-full p-2.5 rounded-xl text-sm" placeholder="e.g. Stock Invoice #55 / HBL Online Transfer">
+                </div>
+
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeModal('companyTxModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold">Cancel</button>
+                    <button type="submit" id="compTxSubmitBtn" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-200">Save Entry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- ==================== FIREBASE SDK MODULE ==================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -1360,6 +1599,8 @@
                             shops: Array.isArray(data.shops) ? data.shops : [],
                             purchases: Array.isArray(data.purchases) ? data.purchases : [],
                             transactions: Array.isArray(data.transactions) ? data.transactions : [],
+                            companyDistributions: Array.isArray(data.companyDistributions) ? data.companyDistributions : [],
+                            companyTransactions: Array.isArray(data.companyTransactions) ? data.companyTransactions : [],
                             adminPassword: resolvedAdminPass
                         };
                         if (resolvedAdminPass) {
@@ -1408,6 +1649,8 @@
             shops: [],
             purchases: [],
             transactions: [],
+            companyDistributions: [],
+            companyTransactions: [],
             adminPassword: ""
         };
 
@@ -1418,11 +1661,17 @@
         } catch (e) {
             savedLocal = null;
         }
-        let db = savedLocal && Array.isArray(savedLocal.shops) ? savedLocal : structuredClone(defaultData);
+        let db = savedLocal && Array.isArray(savedLocal.shops) ? {
+            ...structuredClone(defaultData),
+            ...savedLocal,
+            companyDistributions: Array.isArray(savedLocal.companyDistributions) ? savedLocal.companyDistributions : [],
+            companyTransactions: Array.isArray(savedLocal.companyTransactions) ? savedLocal.companyTransactions : []
+        } : structuredClone(defaultData);
         window.db = db;
 
         let activeTown = null;
         let activeShopId = null;
+        let activeCompanyDistId = "ALL";
         let currentAuthMode = "login";
 
         function saveDB() {
@@ -1636,7 +1885,9 @@
                     snapshot: {
                         shops: window.db.shops,
                         purchases: window.db.purchases,
-                        transactions: window.db.transactions
+                        transactions: window.db.transactions,
+                        companyDistributions: window.db.companyDistributions || [],
+                        companyTransactions: window.db.companyTransactions || []
                     }
                 });
                 showCloudBackupStatus("Firebase Cloud Backup mehfooz ho gaya! (" + label + ")");
@@ -1706,6 +1957,8 @@
                 shops: Array.isArray(item.snapshot.shops) ? item.snapshot.shops : [],
                 purchases: Array.isArray(item.snapshot.purchases) ? item.snapshot.purchases : [],
                 transactions: Array.isArray(item.snapshot.transactions) ? item.snapshot.transactions : [],
+                companyDistributions: Array.isArray(item.snapshot.companyDistributions) ? item.snapshot.companyDistributions : [],
+                companyTransactions: Array.isArray(item.snapshot.companyTransactions) ? item.snapshot.companyTransactions : [],
                 adminPassword: keepAdminPass
             };
             activeTown = null;
@@ -1734,7 +1987,9 @@
                 data: {
                     shops: window.db.shops,
                     purchases: window.db.purchases,
-                    transactions: window.db.transactions
+                    transactions: window.db.transactions,
+                    companyDistributions: window.db.companyDistributions || [],
+                    companyTransactions: window.db.companyTransactions || []
                 }
             };
             const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
@@ -1766,6 +2021,8 @@
                         shops: raw.shops,
                         purchases: Array.isArray(raw.purchases) ? raw.purchases : [],
                         transactions: raw.transactions,
+                        companyDistributions: Array.isArray(raw.companyDistributions) ? raw.companyDistributions : [],
+                        companyTransactions: Array.isArray(raw.companyTransactions) ? raw.companyTransactions : [],
                         adminPassword: keepAdminPass
                     };
                     activeTown = null;
@@ -1860,6 +2117,7 @@
             else if (prefix === 'bdz') renderBdzReport();
             else if (prefix === 'stock') renderStockPage();
             else if (prefix === 'ledger') renderTownSheet();
+            else if (prefix === 'comp') renderCompanyLedger();
         }
 
         function clearDateRange(prefix) {
@@ -2807,6 +3065,7 @@
             document.getElementById('tab-content-main').classList.add('hidden');
             document.getElementById('tab-content-bdz').classList.add('hidden');
             document.getElementById('tab-content-stock').classList.add('hidden');
+            document.getElementById('tab-content-company').classList.add('hidden');
             document.getElementById('town-sheet-container').classList.add('hidden');
 
             if (tab === 'main') {
@@ -2821,6 +3080,10 @@
                 document.getElementById('btn-stock').classList.add('active');
                 document.getElementById('tab-content-stock').classList.remove('hidden');
                 renderStockPage();
+            } else if (tab === 'company') {
+                document.getElementById('btn-company').classList.add('active');
+                document.getElementById('tab-content-company').classList.remove('hidden');
+                renderCompanyLedger();
             } else if (tab === 'town-view') {
                 const townBtn = document.getElementById('btn-town-' + activeTown);
                 if (townBtn) townBtn.classList.add('active');
@@ -3084,11 +3347,525 @@
             renderTownSheet();
         }
 
+        /* ==================== COMPANY LEDGER (DISTRIBUTOR NUM & DISTRIBUTION NAME) ==================== */
+        function getCompanyDistStats(dist, fromDate = "", toDate = "") {
+            const distsList = window.db.companyDistributions || [];
+            const txsList = window.db.companyTransactions || [];
+            const targetTxs = dist ? txsList.filter(t => t.distId === dist.id) : txsList;
+
+            let priorPurchases = 0, priorPayments = 0;
+            let totalPurchases = 0, totalPayments = 0, totalCartons = 0, txCount = 0;
+
+            targetTxs.forEach(t => {
+                if (fromDate && t.date < fromDate) {
+                    if (t.type === "PURCHASE") priorPurchases += Number(t.amount || 0);
+                    else if (t.type === "PAYMENT") priorPayments += Number(t.amount || 0);
+                } else if (isDateInRange(t.date, fromDate, toDate)) {
+                    txCount++;
+                    if (t.type === "PURCHASE") {
+                        totalPurchases += Number(t.amount || 0);
+                        totalCartons += Number(t.cartons || 0);
+                    } else if (t.type === "PAYMENT") {
+                        totalPayments += Number(t.amount || 0);
+                    }
+                }
+            });
+
+            const baseOpening = dist
+                ? Number(dist.openingBalance || 0)
+                : distsList.reduce((sum, d) => sum + Number(d.openingBalance || 0), 0);
+
+            const effectiveOpening = baseOpening + priorPurchases - priorPayments;
+            const netPayable = effectiveOpening + totalPurchases - totalPayments;
+
+            return {
+                openingBalance: effectiveOpening,
+                totalPurchases,
+                totalPayments,
+                netPayable,
+                totalCartons,
+                txCount
+            };
+        }
+
+        function selectCompanyDist(distId) {
+            activeCompanyDistId = distId;
+            renderCompanyLedger();
+        }
+
+        function openCompanyDistModal() {
+            document.getElementById("compDistEditId").value = "";
+            document.getElementById("companyDistModalTitle").innerHTML = `<i class="fa-solid fa-building-columns text-sky-600 mr-2.5"></i> Add Company / Distribution`;
+            document.getElementById("compDistNum").value = "";
+            document.getElementById("compDistPhone").value = "";
+            document.getElementById("compDistName").value = "";
+            document.getElementById("compCompanyName").value = "";
+            document.getElementById("compDistCity").value = "";
+            document.getElementById("compDistOpeningBal").value = 0;
+            const delBtn = document.getElementById("btnDeleteCompDist");
+            delBtn.classList.add("hidden");
+            delBtn.classList.remove("flex");
+            openModal("companyDistModal");
+        }
+
+        function openEditCompanyDistModal(distId = null) {
+            const targetId = distId || activeCompanyDistId;
+            if (!targetId || targetId === "ALL") return;
+            const dist = (window.db.companyDistributions || []).find(d => d.id === targetId);
+            if (!dist) return;
+
+            document.getElementById("compDistEditId").value = dist.id;
+            document.getElementById("companyDistModalTitle").innerHTML = `<i class="fa-solid fa-pen-to-square text-sky-600 mr-2.5"></i> Edit Distribution Details`;
+            document.getElementById("compDistNum").value = dist.distNum || "";
+            document.getElementById("compDistPhone").value = dist.phone || "";
+            document.getElementById("compDistName").value = dist.distName || "";
+            document.getElementById("compCompanyName").value = dist.companyName || "";
+            document.getElementById("compDistCity").value = dist.city || "";
+            document.getElementById("compDistOpeningBal").value = Number(dist.openingBalance || 0);
+
+            const delBtn = document.getElementById("btnDeleteCompDist");
+            delBtn.classList.remove("hidden");
+            delBtn.classList.add("flex");
+            openModal("companyDistModal");
+        }
+
+        function saveCompanyDist(e) {
+            e.preventDefault();
+            if (!Array.isArray(window.db.companyDistributions)) window.db.companyDistributions = [];
+            const editId = document.getElementById("compDistEditId").value;
+            const distNum = document.getElementById("compDistNum").value.trim();
+            const phone = document.getElementById("compDistPhone").value.trim();
+            const distName = document.getElementById("compDistName").value.trim();
+            const companyName = document.getElementById("compCompanyName").value.trim();
+            const city = document.getElementById("compDistCity").value.trim();
+            const openingBalance = Number(document.getElementById("compDistOpeningBal").value || 0);
+
+            if (editId) {
+                const idx = window.db.companyDistributions.findIndex(d => d.id === editId);
+                if (idx !== -1) {
+                    window.db.companyDistributions[idx] = {
+                        ...window.db.companyDistributions[idx],
+                        distNum, phone, distName, companyName, city, openingBalance
+                    };
+                }
+                activeCompanyDistId = editId;
+            } else {
+                const newId = "cd_" + Date.now();
+                window.db.companyDistributions.push({
+                    id: newId, distNum, phone, distName, companyName, city, openingBalance
+                });
+                activeCompanyDistId = newId;
+            }
+
+            saveDB();
+            closeModal("companyDistModal");
+            renderCompanyLedger();
+        }
+
+        function deleteCompanyDist() {
+            const editId = document.getElementById("compDistEditId").value;
+            const dist = (window.db.companyDistributions || []).find(d => d.id === editId);
+            if (!dist) return;
+            if (!confirm(`Delete "${dist.distNum} - ${dist.distName}" aur iski tamam company ledger entries?`)) return;
+
+            window.db.companyDistributions = window.db.companyDistributions.filter(d => d.id !== editId);
+            window.db.companyTransactions = (window.db.companyTransactions || []).filter(t => t.distId !== editId);
+            if (activeCompanyDistId === editId) activeCompanyDistId = "ALL";
+            saveDB();
+            closeModal("companyDistModal");
+            renderCompanyLedger();
+        }
+
+        function openCompanyTxModal(type, editTxId = null) {
+            const dists = window.db.companyDistributions || [];
+            if (dists.length === 0) {
+                alert("Pehle '+ Add Company / Distributor' par click karke Distributor Num aur Distribution Name add karein.");
+                openCompanyDistModal();
+                return;
+            }
+
+            const sel = document.getElementById("compTxDistSelect");
+            const preselectId = activeCompanyDistId !== "ALL" ? activeCompanyDistId : dists[0].id;
+            sel.innerHTML = dists.map(d =>
+                `<option value="${d.id}" ${d.id === preselectId ? 'selected' : ''}>[${d.distNum}] ${d.distName} — (${d.companyName})</option>`
+            ).join("");
+
+            document.getElementById("compTxEditId").value = "";
+            document.getElementById("compTxType").value = type;
+            document.getElementById("compTxDate").value = todayStr();
+            document.getElementById("compTxCartons").value = 0;
+            document.getElementById("compTxAmount").value = "";
+            document.getElementById("compTxDesc").value = "";
+            document.getElementById("compTxSyncStock").checked = true;
+
+            if (type === "PURCHASE") {
+                document.getElementById("compTxModalTitle").innerHTML = `<i class="fa-solid fa-file-invoice text-indigo-600 mr-2"></i> Company Invoice / Purchase (Debit)`;
+                document.getElementById("compTxRefLabel").innerText = "Company Invoice / Bilty #";
+                document.getElementById("compTxRef").value = "CMP-" + Math.floor(100 + Math.random() * 900);
+                document.getElementById("compTxCartonField").classList.remove("hidden");
+                document.getElementById("compTxPaymentModeField").classList.add("hidden");
+                document.getElementById("compTxAutoStockWrap").classList.remove("hidden");
+                document.getElementById("compTxAmountLabel").innerText = "Invoice / Purchase Amount (Rs.)";
+                document.getElementById("compTxSubmitBtn").className = "px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-200";
+            } else {
+                document.getElementById("compTxModalTitle").innerHTML = `<i class="fa-solid fa-money-bill-transfer text-emerald-600 mr-2"></i> Payment to Company (Credit)`;
+                document.getElementById("compTxRefLabel").innerText = "Bank Slip / Online Ref #";
+                document.getElementById("compTxRef").value = "PAY-" + Math.floor(100 + Math.random() * 900);
+                document.getElementById("compTxCartonField").classList.add("hidden");
+                document.getElementById("compTxPaymentModeField").classList.remove("hidden");
+                document.getElementById("compTxAutoStockWrap").classList.add("hidden");
+                document.getElementById("compTxAmountLabel").innerText = "Paid Amount (Rs.)";
+                document.getElementById("compTxSubmitBtn").className = "px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-lg shadow-emerald-200";
+            }
+
+            if (editTxId) {
+                const tx = (window.db.companyTransactions || []).find(t => t.id === editTxId);
+                if (tx) {
+                    document.getElementById("compTxEditId").value = tx.id;
+                    document.getElementById("compTxModalTitle").innerHTML = `<i class="fa-solid fa-pen-to-square text-sky-600 mr-2"></i> Edit Company Ledger Entry`;
+                    sel.value = tx.distId;
+                    document.getElementById("compTxDate").value = tx.date;
+                    document.getElementById("compTxRef").value = tx.ref;
+                    document.getElementById("compTxCartons").value = tx.cartons || 0;
+                    if (tx.payMode) document.getElementById("compTxPayMode").value = tx.payMode;
+                    document.getElementById("compTxAmount").value = tx.amount;
+                    document.getElementById("compTxDesc").value = tx.desc || "";
+                    document.getElementById("compTxAutoStockWrap").classList.add("hidden");
+                }
+            }
+
+            openModal("companyTxModal");
+        }
+
+        function saveCompanyTx(e) {
+            e.preventDefault();
+            if (!Array.isArray(window.db.companyTransactions)) window.db.companyTransactions = [];
+            const editId = document.getElementById("compTxEditId").value;
+            const type = document.getElementById("compTxType").value;
+            const distId = document.getElementById("compTxDistSelect").value;
+            const date = document.getElementById("compTxDate").value;
+            const ref = document.getElementById("compTxRef").value.trim();
+            const cartons = type === "PURCHASE" ? Number(document.getElementById("compTxCartons").value || 0) : 0;
+            const payMode = type === "PAYMENT" ? document.getElementById("compTxPayMode").value : "";
+            const amount = Number(document.getElementById("compTxAmount").value || 0);
+            const rawDesc = document.getElementById("compTxDesc").value.trim();
+            const desc = rawDesc || (type === "PURCHASE" ? (cartons > 0 ? `Company Stock Invoice (${cartons} Ctn)` : "Company Invoice") : `${payMode} to Company`);
+
+            const dist = (window.db.companyDistributions || []).find(d => d.id === distId);
+
+            if (editId) {
+                const idx = window.db.companyTransactions.findIndex(t => t.id === editId);
+                if (idx !== -1) {
+                    window.db.companyTransactions[idx] = {
+                        ...window.db.companyTransactions[idx],
+                        distId, date, type, ref, cartons, payMode, amount, desc
+                    };
+                }
+            } else {
+                const newTxId = "ct_" + Date.now();
+                window.db.companyTransactions.push({
+                    id: newTxId, distId, date, type, ref, cartons, payMode, amount, desc
+                });
+
+                // Optional auto-sync to Warehouse Carton Stock (+)
+                if (type === "PURCHASE" && cartons > 0 && document.getElementById("compTxSyncStock").checked) {
+                    const distTag = dist ? `[${dist.distNum} - ${dist.distName}] ` : "";
+                    window.db.purchases.push({
+                        id: "p_" + Date.now() + "_c",
+                        date,
+                        cartons,
+                        note: `${distTag}${ref} — ${desc}`
+                    });
+                }
+            }
+
+            saveDB();
+            closeModal("companyTxModal");
+            refreshAll();
+            renderCompanyLedger();
+        }
+
+        function deleteCompanyTx(txId) {
+            if (!confirm("Kya aap yeh company ledger entry delete karna chahte hain? Balance khud adjust ho jayega.")) return;
+            window.db.companyTransactions = (window.db.companyTransactions || []).filter(t => t.id !== txId);
+            saveDB();
+            renderCompanyLedger();
+        }
+
+        function renderCompanyLedger() {
+            const dists = window.db.companyDistributions || [];
+            const allTxs = window.db.companyTransactions || [];
+            const { from: fromDate, to: toDate } = getDateRange('comp');
+
+            document.getElementById("compDistCountLabel").innerText = dists.length;
+
+            const activeDist = activeCompanyDistId !== "ALL"
+                ? dists.find(d => d.id === activeCompanyDistId) || null
+                : null;
+            if (!activeDist && activeCompanyDistId !== "ALL") {
+                activeCompanyDistId = "ALL";
+            }
+
+            // KPIs for active selection (single distribution or consolidated all)
+            const kpiStats = getCompanyDistStats(activeDist, fromDate, toDate);
+            document.getElementById("compKpiOpening").innerText = formatPKR(kpiStats.openingBalance);
+            document.getElementById("compKpiPurchase").innerText = formatPKR(kpiStats.totalPurchases);
+            document.getElementById("compKpiPaid").innerText = formatPKR(kpiStats.totalPayments);
+            document.getElementById("compKpiNet").innerText = formatPKR(kpiStats.netPayable);
+
+            // Render Distribution Cards
+            const grid = document.getElementById("companyDistGrid");
+            grid.innerHTML = "";
+            if (dists.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-6 text-center text-slate-500 text-xs border border-dashed border-sky-300 rounded-xl">
+                        Abhi koi Company ya Distribution add nahi hui. Upar <b>"+ Add Company / Distributor"</b> par click karke Distributor Num aur Distribution Name darj karein.
+                    </div>
+                `;
+            } else {
+                dists.forEach(d => {
+                    const st = getCompanyDistStats(d, fromDate, toDate);
+                    const isSelected = activeDist && activeDist.id === d.id;
+                    const card = document.createElement("div");
+                    card.onclick = () => selectCompanyDist(d.id);
+                    card.className = `p-4 rounded-2xl cursor-pointer transition-all duration-200 ${
+                        isSelected
+                            ? 'bg-indigo-600/15 border-2 border-indigo-500 shadow-lg shadow-sky-200'
+                            : 'glass-panel-interactive border border-sky-200/80'
+                    }`;
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start gap-2">
+                            <div>
+                                <div class="flex items-center gap-1.5 flex-wrap">
+                                    <span class="bg-sky-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md font-num">#${d.distNum}</span>
+                                    <h4 class="font-extrabold text-slate-900 text-sm">${d.distName}</h4>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-1">
+                                    <i class="fa-solid fa-industry mr-1 text-indigo-600"></i><b>${d.companyName}</b> ${d.city ? '&bull; ' + d.city : ''} ${d.phone ? '&bull; ' + d.phone : ''}
+                                </p>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <button onclick="event.stopPropagation(); openEditCompanyDistModal('${d.id}')" title="Edit Distribution" class="p-1.5 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-700">
+                                    <i class="fa-solid fa-pen-to-square text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mt-3 pt-2.5 border-t border-sky-200/80 flex justify-between items-end">
+                            <div>
+                                <span class="text-[10px] uppercase text-slate-500 font-bold block">Opening Bal</span>
+                                <span class="text-xs font-bold text-slate-700 font-num">${formatPKR(st.openingBalance)}</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-[10px] uppercase text-slate-500 font-bold block">Payable Balance</span>
+                                <span class="text-base font-extrabold font-num ${st.netPayable <= 0 ? 'text-emerald-600' : 'text-rose-600'}">${formatPKR(st.netPayable)}</span>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            // Header Info
+            const titleEl = document.getElementById("activeCompDistName");
+            const badgeEl = document.getElementById("activeCompDistNumBadge");
+            const editBtn = document.getElementById("btnEditActiveCompDist");
+            const metaEl = document.getElementById("activeCompDistMeta");
+
+            if (activeDist) {
+                titleEl.innerText = `${activeDist.distName} (${activeDist.companyName})`;
+                badgeEl.innerText = `Dist Num: ${activeDist.distNum}`;
+                badgeEl.classList.remove("hidden");
+                editBtn.classList.remove("hidden");
+                editBtn.classList.add("inline-flex");
+                metaEl.innerText = `City: ${activeDist.city || '—'} | Contact: ${activeDist.phone || '—'} | Opening Balance: ${formatPKR(activeDist.openingBalance)}`;
+            } else {
+                titleEl.innerText = "All Companies / Distributions (Consolidated Ledger)";
+                badgeEl.classList.add("hidden");
+                editBtn.classList.add("hidden");
+                editBtn.classList.remove("inline-flex");
+                metaEl.innerText = `Total Registered Distributions: ${dists.length} | Combined Ledger Statement`;
+            }
+
+            // Render Ledger Rows
+            const tbody = document.getElementById("companyLedgerBody");
+            tbody.innerHTML = "";
+
+            let runningBal = Number(kpiStats.openingBalance);
+
+            const openTr = document.createElement("tr");
+            openTr.className = "bg-amber-50/90 font-semibold";
+            openTr.innerHTML = `
+                <td class="py-3 px-4 text-xs text-slate-500">${fromDate || '—'}</td>
+                <td class="py-3 px-4 font-bold text-sky-700 font-num">${activeDist ? activeDist.distNum : 'ALL'}</td>
+                <td class="py-3 px-4 font-bold text-slate-800">${activeDist ? activeDist.distName : 'All Distributions'}</td>
+                <td class="py-3 px-4"><span class="bg-amber-100 text-amber-700 border border-amber-400/30 text-xs font-extrabold px-2 py-0.5 rounded">${fromDate ? 'B/F BAL' : 'OPENING'}</span></td>
+                <td class="py-3 px-4 text-slate-800">${fromDate ? 'Opening + Previous Balance Before ' + fromDate : 'Company Opening Payable Balance'}</td>
+                <td class="py-3 px-4 text-center text-slate-500">—</td>
+                <td class="py-3 px-4 text-right text-slate-700 font-num">${formatPKR(runningBal)}</td>
+                <td class="py-3 px-4 text-right text-slate-500">—</td>
+                <td class="py-3 px-4 text-right font-extrabold text-slate-900 font-num">${formatPKR(runningBal)}</td>
+                <td class="py-3 px-4 text-center">
+                    ${activeDist ? `<button onclick="openEditCompanyDistModal('${activeDist.id}')" class="text-amber-600 hover:text-amber-700 text-xs font-bold underline">Edit</button>` : '—'}
+                </td>
+            `;
+            tbody.appendChild(openTr);
+
+            const visibleTxs = allTxs
+                .filter(t => (!activeDist || t.distId === activeDist.id) && isDateInRange(t.date, fromDate, toDate))
+                .sort((a, b) => a.date.localeCompare(b.date));
+
+            if (visibleTxs.length === 0) {
+                const emptyTr = document.createElement("tr");
+                emptyTr.innerHTML = `<td colspan="10" class="py-6 text-center text-slate-500 text-xs">Is company ledger mein abhi koi invoice ya payment entry darj nahi hai.</td>`;
+                tbody.appendChild(emptyTr);
+            }
+
+            visibleTxs.forEach(tx => {
+                const dObj = dists.find(d => d.id === tx.distId);
+                if (tx.type === "PURCHASE") {
+                    runningBal += Number(tx.amount || 0);
+                } else {
+                    runningBal -= Number(tx.amount || 0);
+                }
+
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-sky-50/80 transition";
+                tr.innerHTML = `
+                    <td class="py-3 px-4 text-xs text-slate-500 whitespace-nowrap">${tx.date}</td>
+                    <td class="py-3 px-4 font-extrabold text-sky-700 font-num whitespace-nowrap">${dObj ? dObj.distNum : '—'}</td>
+                    <td class="py-3 px-4 font-bold text-slate-900">${dObj ? dObj.distName : 'Unknown'}</td>
+                    <td class="py-3 px-4 font-bold text-slate-800 whitespace-nowrap">${tx.ref}</td>
+                    <td class="py-3 px-4 text-slate-700">
+                        ${tx.desc || ''}
+                        ${tx.payMode ? `<span class="ml-1.5 text-[10px] bg-emerald-100 text-emerald-700 border border-emerald-300 px-2 py-0.5 rounded-full font-bold">${tx.payMode}</span>` : ''}
+                    </td>
+                    <td class="py-3 px-4 text-center font-bold text-indigo-700 font-num">${tx.cartons ? tx.cartons + ' Ctn' : '—'}</td>
+                    <td class="py-3 px-4 text-right font-bold text-indigo-700 font-num">${tx.type === 'PURCHASE' ? formatPKR(tx.amount) : '—'}</td>
+                    <td class="py-3 px-4 text-right font-bold text-emerald-600 font-num">${tx.type === 'PAYMENT' ? formatPKR(tx.amount) : '—'}</td>
+                    <td class="py-3 px-4 text-right font-extrabold text-slate-900 font-num">${formatPKR(runningBal)}</td>
+                    <td class="py-3 px-4 text-center space-x-1 whitespace-nowrap">
+                        <button onclick="openCompanyTxModal('${tx.type}', '${tx.id}')" title="Edit Entry" class="text-sky-700 hover:text-sky-950 bg-sky-100 p-1.5 rounded-lg border border-sky-300">
+                            <i class="fa-solid fa-pen text-xs"></i>
+                        </button>
+                        <button onclick="deleteCompanyTx('${tx.id}')" title="Delete Entry" class="text-rose-600 hover:text-rose-800 bg-rose-100 p-1.5 rounded-lg border border-rose-300">
+                            <i class="fa-solid fa-trash text-xs"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function printCompanyLedger() {
+            const dists = window.db.companyDistributions || [];
+            const allTxs = window.db.companyTransactions || [];
+            const { from: fromDate, to: toDate } = getDateRange('comp');
+            const dateLabel = formatDateRangeLabel(fromDate, toDate);
+
+            const activeDist = activeCompanyDistId !== "ALL"
+                ? dists.find(d => d.id === activeCompanyDistId) || null
+                : null;
+            const st = getCompanyDistStats(activeDist, fromDate, toDate);
+
+            let runningBal = Number(st.openingBalance);
+            let rowsHtml = `
+                <tr class="subtotal-row">
+                    <td>${fromDate || '—'}</td>
+                    <td>${activeDist ? activeDist.distNum : 'ALL'}</td>
+                    <td>${activeDist ? activeDist.distName : 'All Distributions'}</td>
+                    <td>${fromDate ? 'B/F BAL' : 'OPENING'}</td>
+                    <td>${fromDate ? 'Opening + Previous Balance Before ' + fromDate : 'Company Opening Payable Balance'}</td>
+                    <td style="text-align: center;">—</td>
+                    <td style="text-align: right;">${formatPKR(runningBal)}</td>
+                    <td style="text-align: right;">—</td>
+                    <td style="text-align: right;">${formatPKR(runningBal)}</td>
+                </tr>
+            `;
+
+            const visibleTxs = allTxs
+                .filter(t => (!activeDist || t.distId === activeDist.id) && isDateInRange(t.date, fromDate, toDate))
+                .sort((a, b) => a.date.localeCompare(b.date));
+
+            visibleTxs.forEach(tx => {
+                const dObj = dists.find(d => d.id === tx.distId);
+                if (tx.type === "PURCHASE") runningBal += Number(tx.amount || 0);
+                else runningBal -= Number(tx.amount || 0);
+
+                rowsHtml += `
+                    <tr>
+                        <td style="white-space: nowrap;">${tx.date}</td>
+                        <td style="font-weight: 700;">${dObj ? dObj.distNum : '—'}</td>
+                        <td style="font-weight: 700;">${dObj ? dObj.distName : '—'}</td>
+                        <td style="font-weight: 700;">${tx.ref}</td>
+                        <td>${tx.desc || ''} ${tx.payMode ? '(' + tx.payMode + ')' : ''}</td>
+                        <td style="text-align: center;">${tx.cartons ? tx.cartons + ' Ctn' : '—'}</td>
+                        <td style="text-align: right; font-weight: 700;">${tx.type === 'PURCHASE' ? formatPKR(tx.amount) : '—'}</td>
+                        <td style="text-align: right; font-weight: 700;">${tx.type === 'PAYMENT' ? formatPKR(tx.amount) : '—'}</td>
+                        <td style="text-align: right; font-weight: 800;">${formatPKR(runningBal)}</td>
+                    </tr>
+                `;
+            });
+
+            rowsHtml += `
+                <tr class="grandtotal-row">
+                    <td colspan="5" style="text-align: right; text-transform: uppercase;">Company Ledger Closing Totals:</td>
+                    <td style="text-align: center;">${st.totalCartons} Ctn</td>
+                    <td style="text-align: right;">${formatPKR(st.openingBalance + st.totalPurchases)}</td>
+                    <td style="text-align: right;">${formatPKR(st.totalPayments)}</td>
+                    <td style="text-align: right;">${formatPKR(st.netPayable)}</td>
+                </tr>
+            `;
+
+            const metaBox = activeDist ? `
+                <div style="border: 1px solid #94a3b8; background: #f8fafc; padding: 10px 12px; margin-bottom: 14px; display: flex; justify-content: space-between; font-size: 12px;">
+                    <div style="line-height: 1.6;">
+                        <div><span style="color: #475569;">Distributor Num:</span> <b style="font-size: 14px;">${activeDist.distNum}</b></div>
+                        <div><span style="color: #475569;">Distribution Name:</span> <b>${activeDist.distName}</b></div>
+                        <div><span style="color: #475569;">Company / Brand:</span> <b>${activeDist.companyName}</b></div>
+                    </div>
+                    <div style="text-align: right; line-height: 1.6;">
+                        <div><span style="color: #475569;">City / Contact:</span> <b>${activeDist.city || '—'} / ${activeDist.phone || '—'}</b></div>
+                        <div><span style="color: #475569;">Opening Payable:</span> <b>${formatPKR(st.openingBalance)}</b></div>
+                        <div><span style="color: #475569;">Net Payable Balance:</span> <b style="font-size: 14px; border-bottom: 2px solid #0f172a;">${formatPKR(st.netPayable)}</b></div>
+                    </div>
+                </div>
+            ` : '';
+
+            const subLine = activeDist
+                ? `Distributor #${activeDist.distNum} — ${activeDist.distName} (${activeDist.companyName})${dateLabel ? ' | ' + dateLabel : ''}`
+                : `Consolidated Company & Distribution Ledger (${dists.length} Distributions)${dateLabel ? ' | ' + dateLabel : ''}`;
+
+            const html = `
+                ${buildPrintHeader("Company & Distributor Ledger", subLine)}
+                ${metaBox}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Dist. Num</th>
+                            <th>Distribution Name</th>
+                            <th>Inv / Ref #</th>
+                            <th>Particulars</th>
+                            <th style="text-align: center;">Ctn</th>
+                            <th style="text-align: right;">Purchase (Dr)</th>
+                            <th style="text-align: right;">Paid (Cr)</th>
+                            <th style="text-align: right;">Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rowsHtml}</tbody>
+                </table>
+                ${buildPrintFooter()}
+            `;
+
+            triggerCleanPrint(html);
+        }
+
         function refreshAll() {
             rebuildNavigation();
             renderDashboard();
             renderBdzReport();
             renderStockPage();
+            renderCompanyLedger();
         }
 
 
